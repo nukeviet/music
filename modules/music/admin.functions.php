@@ -32,5 +32,3 @@ $submenu['utilities'] = $classMusic->lang('utilities');
 $submenu['globalsetting'] = $classMusic->lang('set_global');
 
 $allow_func = array( 'main', 'content-song', 'category', 'album', 'content-album', 'alias', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'ads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'content-lyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite', 'utilities', 'setting-alias', 'setting-home' );
-
-?>

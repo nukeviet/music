@@ -41,7 +41,7 @@ class nv_mod_music
 
 	public function __construct( $d = "", $n = "", $f = "", $lang = "", $get_lang = false )
 	{
-		global $module_data, $module_name, $module_file, $db_config, $db, $lang_global, $my_head;
+		global $module_data, $module_name, $module_file, $db_config, $db, $lang_global, $my_head, $nv_Cache;
 		
 		// Ten CSDL
 		if( ! empty( $d ) ) $this->mod_data = $d;
@@ -148,19 +148,19 @@ class nv_mod_music
 	
 	private function db_cache( $sql, $id = '', $module_name = '' )
 	{
-		return nv_db_cache( $sql, $id, $module_name );
+		return $nv_Cache->db( $sql, $id, $module_name );
 	}
 	
 	private function del_cache( $module_name )
 	{
-		return nv_del_moduleCache( $module_name );
+		return $nv_Cache->delMod( $module_name );
 	}
 	
 	private function get_setting()
 	{
 		$setting = array();
 
-		$sql = "SELECT * FROM `" . $this->table_prefix . "_setting`";
+		$sql = "SELECT * FROM " . $this->table_prefix . "_setting";
 		$result = $this->db_cache( $sql, 'key' );
 
 		if( ! empty( $result ) )
@@ -288,8 +288,8 @@ class nv_mod_music
 	{
 		$this->check_admin();
 
-		$this->db->sql_query( "UPDATE `" . $this->table_prefix . "` SET `active` = " . $active . " WHERE `server` = " . $server );
-		$this->db->sql_query( "UPDATE `" . $this->table_prefix . "_video` SET `active` = " . $active . " WHERE `server` = " . $server );
+		$this->db->sql_query( "UPDATE " . $this->table_prefix . " SET active = " . $active . " WHERE server = " . $server );
+		$this->db->sql_query( "UPDATE " . $this->table_prefix . "_video SET active = " . $active . " WHERE server = " . $server );
 	}
 
 	// Xuat duong dan nguoc lai
@@ -327,7 +327,7 @@ class nv_mod_music
 	public function getFTP()
 	{
 		$ftpdata = array();
-		$sql = "SELECT * FROM `" . $this->table_prefix . "_ftp` ORDER BY `id` DESC";
+		$sql = "SELECT * FROM " . $this->table_prefix . "_ftp ORDER BY id DESC";
 		$result = $this->db_cache( $sql, 'id' );
 
 		if( ! empty( $result ) )
@@ -355,7 +355,7 @@ class nv_mod_music
 	{
 		$category = array();
 
-		$sql = "SELECT * FROM `" . $this->table_prefix . "_category` ORDER BY `weight` ASC";
+		$sql = "SELECT * FROM " . $this->table_prefix . "_category ORDER BY weight ASC";
 		$result = $this->db_cache( $sql, 'id' );
 
 		$category[0] = array(
@@ -386,7 +386,7 @@ class nv_mod_music
 	{
 		$category = array();
 
-		$sql = "SELECT * FROM `" . $this->table_prefix . "_video_category` ORDER BY `weight` ASC";
+		$sql = "SELECT * FROM " . $this->table_prefix . "_video_category ORDER BY weight ASC";
 		$result = $this->db_cache( $sql, 'id' );
 		
 		$category[0] = array(
@@ -418,7 +418,7 @@ class nv_mod_music
 		$limit = $limit ? ( int ) $limit : 100;
 		$array = array();
 		
-		$sql = "SELECT `id` FROM `" . $this->table_prefix . "_singer` WHERE `tenthat` LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
+		$sql = "SELECT id FROM " . $this->table_prefix . "_singer WHERE tenthat LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
 		$result = $this->db->sql_query( $sql );
 		while( $row = $this->db->sql_fetch_assoc( $result ) )
 		{
@@ -434,7 +434,7 @@ class nv_mod_music
 		$limit = $limit ? ( int ) $limit : 100;
 		$array = array();
 		
-		$sql = "SELECT `id` FROM `" . $this->table_prefix . "_author` WHERE `tenthat` LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
+		$sql = "SELECT id FROM " . $this->table_prefix . "_author WHERE tenthat LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
 		$result = $this->db->sql_query( $sql );
 		while( $row = $this->db->sql_fetch_assoc( $result ) )
 		{
@@ -450,7 +450,7 @@ class nv_mod_music
 		$limit = $limit ? ( int ) $limit : 100;
 		$array = array();
 		
-		$sql = "SELECT `id` FROM `" . $this->table_prefix . "` WHERE `tenthat` LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
+		$sql = "SELECT id FROM " . $this->table_prefix . " WHERE tenthat LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
 		$result = $this->db->sql_query( $sql );
 		while( $row = $this->db->sql_fetch_assoc( $result ) )
 		{
@@ -472,7 +472,7 @@ class nv_mod_music
 		
 		if( is_array( $id ) )
 		{
-			$result = $this->db->sql_query( " SELECT `userid`, `username`, `full_name` FROM `" . $this->db_prefix . "_users` WHERE `userid` IN(" . implode( ",", $id ) . ")" );
+			$result = $this->db->sql_query( " SELECT userid, username, full_name FROM " . $this->db_prefix . "_users WHERE userid IN(" . implode( ",", $id ) . ")" );
 			
 			while( $row = $this->db->sql_fetch_assoc( $result ) )
 			{
@@ -482,7 +482,7 @@ class nv_mod_music
 		}
 		else
 		{
-			$result = $this->db->sql_query( " SELECT `userid`, `username`, `full_name` FROM `" . $this->db_prefix . "_users` WHERE `userid`=" . $id );
+			$result = $this->db->sql_query( " SELECT userid, username, full_name FROM " . $this->db_prefix . "_users WHERE userid=" . $id );
 			$users = $this->db->sql_fetch_assoc( $result );
 			$users['full_name'] = $users['full_name'] == '' ? $users['username'] : $users['full_name'];
 		}
@@ -497,7 +497,7 @@ class nv_mod_music
 		
 		if( is_array( $id ) )
 		{
-			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_singer` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			$result = $this->db->sql_query( " SELECT * FROM " . $this->table_prefix . "_singer WHERE id IN(" . implode( ",", $id ) . ")" );
 			
 			while( $row = $this->db->sql_fetch_assoc( $result ) )
 			{
@@ -508,7 +508,7 @@ class nv_mod_music
 		}
 		else
 		{
-			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_singer` WHERE `id`=" . $id );
+			$result = $this->db->sql_query( " SELECT * FROM " . $this->table_prefix . "_singer WHERE id=" . $id );
 			$singer = $this->db->sql_fetch_assoc( $result );
 		}
 
@@ -522,7 +522,7 @@ class nv_mod_music
 		
 		if( is_array( $id ) )
 		{
-			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_author` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			$result = $this->db->sql_query( " SELECT * FROM " . $this->table_prefix . "_author WHERE id IN(" . implode( ",", $id ) . ")" );
 			
 			while( $row = $this->db->sql_fetch_assoc( $result ) )
 			{
@@ -547,7 +547,7 @@ class nv_mod_music
 		
 		if( is_array( $id ) )
 		{
-			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			$result = $this->db->sql_query( " SELECT * FROM " . $this->table_prefix . " WHERE id IN(" . implode( ",", $id ) . ")" );
 			
 			while( $row = $this->db->sql_fetch_assoc( $result ) )
 			{
@@ -558,7 +558,7 @@ class nv_mod_music
 		}
 		else
 		{
-			$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "` WHERE `id`=" . $id );
+			$result = $this->db->sql_query( "SELECT * FROM " . $this->table_prefix . " WHERE id=" . $id );
 			$songs = $this->db->sql_fetch_assoc( $result );
 		}
 		
@@ -572,7 +572,7 @@ class nv_mod_music
 		
 		if( is_array( $id ) )
 		{
-			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_video` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			$result = $this->db->sql_query( " SELECT * FROM " . $this->table_prefix . "_video WHERE id IN(" . implode( ",", $id ) . ")" );
 			
 			while( $row = $this->db->sql_fetch_assoc( $result ) )
 			{
@@ -583,7 +583,7 @@ class nv_mod_music
 		}
 		else
 		{
-			$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_video` WHERE `id`=" . $id );
+			$result = $this->db->sql_query( "SELECT * FROM " . $this->table_prefix . "_video WHERE id=" . $id );
 			$videoclips = $this->db->sql_fetch_assoc( $result );
 		}
 		
@@ -597,7 +597,7 @@ class nv_mod_music
 		
 		if( is_array( $id ) )
 		{
-			$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_album` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			$result = $this->db->sql_query( "SELECT * FROM " . $this->table_prefix . "_album WHERE id IN(" . implode( ",", $id ) . ")" );
 			
 			while( $row = $this->db->sql_fetch_assoc( $result ) )
 			{
@@ -608,7 +608,7 @@ class nv_mod_music
 		}
 		else
 		{
-			$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_album` WHERE `id`=" . $id );
+			$result = $this->db->sql_query( "SELECT * FROM " . $this->table_prefix . "_album WHERE id=" . $id );
 			$albums = $this->db->sql_fetchrow( $result );
 		}
 		
@@ -619,7 +619,7 @@ class nv_mod_music
 	public function getsingerbyName( $name )
 	{
 		$singer = array();
-		$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_singer` WHERE `tenthat`=" . $this->db->dbescape( $name ) );
+		$result = $this->db->sql_query( " SELECT * FROM " . $this->table_prefix . "_singer WHERE tenthat=" . $this->db->dbescape( $name ) );
 		$singer = $this->db->sql_fetch_assoc( $result );
 
 		return $singer;
@@ -629,7 +629,7 @@ class nv_mod_music
 	public function getauthorbyName( $name )
 	{
 		$author = array();
-		$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_author` WHERE `tenthat`=" . $this->db->dbescape( $name ) );
+		$result = $this->db->sql_query( "SELECT * FROM " . $this->table_prefix . "_author WHERE tenthat=" . $this->db->dbescape( $name ) );
 		$author = $this->db->sql_fetch_assoc( $result );
 
 		return $author;
@@ -746,7 +746,7 @@ class nv_mod_music
 	// Them moi mot ca si
 	public function newsinger( $name, $tname )
 	{
-		$sql = "INSERT INTO `" . $this->table_prefix . "_singer` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`, `numvideo` ) VALUES ( NULL, " . $this->db->dbescape( $name ) . ", " . $this->db->dbescape( $tname ) . ", '', '', 0, 0, 0 )";
+		$sql = "INSERT INTO " . $this->table_prefix . "_singer ( id, ten, tenthat, thumb, introduction, numsong, numalbum, numvideo ) VALUES ( NULL, " . $this->db->dbescape( $name ) . ", " . $this->db->dbescape( $tname ) . ", '', '', 0, 0, 0 )";
 
 		$newid = $this->db->sql_query_insert_id( $sql );
 
@@ -763,7 +763,7 @@ class nv_mod_music
 	// Them moi mot nhac si
 	public function newauthor( $name, $tname )
 	{
-		$sql = "INSERT INTO `" . $this->table_prefix . "_author` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numvideo`) VALUES ( NULL, " . $this->db->dbescape( $name ) . ", " . $this->db->dbescape( $tname ) . ", '', '', 0, 0 )";
+		$sql = "INSERT INTO " . $this->table_prefix . "_author ( id, ten, tenthat, thumb, introduction, numsong, numvideo) VALUES ( NULL, " . $this->db->dbescape( $name ) . ", " . $this->db->dbescape( $tname ) . ", '', '', 0, 0 )";
 
 		$newid = $this->db->sql_query_insert_id( $sql );
 
@@ -796,11 +796,11 @@ class nv_mod_music
 		
 		foreach( $id as $_id )
 		{
-			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "` WHERE `theloai`=" . $_id . " OR `listcat` LIKE '%," . $_id . ",%'";
+			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . " WHERE theloai=" . $_id . " OR listcat LIKE '%," . $_id . ",%'";
 			$result = $this->db->sql_query( $sql );
 			list( $num ) = $this->db->sql_fetchrow( $result );
 			
-			$sql = "UPDATE `" . $this->table_prefix . "_category` SET `numsong`=" . $num . " WHERE `id`=" . $_id;
+			$sql = "UPDATE " . $this->table_prefix . "_category SET numsong=" . $num . " WHERE id=" . $_id;
 			$this->db->sql_query( $sql );
 		}
 	}
@@ -814,11 +814,11 @@ class nv_mod_music
 		
 		foreach( $id as $_id )
 		{
-			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "_video` WHERE `theloai`=" . $_id . " OR `listcat` LIKE '%," . $_id . ",%'";
+			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . "_video WHERE theloai=" . $_id . " OR listcat LIKE '%," . $_id . ",%'";
 			$result = $this->db->sql_query( $sql );
 			list( $num ) = $this->db->sql_fetchrow( $result );
 			
-			$sql = "UPDATE `" . $this->table_prefix . "_video_category` SET `numvideo`=" . $num . " WHERE `id`=" . $_id;
+			$sql = "UPDATE " . $this->table_prefix . "_video_category SET numvideo=" . $num . " WHERE id=" . $_id;
 			$this->db->sql_query( $sql );
 		}
 	}
@@ -833,27 +833,27 @@ class nv_mod_music
 		foreach( $id as $_id )
 		{
 			// Bai hat
-			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "` WHERE `casi` LIKE '%," . $_id . ",%'";
+			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . " WHERE casi LIKE '%," . $_id . ",%'";
 			$result = $this->db->sql_query( $sql );
 			list( $num ) = $this->db->sql_fetchrow( $result );
 			
-			$sql = "UPDATE `" . $this->table_prefix . "_singer` SET `numsong`=" . $num . " WHERE `id`=" . $_id;
+			$sql = "UPDATE " . $this->table_prefix . "_singer SET numsong=" . $num . " WHERE id=" . $_id;
 			$this->db->sql_query( $sql );
 			
 			// Album
-			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "_album` WHERE `casi` LIKE '%," . $_id . ",%'";
+			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . "_album WHERE casi LIKE '%," . $_id . ",%'";
 			$result = $this->db->sql_query( $sql );
 			list( $num ) = $this->db->sql_fetchrow( $result );
 			
-			$sql = "UPDATE `" . $this->table_prefix . "_singer` SET `numalbum`=" . $num . " WHERE `id`=" . $_id;
+			$sql = "UPDATE " . $this->table_prefix . "_singer SET numalbum=" . $num . " WHERE id=" . $_id;
 			$this->db->sql_query( $sql );
 			
 			// Video
-			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "_video` WHERE `casi` LIKE '%," . $_id . ",%'";
+			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . "_video WHERE casi LIKE '%," . $_id . ",%'";
 			$result = $this->db->sql_query( $sql );
 			list( $num ) = $this->db->sql_fetchrow( $result );
 			
-			$sql = "UPDATE `" . $this->table_prefix . "_singer` SET `numvideo`=" . $num . " WHERE `id`=" . $_id;
+			$sql = "UPDATE " . $this->table_prefix . "_singer SET numvideo=" . $num . " WHERE id=" . $_id;
 			$this->db->sql_query( $sql );
 		}
 	}
@@ -868,19 +868,19 @@ class nv_mod_music
 		foreach( $id as $_id )
 		{
 			// Bai hat
-			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "` WHERE `nhacsi` LIKE '%," . $_id . ",%'";
+			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . " WHERE nhacsi LIKE '%," . $_id . ",%'";
 			$result = $this->db->sql_query( $sql );
 			list( $num ) = $this->db->sql_fetchrow( $result );
 			
-			$sql = "UPDATE `" . $this->table_prefix . "_author` SET `numsong`=" . $num . " WHERE `id`=" . $_id;
+			$sql = "UPDATE " . $this->table_prefix . "_author SET numsong=" . $num . " WHERE id=" . $_id;
 			$this->db->sql_query( $sql );
 			
 			// Video
-			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "_video` WHERE `nhacsi` LIKE '%," . $_id . ",%'";
+			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . "_video WHERE nhacsi LIKE '%," . $_id . ",%'";
 			$result = $this->db->sql_query( $sql );
 			list( $num ) = $this->db->sql_fetchrow( $result );
 			
-			$sql = "UPDATE `" . $this->table_prefix . "_author` SET `numvideo`=" . $num . " WHERE `id`=" . $_id;
+			$sql = "UPDATE " . $this->table_prefix . "_author SET numvideo=" . $num . " WHERE id=" . $_id;
 			$this->db->sql_query( $sql );
 		}
 	}
@@ -895,13 +895,13 @@ class nv_mod_music
 		foreach( $id as $_id )
 		{
 			// Lay bai hat cu
-			$sql = "SELECT `listsong` FROM `" . $this->table_prefix . "_album` WHERE `id`=" . $_id;
+			$sql = "SELECT listsong FROM " . $this->table_prefix . "_album WHERE id=" . $_id;
 			$result = $this->db->sql_query( $sql );
 			list( $list_song ) = $this->db->sql_fetchrow( $result );
 			$list_song = array_filter( array_unique( explode( ',', $list_song ) ) );
 			
 			// Lay cau hinh cua cac bai hat them vao danh sach bai hat cua album neu co
-			$sql = "SELECT `id` FROM `" . $this->table_prefix . "` WHERE `album`=" . $_id;
+			$sql = "SELECT id FROM " . $this->table_prefix . " WHERE album=" . $_id;
 			$result = $this->db->sql_query( $sql );
 			while( $row = $this->db->sql_fetchrow( $result ) )
 			{
@@ -912,7 +912,7 @@ class nv_mod_music
 			}
 
 			// Cap nhat lai so bai hat va danh sach bai hat
-			$this->db->sql_query( "UPDATE `" . $this->table_prefix . "_album` SET `listsong`='" . implode( ',', $list_song ) . "', `numsong`=" . sizeof( $list_song ) . " WHERE `id`=" . $_id );
+			$this->db->sql_query( "UPDATE " . $this->table_prefix . "_album SET listsong='" . implode( ',', $list_song ) . "', numsong=" . sizeof( $list_song ) . " WHERE id=" . $_id );
 		}
 	}
 	
@@ -943,23 +943,23 @@ class nv_mod_music
 		$array['id'] = ! isset( $array['id'] ) ? 0 : $array['id'];
 		$array['is_official'] = ! isset( $array['is_official'] ) ? 0 : $array['is_official'];
 
-		$sql = "UPDATE `" . $this->table_prefix . "` SET 
-			`ten`=" . $this->db->dbescape( $array['ten'] ) . ", 
-			`tenthat`=" . $this->db->dbescape( $array['tenthat'] ) . ", 
-			`casi`='" . $this->build_query_singer_author( $array['casi'] ) . "', 
-			`nhacsi`='" . $this->build_query_singer_author( $array['nhacsi'] ) . "', 
-			`album`=" . $array['album'] . ", 
-			`theloai`=" . $this->db->dbescape( $array['theloai'] ) . ", 
-			`listcat`='" . $this->build_query_singer_author( $array['listcat'] ) . "', 
-			`duongdan`=" . $this->db->dbescape( $array['duongdan'] ) . ", 
-			`bitrate`=" . $array['bitrate'] . " ,
-			`size`=" . $array['size'] . " ,
-			`duration`=" . $array['duration'] . ",
-			`server`=" . $array['server'] . ",
-			`userid`=" . $array['userid'] . ",
-			`upboi`=" . $this->db->dbescape( $array['upboi'] ) . ",
-			`is_official`=" . $array['is_official'] . "
-		WHERE `id`=" . $array['id'];
+		$sql = "UPDATE " . $this->table_prefix . " SET 
+			ten=" . $this->db->dbescape( $array['ten'] ) . ", 
+			tenthat=" . $this->db->dbescape( $array['tenthat'] ) . ", 
+			casi='" . $this->build_query_singer_author( $array['casi'] ) . "', 
+			nhacsi='" . $this->build_query_singer_author( $array['nhacsi'] ) . "', 
+			album=" . $array['album'] . ", 
+			theloai=" . $this->db->dbescape( $array['theloai'] ) . ", 
+			listcat='" . $this->build_query_singer_author( $array['listcat'] ) . "', 
+			duongdan=" . $this->db->dbescape( $array['duongdan'] ) . ", 
+			bitrate=" . $array['bitrate'] . " ,
+			size=" . $array['size'] . " ,
+			duration=" . $array['duration'] . ",
+			server=" . $array['server'] . ",
+			userid=" . $array['userid'] . ",
+			upboi=" . $this->db->dbescape( $array['upboi'] ) . ",
+			is_official=" . $array['is_official'] . "
+		WHERE id=" . $array['id'];
 
 		$check_update = $this->db->sql_query( $sql );
 
@@ -986,11 +986,11 @@ class nv_mod_music
 
 				if( $array['lyric_id'] )
 				{
-					$this->db->sql_query( "UPDATE `" . $this->table_prefix . "_lyric` SET `body`=" . $this->db->dbescape( $array['lyric'] ) . " WHERE `id`=" . $array['lyric_id'] );
+					$this->db->sql_query( "UPDATE " . $this->table_prefix . "_lyric SET body=" . $this->db->dbescape( $array['lyric'] ) . " WHERE id=" . $array['lyric_id'] );
 				}
 				else
 				{
-					$sql = "INSERT INTO `" . $this->table_prefix . "_lyric` ( `id`, `songid`, `user`, `body`, `active`, `dt` ) VALUES(
+					$sql = "INSERT INTO " . $this->table_prefix . "_lyric ( id, songid, user, body, active, dt ) VALUES(
 						NULL,
 						" . $array['id'] . ",
 						" . $this->db->dbescape( $array['upboi'] ) . ",
@@ -1029,7 +1029,7 @@ class nv_mod_music
 		$array['lyric_id'] = ! isset( $array['lyric_id'] ) ? 0 : ( int ) $array['lyric_id'];
 		$array['is_official'] = ! isset( $array['is_official'] ) ? 0 : ( int ) $array['is_official'];
 
-		$sql = "INSERT INTO `" . $this->table_prefix . "` VALUES (
+		$sql = "INSERT INTO " . $this->table_prefix . " VALUES (
 			NULL, 
 			" . $this->db->dbescape( $array['ten'] ) . ", 
 			" . $this->db->dbescape( $array['tenthat'] ) . ", 
@@ -1065,7 +1065,7 @@ class nv_mod_music
 			if( ! empty( $array['lyric'] ) )
 			{
 				$array['lyric'] = $this->nl2br( strip_tags( $array['lyric'] ), "<br />" );
-				$sql = "INSERT INTO `" . $this->table_prefix . "_lyric` ( `id`, `songid`, `user`, `body`, `active`, `dt` ) VALUES(
+				$sql = "INSERT INTO " . $this->table_prefix . "_lyric ( id, songid, user, body, active, dt ) VALUES(
 					NULL,
 					" . $songid . ",
 					" . $this->db->dbescape( $array['upboi'] ) . ",
@@ -1133,14 +1133,14 @@ class nv_mod_music
 	// Xoa cac binh luan
 	public function delcomment( $delwwhat, $where )
 	{
-		$sql = "DELETE FROM `" . $this->table_prefix . "_comment_" . $delwwhat . "` WHERE `what`=" . $where;
+		$sql = "DELETE FROM " . $this->table_prefix . "_comment_" . $delwwhat . " WHERE what=" . $where;
 		return $this->db->sql_query( $sql );
 	}
 	
 	// Xoa cac loi bai hat
 	public function dellyric( $songid )
 	{
-		$sql = "DELETE FROM `" . $this->table_prefix . "_lyric` WHERE `songid`=" . $songid;
+		$sql = "DELETE FROM " . $this->table_prefix . "_lyric WHERE songid=" . $songid;
 		$result = $this->db->sql_query( $sql );
 		return $result;
 	}
@@ -1148,14 +1148,14 @@ class nv_mod_music
 	// Xoa cac bao loi
 	public function delerror( $where, $key )
 	{
-		$sql = "DELETE FROM `" . $this->table_prefix . "_error` WHERE `where`= '" . $where . "' AND `sid`=" . $key;
+		$sql = "DELETE FROM " . $this->table_prefix . "_error WHERE where= '" . $where . "' AND sid=" . $key;
 		return $this->db->sql_query( $sql );
 	}
 	
 	// Xoa cac qua tang am nhac
 	function delgift( $songid )
 	{
-		$sql = "DELETE FROM `" . $this->table_prefix . "_gift` WHERE `songid` =" . $songid;
+		$sql = "DELETE FROM " . $this->table_prefix . "_gift WHERE songid =" . $songid;
 		return $this->db->sql_query( $sql );
 	}
 	
@@ -1223,5 +1223,3 @@ class nv_mod_music
 		return $query;
 	}
 }
-
-?>

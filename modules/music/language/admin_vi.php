@@ -406,5 +406,3 @@ $lang_module['block_album_cap_pos_1'] = "Nằm bên dưới ảnh";
 $lang_module['block_album_num_cols'] = "Số album trên một hàng";
 $lang_module['block_album_image_size'] = "Kích thước ảnh";
 $lang_module['block_album_num_albums'] = "Số album";
-
-?>

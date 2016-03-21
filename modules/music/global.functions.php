@@ -18,8 +18,8 @@ function getalbumbyNAME( $name )
 	global $module_data, $db;
 
 	$album = array();
-	$result = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`=" . $db->dbescape( $name ) );
-	$album = $db->sql_fetchrow( $result );
+	$result = $db->query( "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE name=" . $db->quote( $name ) );
+	$album = $result->fetch();
 
 	return $album;
 }
@@ -35,7 +35,7 @@ function outputURL( $server, $inputurl )
 	}
 	elseif( $server == 1 )
 	{
-		$output = NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $classMusic->setting['root_contain'] . "/" . $inputurl;
+		$output = NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_upload . "/" . $classMusic->setting['root_contain'] . "/" . $inputurl;
 	}
 	else
 	{
@@ -56,7 +56,7 @@ function outputURL( $server, $inputurl )
 						}
 					}
 
-					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					if( ( $cache = $nv_Cache->getItem( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -85,7 +85,7 @@ function outputURL( $server, $inputurl )
 						}
 
 						$cache = serialize( $cache );
-						nv_set_cache( $cache_file, $cache );
+						$nv_Cache->setItem( $cache_file, $cache );
 					}
 				}
 				elseif( $data['host'] == "zing" )
@@ -100,7 +100,7 @@ function outputURL( $server, $inputurl )
 						}
 					}
 
-					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					if( ( $cache = $nv_Cache->getItem( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -132,7 +132,7 @@ function outputURL( $server, $inputurl )
 						}
 
 						$cache = serialize( $output );
-						nv_set_cache( $cache_file, $cache );
+						$nv_Cache->setItem( $cache_file, $cache );
 					}
 				}
 				elseif( $data['host'] == "nhacvui" )
@@ -147,7 +147,7 @@ function outputURL( $server, $inputurl )
 						}
 					}
 
-					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					if( ( $cache = $nv_Cache->getItem( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -178,7 +178,7 @@ function outputURL( $server, $inputurl )
 						}
 
 						$cache = serialize( $output );
-						nv_set_cache( $cache_file, $cache );
+						$nv_Cache->setItem( $cache_file, $cache );
 					}
 				}
 				elseif( $data['host'] == "nhacso" )
@@ -193,7 +193,7 @@ function outputURL( $server, $inputurl )
 						}
 					}
 
-					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					if( ( $cache = $nv_Cache->getItem( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -227,7 +227,7 @@ function outputURL( $server, $inputurl )
 						}
 
 						$cache = serialize( $output );
-						nv_set_cache( $cache_file, $cache );
+						$nv_Cache->setItem( $cache_file, $cache );
 					}
 				}
 				elseif( $data['host'] == "zingclip" )
@@ -242,7 +242,7 @@ function outputURL( $server, $inputurl )
 						}
 					}
 
-					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					if( ( $cache = $nv_Cache->getItem( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -264,7 +264,7 @@ function outputURL( $server, $inputurl )
 						}
 
 						$cache = serialize( $output );
-						nv_set_cache( $cache_file, $cache );
+						$nv_Cache->setItem( $cache_file, $cache );
 					}
 				}
 				elseif( $data['host'] == "nctclip" )
@@ -279,7 +279,7 @@ function outputURL( $server, $inputurl )
 						}
 					}
 
-					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					if( ( $cache = $nv_Cache->getItem( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -308,7 +308,7 @@ function outputURL( $server, $inputurl )
 						}
 
 						$cache = serialize( $output );
-						nv_set_cache( $cache_file, $cache );
+						$nv_Cache->setItem( $cache_file, $cache );
 					}
 				}
 				else
@@ -324,12 +324,8 @@ function outputURL( $server, $inputurl )
 
 function nv_get_URL_content( $target_url )
 {
-	global $global_config;
+	global $global_config;	
 	
-	require_once( NV_ROOTDIR . "/includes/class/geturl.class.php" );
-	
-	$UrlGetContents = new UrlGetContents( $global_config );
+	$UrlGetContents = new NukeViet\Client\UrlGetContents( $global_config );
 	return $UrlGetContents->get( $target_url );
 }
-
-?>

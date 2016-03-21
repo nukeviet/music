@@ -81,5 +81,3 @@ foreach( $list as $row )
 }
 
 unset( $classMusic );
-
-?>

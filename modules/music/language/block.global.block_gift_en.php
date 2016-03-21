@@ -22,5 +22,3 @@ $lang_block['message'] = "The message";
 $lang_block['readmore'] = "Read more";
 
 $lang_block['listen'] = "Listen to musical gift";
-
-?>

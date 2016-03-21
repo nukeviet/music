@@ -19,7 +19,7 @@ $classMusic = new nv_mod_music();
 // lay quang cao
 function getADS()
 {
-	global $module_data, $global_config, $db, $module_file, $lang_module;
+	global $module_data, $global_config, $db, $module_file, $lang_module, $nv_Cache;
 
 	$ads = array();
 	$ads['link'] = array();
@@ -27,7 +27,7 @@ function getADS()
 	$ads['name'] = array();
 
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads ORDER BY RAND()";
-	$result = nv_db_cache( $sql, 'id' );
+	$result = $nv_Cache->db( $sql, 'id' );
 
 	if( ! empty( $result ) )
 	{
@@ -61,7 +61,7 @@ function updateHIT_VIEW( $id, $where, $is_numview = true )
 	global $module_data, $db, $classMusic;
 	( $where == "_video" ) ? ( $key = "view" ) : ( $key = "numview" );
 
-	if( $is_numview ) $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET " . $key . " = " . $key . "+1 WHERE `id` =" . $id );
+	if( $is_numview ) $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . $where . " SET " . $key . " = " . $key . "+1 WHERE id =" . $id );
 
 	if( $where == '' )
 	{
@@ -82,13 +82,13 @@ function updateHIT_VIEW( $id, $where, $is_numview = true )
 	if( ( NV_CURRENTTIME - $hittime ) > 864000 )
 	{
 		$hit = "0-" . NV_CURRENTTIME;
-		$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET hit = " . $db->dbescape( $hit ) . " WHERE `id` =" . $id );
+		$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . $where . " SET hit = " . $db->quote( $hit ) . " WHERE id =" . $id );
 	}
 	else
 	{
 		$newhit = $hitnum + 1;
 		$hit = $newhit . "-" . $hittime;
-		$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET hit = " . $db->dbescape( $hit ) . " WHERE `id` =" . $id );
+		$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . $where . " SET hit = " . $db->quote( $hit ) . " WHERE id =" . $id );
 	}
 	return;
 }
@@ -114,5 +114,3 @@ if( $op == 'main' )
 }
 
 $downURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE . "=down&amp;id=";
-
-?>

@@ -314,5 +314,3 @@ $lang_module['rss_music'] = "Thể loại âm nhạc";
 $lang_module['rss_video'] = "Thể loại video";
 $lang_module['rss_gift'] = "Quà tặng âm nhạc";
 $lang_module['rss_play_list'] = "Playlist";
-
-?>

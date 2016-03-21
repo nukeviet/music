@@ -386,5 +386,3 @@ $lang_module['ex_detected_and_delete_duplicate_singer_complete'] = "Successfuly 
 $lang_module['addFromOtherSite_title'] = "Add song from other sites";
 $lang_module['addFromOtherSite_listSong'] = "List song url";
 $lang_module['addFromOtherSite_site'] = "Choose site";
-
-?>

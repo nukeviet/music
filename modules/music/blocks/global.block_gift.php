@@ -13,7 +13,7 @@ if( ! nv_function_exists( 'nv_music_gift_block' ) )
 {
 	function nv_music_gift_block( $block_config )
 	{
-		global $module_array_cat, $module_info, $lang_module, $site_mods, $db, $module_name, $my_head;
+		global $module_array_cat, $module_info, $lang_module, $site_mods, $db, $module_name, $my_head, $nv_Cache;
 		$module = $block_config['module'];
 		$data = $site_mods[$module]['module_data'];
 		$file = $site_mods[$module]['module_file'];
@@ -29,9 +29,9 @@ if( ! nv_function_exists( 'nv_music_gift_block' ) )
 		{
 			include ( $block_file_lang );
 
-			$sql = "SELECT a.who_send, a.who_receive, a.time, a.body, b.id AS songid, b.ten AS songalias, b.tenthat AS songtitle, c.ten AS singeralias, c.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $data . "` AS b ON a.songid =b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $data . "_singer` AS c ON b.casi=c.id WHERE a.active=1 ORDER BY a.id DESC LIMIT 0,3";
+			$sql = "SELECT a.who_send, a.who_receive, a.time, a.body, b.id AS songid, b.ten AS songalias, b.tenthat AS songtitle, c.ten AS singeralias, c.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $data . "_gift AS a INNER JOIN " . NV_PREFIXLANG . "_" . $data . " AS b ON a.songid =b.id LEFT JOIN " . NV_PREFIXLANG . "_" . $data . "_singer AS c ON b.casi=c.id WHERE a.active=1 ORDER BY a.id DESC LIMIT 0,3";
 
-			$list = nv_db_cache( $sql, 0, $module );
+			$list = $nv_Cache->db( $sql, 0, $module );
 
 			if( ! empty( $list ) )
 			{
@@ -95,5 +95,3 @@ if( defined( 'NV_SYSTEM' ) )
 		$content = nv_music_gift_block( $block_config );
 	}
 }
-
-?>

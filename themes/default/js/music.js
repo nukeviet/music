@@ -23,7 +23,9 @@ function senderror(id, where){
 		alert(nv_content);
 		document.getElementById('bodyerror').focus();
 	} else {
-		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&senderror=1&id=' + id + '&where=' + where + '&user=' + user.value + '&root_error=' + root_error + '&body=' + encodeURIComponent(body), '', 'resultgift');
+		$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'senderror=1&id=' + id + '&where=' + where + '&user=' + user.value + '&root_error=' + root_error + '&body=' + encodeURIComponent(body), function(res) {
+			resultgift(res);
+		});	
 	}
 	return;
 }
@@ -31,13 +33,17 @@ function senderror(id, where){
 // Them paylist
 function addplaylist(id) 
 {
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&addplaylist=1&id=' + id, '', 'resultplaylist');
+	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'addplaylist=1&id=' + id, function(res) {
+		resultplaylist(res);
+	});	
 	return;
 }
 function resultplaylist(res) {
 	var r_split = res.split("_");
 	if (r_split[0] == 'OK') {
-		nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=showplaylist', 'playlist', '');
+		$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=showplaylist&nocache=' + new Date().getTime(), '', function(res) {
+			$('#'+playlist).html(res);
+		});	
 	} else alert(res);
 }
 
@@ -45,6 +51,9 @@ function resultplaylist(res) {
 function delplaylist()
 {
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delplaylist=1' , '', 'resultgift');
+	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'delplaylist=1', function(res) {
+		resultgift(res);
+	}
 	return;
 }
 
@@ -61,7 +70,9 @@ function sendcommment(id, where) {
 	} else {
 		var sd = document.getElementById('button-comment');
 		sd.disabled = true;
-		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=postcomment&id=' + id + '&where=' + where + '&name=' + name.value + '&body=' + encodeURIComponent(body), '', 'comment_result');
+		$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=postcomment&nocache=' + new Date().getTime(), 'id=' + id + '&where=' + where + '&name=' + name.value + '&body=' + encodeURIComponent(body), function(res) {
+			comment_result(res);
+		}
 	}
 	return;
 }
@@ -83,13 +94,17 @@ function comment_result(res) {
 
 // Hien thi cac binh luan
 function show_comment(id, where, page) {
-	nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=comment&id=' + id + '&where=' + where + '&page=' + page, 'comment-content', '');
+	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=comment&nocache=' + new Date().getTime(), 'id=' + id + '&where=' + where + '&page=' + page, function(res) {
+		$('#comment-content').html(res);
+	}
 }
 
 // Luu album
 function saveplaylist(name, singer, message){
 	document.getElementById('submitpl').disabled = true;
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&savealbum=1&name=' + name + '&singer=' + singer + '&message=' + encodeURIComponent(message), '', 'aftersavelist');
+	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'savealbum=1&name=' + name + '&singer=' + singer + '&message=' + encodeURIComponent(message), function(res) {
+		aftersavelist(res);
+	}
 }
 function aftersavelist(res){
 	var r_split = res.split("_");
@@ -105,19 +120,25 @@ function aftersavelist(res){
 // Xoa mot bai hat tu playlist chua luu
 function delsongfrlist(stt, mess) {
 	if ( confirm( mess ) )
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delsongfrlist=1&stt=' + stt, '', 'afterdelsong');
+	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'delsongfrlist=1&stt=' + stt, function(res) {
+		afterdelsong(res);
+	}
 }
 
 // Xoa mot bai hat tu playlist da luu
 function delsongfrplaylist(id, plid, mess) {
 	if ( confirm( mess ) )
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delsongfrplaylist=1&id=' + id + '&plid=' + plid, '', 'afterdelsong');
+	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'delsongfrplaylist=1&id=' + id + '&plid=' + plid, function(res) {
+		afterdelsong(res);
+	}
 }
 
 // Xoa mot bai hat cua thanh vien
 function delsong(id, mess) {
 	if ( confirm ( mess ) )
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delsong=1&id=' + id , '', 'afterdelsong');
+	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'delsong=1&id=' + id, function(res) {
+		afterdelsong(res);
+	}
 }
 function afterdelsong(res)
 {
@@ -137,7 +158,9 @@ function afterdelsong(res)
 // Xoa playlist da duoc luu vao CSDL
 function dellist(id, mess) {
 	if( confirm( mess ) )
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&dellist=1&id=' + id, '', 'afterdellist');
+	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'dellist=1&id=' + id, function(res) {
+		afterdellist(res);
+	}
 }
 function afterdellist(res)
 {
@@ -150,7 +173,9 @@ function afterdellist(res)
 
 // Binh chon bai hat
 function votethissong( id ) {
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&votesong=1&id=' + id, '', 'aftervote');
+	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'votesong=1&id=' + id, function(res) {
+		aftervote(res);
+	}
 }
 function aftervote(res)
 {

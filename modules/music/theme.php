@@ -1261,5 +1261,3 @@ function nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $ar
 	$xtpl->parse( 'main' );
 	return $xtpl->text( 'main' );
 }
-
-?>

@@ -35,23 +35,23 @@ if( $xml !== false )
 	if( empty( $type_search ) or ( $type_search == "song" ) )
 	{
 		// search song
-		$sql = "SELECT SQL_CALC_FOUND_ROWS `id`, `ten`, `tenthat` 
-		FROM `" . NV_PREFIXLANG . "_" . $m_values['module_data'] . "` 
-		WHERE `active`=1 
+		$sql = "SELECT SQL_CALC_FOUND_ROWS id, ten, tenthat 
+		FROM " . NV_PREFIXLANG . "_" . $m_values['module_data'] . " 
+		WHERE active=1 
 		AND " . nv_like_logic( 'tenthat', $dbkeyword, $logic ) . " 
-		ORDER BY `id` DESC 
+		ORDER BY id DESC 
 		LIMIT " . $pages . "," . $limit;
 
-		$tmp_re = $db->sql_query( $sql );
+		$tmp_re = $db->query( $sql );
 
-		$result = $db->sql_query( "SELECT FOUND_ROWS()" );
-		list( $all_page ) = $db->sql_fetchrow( $result );
+		$result = $db->query( "SELECT FOUND_ROWS()" );
+		$all_page = $result->fetchColumn();
 
 		if( $all_page )
 		{
 			$link = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $m_values['module_name'] . '&amp;' . NV_OP_VARIABLE . '=listenone/';
 
-			while( list( $id, $ten, $tenthat ) = $db->sql_fetchrow( $tmp_re ) )
+			while( list( $id, $ten, $tenthat ) = $tmp_re->fetch( 3 ) )
 			{
 				$result_array[] = array( //
 					'link' => $link . $id . '/' . $ten, //
@@ -63,23 +63,23 @@ if( $xml !== false )
 	}
 	elseif( $type_search == "video" )
 	{
-		$sql = "SELECT SQL_CALC_FOUND_ROWS `id`, `name`, `tname` 
-		FROM `" . NV_PREFIXLANG . "_" . $m_values['module_data'] . "_video` 
-		WHERE `active`=1 
+		$sql = "SELECT SQL_CALC_FOUND_ROWS id, name, tname 
+		FROM " . NV_PREFIXLANG . "_" . $m_values['module_data'] . "_video 
+		WHERE active=1 
 		AND " . nv_like_logic( 'tname', $dbkeyword, $logic ) . " 
-		ORDER BY `id` DESC 
+		ORDER BY id DESC 
 		LIMIT " . $pages . "," . $limit;
 
-		$tmp_re = $db->sql_query( $sql );
+		$tmp_re = $db->query( $sql );
 
-		$result = $db->sql_query( "SELECT FOUND_ROWS()" );
-		list( $all_page ) = $db->sql_fetchrow( $result );
+		$result = $db->query( "SELECT FOUND_ROWS()" );
+		$all_page = $result->fetchColumn();
 
 		if( $all_page )
 		{
 			$link = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $m_values['module_name'] . '&amp;' . NV_OP_VARIABLE . '=viewvideo/';
 
-			while( list( $id, $ten, $tenthat ) = $db->sql_fetchrow( $tmp_re ) )
+			while( list( $id, $ten, $tenthat ) = $tmp_re->fetch( 3 ) )
 			{
 				$result_array[] = array( //
 					'link' => $link . $id . '/' . $ten, //
@@ -91,23 +91,23 @@ if( $xml !== false )
 	}
 	elseif( $type_search == "album" )
 	{
-		$sql = "SELECT SQL_CALC_FOUND_ROWS `id`, `name`, `tname` 
-		FROM `" . NV_PREFIXLANG . "_" . $m_values['module_data'] . "_album` 
-		WHERE `active`=1 
+		$sql = "SELECT SQL_CALC_FOUND_ROWS id, name, tname 
+		FROM " . NV_PREFIXLANG . "_" . $m_values['module_data'] . "_album 
+		WHERE active=1 
 		AND " . nv_like_logic( 'tname', $dbkeyword, $logic ) . " 
-		ORDER BY `id` DESC 
+		ORDER BY id DESC 
 		LIMIT " . $pages . "," . $limit;
 
-		$tmp_re = $db->sql_query( $sql );
+		$tmp_re = $db->query( $sql );
 
-		$result = $db->sql_query( "SELECT FOUND_ROWS()" );
-		list( $all_page ) = $db->sql_fetchrow( $result );
+		$result = $db->query( "SELECT FOUND_ROWS()" );
+		$all_page = $result->fetchColumn();
 
 		if( $all_page )
 		{
 			$link = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $m_values['module_name'] . '&amp;' . NV_OP_VARIABLE . '=listenlist/';
 
-			while( list( $id, $ten, $tenthat ) = $db->sql_fetchrow( $tmp_re ) )
+			while( list( $id, $ten, $tenthat ) = $tmp_re->fetch( 3 ) )
 			{
 				$result_array[] = array( //
 					'link' => $link . $id . '/' . $ten, //
@@ -119,23 +119,23 @@ if( $xml !== false )
 	}
 	else
 	{
-		$sql = "SELECT SQL_CALC_FOUND_ROWS `id`, `keyname`, `name` 
-		FROM `" . NV_PREFIXLANG . "_" . $m_values['module_data'] . "_playlist` 
-		WHERE `active`=1 
+		$sql = "SELECT SQL_CALC_FOUND_ROWS id, keyname, name 
+		FROM " . NV_PREFIXLANG . "_" . $m_values['module_data'] . "_playlist 
+		WHERE active=1 
 		AND " . nv_like_logic( 'name', $dbkeyword, $logic ) . " 
-		ORDER BY `id` DESC 
+		ORDER BY id DESC 
 		LIMIT " . $pages . "," . $limit;
 
-		$tmp_re = $db->sql_query( $sql );
+		$tmp_re = $db->query( $sql );
 
-		$result = $db->sql_query( "SELECT FOUND_ROWS()" );
-		list( $all_page ) = $db->sql_fetchrow( $result );
+		$result = $db->query( "SELECT FOUND_ROWS()" );
+		$all_page = $result->fetchColumn();
 
 		if( $all_page )
 		{
 			$link = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $m_values['module_name'] . '&amp;' . NV_OP_VARIABLE . '=listenuserlist/';
 
-			while( list( $id, $ten, $tenthat ) = $db->sql_fetchrow( $tmp_re ) )
+			while( list( $id, $ten, $tenthat ) = $tmp_re->fetch( 3 ) )
 			{
 				$result_array[] = array( //
 					'link' => $link . $id . '/' . $ten, //
@@ -146,5 +146,3 @@ if( $xml !== false )
 		}
 	}
 }
-
-?>
