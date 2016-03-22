@@ -146,7 +146,7 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 
 	if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
 	if( ! empty( $array_author_ids ) ) $array_authors = $classMusic->getauthorbyID( $array_author_ids );
-	
+
 	$a = 0;
 	foreach( $array as $row )
 	{
@@ -178,12 +178,12 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 {
 	$listvideo = nv_substr( $nv_Request->get_title( 'listvideo', 'get', '', 1 ), 0, 255);
-	
+
 	$returnArea = nv_substr( $nv_Request->get_title( 'area', 'get', '', 1 ), 0, 255);
 	$returnInput = nv_substr( $nv_Request->get_title( 'input', 'get', '', 1 ), 0, 255);
-	
+
 	if( $nv_Request->isset_request( 'loadname', 'get' ) )
-	{		
+	{
 		$sql = "SELECT id, tname FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id IN(" . $listvideo . ")";
 		$result = $db->query( $sql );
 
@@ -193,7 +193,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		{
 			$_tmp[$songid] = $songname;
 		}
-		
+
 		$listvideo = $classMusic->string2array( $listvideo );
 		foreach( $listvideo as $_sid )
 		{
@@ -211,7 +211,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		include NV_ROOTDIR . '/includes/footer.php';
 		die();
 	}
-	
+
 	$listvideo = $classMusic->string2array( $listvideo );
 
 	$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_video";
@@ -272,7 +272,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 
 		if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
 		if( ! empty( $array_author_ids ) ) $array_authors = $classMusic->getauthorbyID( $array_author_ids );
-		
+
 		$a = 0;
 		foreach( $array as $row )
 		{
@@ -314,12 +314,12 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-    
+
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     $list_levelid = $nv_Request->get_title( 'listid', 'post', '' );
-    
+
     if ( empty( $id ) and empty ( $list_levelid ) ) die( 'NO' );
-    
+
 	$listid = array();
 	if ( $id )
 	{
@@ -335,26 +335,26 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$listid = $list_levelid;
 		$num = sizeof( $list_levelid );
 	}
-	
-	$videoclips = $classMusic->getsongbyID( $listid );
-	
+
+	$videoclips = $classMusic->getvideobyID( $listid );
+
 	if( sizeof( $videoclips ) != $num ) die( 'NO' );
-	
+
 	foreach( $videoclips as $id => $video )
 	{
 		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id=" . $id;
 		$result = $db->query( $sql );
-		
+
 		$classMusic->fix_singer( $classMusic->string2array( $video['casi'] ) );
 		$classMusic->fix_author( $classMusic->string2array( $video['nhacsi'] ) );
 		$classMusic->delcomment( 'video', $video['id'] );
-		$classMusic->fix_cat_video( array_unique( array_filter( array_merge_recursive( $video['listcat'], array( $video['theloai'] ) ) ) ) );
+		$classMusic->fix_cat_video( array_unique( array_filter( array_merge_recursive( explode(',', $video['listcat']), array( $video['theloai'] ) ) ) ) );
 		$classMusic->unlinkSV( $video['server'], $video['duongdan'] );
 	}
-    
+
     $nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_video'), implode( ", ", array_keys( $videoclips ) ), $admin_info['userid'] );
-	
+
     die( 'OK' );
 }
 
@@ -362,13 +362,13 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-    
+
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     $controlstatus = $nv_Request->get_int( 'status', 'post', 0 );
     $array_id = $nv_Request->get_title( 'listid', 'post', '' );
-    
+
     if ( empty( $id ) and empty ( $array_id ) ) die( 'NO' );
-    
+
 	$listid = array();
 	if ( $id )
 	{
@@ -384,18 +384,18 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 		$listid = $array_id;
 		$num = count( $array_id );
 	}
-	
+
 	// Lay thong tin
 	$sql = "SELECT id, active FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id IN (" . implode ( ",", $listid ) . ")";
 	$result = $db->query( $sql );
 	$check = $result->rowCount();
-	
+
 	if ( $check != $num ) die( 'NO' );
-	
+
 	$array_status = array();
 	$array_title = array();
 	while ( list( $id, $active ) = $result->fetch( 3 ) )
-	{		
+	{
 		if ( empty ( $controlstatus ) )
 		{
 			$array_status[$id] = $active ? 0 : 1;
@@ -405,15 +405,15 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 			$array_status[$id] = ( $controlstatus == 1 ) ? 1 : 0;
 		}
 	}
-	
+
 	foreach( $array_status as $id => $active )
 	{
 		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_video SET active=" . $active . " WHERE id=" . $id;
-		$db->query( $sql );	
-	}	
-    
+		$db->query( $sql );
+	}
+
     $nv_Cache->delMod( $module_name );
-	
+
     die( 'OK' );
 }
 
@@ -450,7 +450,7 @@ if( ! empty ( $data_search['q'] ) or ! empty ( $data_search['singer'] ) or ! emp
 if( ! empty ( $data_search['q'] ) )
 {
 	$base_url .= "&amp;q=" . urlencode( $data_search['q'] );
-	
+
 	// Tim theo ten videoclip
 	$sql .= " AND ( tname LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%' )";
 }
@@ -503,7 +503,7 @@ foreach ( $order as $key => $check )
 		"url" => $base_url . "&amp;order_" . $key . "=" . $opposite_order[$order[$key]['order']],
 		"title" => sprintf ( $lang_module['filter_order_by'], "&quot;" . $lang_order_2[$key] . "&quot;" ) . " " . $lang_order_1[$order[$key]['order']]
 	);
-	
+
 	if ( ! in_array ( $check['order'], $check_order ) )
 	{
 		$order[$key]['order'] = "NO";
@@ -549,7 +549,7 @@ while( $row = $result->fetch() )
 	$array_author_ids = $array_author_ids == '' ? $row['nhacsi'] : $array_author_ids . "," . $row['nhacsi'];
 
 	$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-videoclip.png";
-	
+
 	$array[] = array(
 		"id" => $row['id'],
 		"theloai" => $row['theloai'] . "," . $row['listcat'],
@@ -606,7 +606,7 @@ $global_array_cat_videoclip = $classMusic->get_videocategory();
 foreach( $global_array_cat_videoclip as $cat )
 {
 	$cat['selected'] = $cat['id'] == $data_search['theloai'] ? " selected=\"selected\"" : "";
-	
+
 	$xtpl->assign( 'CAT', $cat );
 	$xtpl->parse( 'main.cat' );
 }
@@ -629,7 +629,7 @@ foreach( $array as $row )
 	$row['singers'] = $classMusic->build_author_singer_2string( $array_singers, $row['singers'] );
 	$row['authors'] = $classMusic->build_author_singer_2string( $array_authors, $row['authors'] );
 	$row['theloai'] = $classMusic->build_categories_2tring( $global_array_cat_videoclip, $row['theloai'] );
-	
+
 	$xtpl->assign( 'ROW', $row );
 	$xtpl->parse( 'main.row' );
 }

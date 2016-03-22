@@ -551,8 +551,7 @@ class nv_mod_music
 
 		if( is_array( $id ) )
 		{
-			$result = $this->db->query( " SELECT * FROM " . $this->table_prefix . " WHERE id IN(" . implode( ",", $id ) . ")" );
-
+			$result = $this->db->query( "SELECT * FROM " . $this->table_prefix . " WHERE id IN(" . implode( ",", $id ) . ")" );
 			while( $row = $result->fetch() )
 			{
 				$songs[$row['id']] = $row;
