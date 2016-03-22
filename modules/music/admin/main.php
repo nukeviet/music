@@ -145,7 +145,7 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 
 	if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
 	if( ! empty( $array_author_ids ) ) $array_authors = $classMusic->getauthorbyID( $array_author_ids );
-	
+
 	$a = 0;
 	foreach( $array as $row )
 	{
@@ -177,12 +177,12 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 {
 	$listsong = nv_substr( $nv_Request->get_title( 'listsong', 'get', '', 1 ), 0, 255);
-	
+
 	$returnArea = nv_substr( $nv_Request->get_title( 'area', 'get', '', 1 ), 0, 255);
 	$returnInput = nv_substr( $nv_Request->get_title( 'input', 'get', '', 1 ), 0, 255);
-	
+
 	if( $nv_Request->isset_request( 'loadname', 'get' ) )
-	{		
+	{
 		$sql = "SELECT id, tenthat FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id IN(" . $listsong . ")";
 		$result = $db->query( $sql );
 
@@ -192,7 +192,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		{
 			$_tmp[$songid] = $songname;
 		}
-		
+
 		$listsong = $classMusic->string2array( $listsong );
 		foreach( $listsong as $_sid )
 		{
@@ -210,7 +210,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		include NV_ROOTDIR . '/includes/footer.php';
 		die();
 	}
-	
+
 	$listsong = $classMusic->string2array( $listsong );
 
 	$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "";
@@ -268,7 +268,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 
 		if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
 		if( ! empty( $array_author_ids ) ) $array_authors = $classMusic->getauthorbyID( $array_author_ids );
-		
+
 		$a = 0;
 		foreach( $array as $row )
 		{
@@ -310,12 +310,12 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-    
+
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     $list_levelid = $nv_Request->get_title( 'listid', 'post', '' );
-    
+
     if ( empty( $id ) and empty ( $list_levelid ) ) die( 'NO' );
-    
+
 	$listid = array();
 	if ( $id )
 	{
@@ -331,16 +331,16 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$listid = $list_levelid;
 		$num = sizeof( $list_levelid );
 	}
-	
+
 	$songs = $classMusic->getsongbyID( $listid );
-	
+
 	if( sizeof( $songs ) != $num ) die( 'NO' );
-	
+
 	foreach( $songs as $id => $song )
 	{
 		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id=" . $id;
 		$result = $db->query( $sql );
-		
+
 		if( $song['album'] != 0 ) $classMusic->fix_album( $song['album'] );
 		$classMusic->fix_singer( $classMusic->string2array( $song['casi'] ) );
 		$classMusic->fix_author( $classMusic->string2array( $song['nhacsi'] ) );
@@ -349,12 +349,12 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$classMusic->delerror( 'song', $song['id'] );
 		$classMusic->delgift( $song['id'] );
 		$classMusic->unlinkSV( $song['server'], $song['duongdan'] );
-		$classMusic->fix_cat_song( array_unique( array_filter( array_merge_recursive( $song['listcat'], array( $song['theloai'] ) ) ) ) );
-	}	
-    
+		$classMusic->fix_cat_song( array_unique( array_filter( array_merge_recursive( explode(',', $song['listcat']), array( $song['theloai'] ) ) ) ) );
+	}
+
     $nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_song'), implode( ", ", array_keys( $songs ) ), $admin_info['userid'] );
-	
+
     die( 'OK' );
 }
 
@@ -362,13 +362,13 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-    
+
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     $controlstatus = $nv_Request->get_int( 'status', 'post', 0 );
     $array_id = $nv_Request->get_title( 'listid', 'post', '' );
-    
+
     if ( empty( $id ) and empty ( $array_id ) ) die( 'NO' );
-    
+
 	$listid = array();
 	if ( $id )
 	{
@@ -384,18 +384,18 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 		$listid = $array_id;
 		$num = count( $array_id );
 	}
-	
+
 	// Lay thong tin
 	$sql = "SELECT id, active FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id IN (" . implode ( ",", $listid ) . ")";
 	$result = $db->query( $sql );
 	$check = $result->rowCount();
-	
+
 	if ( $check != $num ) die( 'NO' );
-	
+
 	$array_status = array();
 	$array_title = array();
 	while ( list( $id, $active ) = $result->fetch( 3 ) )
-	{		
+	{
 		if ( empty ( $controlstatus ) )
 		{
 			$array_status[$id] = $active ? 0 : 1;
@@ -405,15 +405,15 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 			$array_status[$id] = ( $controlstatus == 1 ) ? 1 : 0;
 		}
 	}
-	
+
 	foreach( $array_status as $id => $active )
 	{
 		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET active=" . $active . " WHERE id=" . $id;
-		$db->query( $sql );	
-	}	
-    
+		$db->query( $sql );
+	}
+
     $nv_Cache->delMod( $module_name );
-	
+
     die( 'OK' );
 }
 
@@ -447,14 +447,14 @@ if( ! empty ( $data_search['q'] ) or ! empty ( $data_search['singer'] ) or ! emp
 if( ! empty ( $data_search['q'] ) )
 {
 	$base_url .= "&amp;q=" . urlencode( $data_search['q'] );
-	
+
 	// Tim theo ten bai hat
 	$sql .= " AND ( tenthat LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%'";
-	
+
 	// Tim loi bai hat
 	$_sql = "SELECT songid FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE body LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%' ORDER BY songid DESC LIMIT 0,50";
 	$_result = $db->query( $_sql );
-	
+
 	if( $_result->rowCount() )
 	{
 		$array_search_id = array();
@@ -462,11 +462,11 @@ if( ! empty ( $data_search['q'] ) )
 		{
 			$array_search_id[] = $songid;
 		}
-		
+
 		$sql .= " OR id IN( " . implode( ",", $array_search_id ) . " )";
 		unset( $_sql, $_result, $array_search_id, $songid );
 	}
-	
+
 	$sql .= ")";
 }
 
@@ -518,7 +518,7 @@ foreach ( $order as $key => $check )
 		"url" => $base_url . "&amp;order_" . $key . "=" . $opposite_order[$order[$key]['order']],
 		"title" => sprintf ( $lang_module['filter_order_by'], "&quot;" . $lang_order_2[$key] . "&quot;" ) . " " . $lang_order_1[$order[$key]['order']]
 	);
-	
+
 	if ( ! in_array ( $check['order'], $check_order ) )
 	{
 		$order[$key]['order'] = "NO";
@@ -564,7 +564,7 @@ while( $row = $result->fetch() )
 	$array_singer_ids = $array_singer_ids == '' ? $row['casi'] : $array_singer_ids . "," . $row['casi'];
 	$array_author_ids = $array_author_ids == '' ? $row['nhacsi'] : $array_author_ids . "," . $row['nhacsi'];
 	$array_userid_ids = $array_userid_ids == '' ? $row['userid'] : $array_userid_ids . "," . $row['userid'];
-	
+
 	$array[] = array(
 		"id" => $row['id'],
 		"theloai" => $row['theloai'] . "," . $row['listcat'],
@@ -628,7 +628,7 @@ $global_array_cat_song = $classMusic->get_category();
 foreach( $global_array_cat_song as $cat )
 {
 	$cat['selected'] = $cat['id'] == $data_search['theloai'] ? " selected=\"selected\"" : "";
-	
+
 	$xtpl->assign( 'CAT', $cat );
 	$xtpl->parse( 'main.cat' );
 }
@@ -657,7 +657,7 @@ foreach( $array as $row )
 	$row['authors'] = $classMusic->build_author_singer_2string( $array_authors, $row['authors'] );
 	$row['theloai'] = $classMusic->build_categories_2tring( $global_array_cat_song, $row['theloai'] );
 	$row['upload_name'] = $classMusic->build_user_2tring( $array_users, $row['upload_id'], $row['upload_name'] );
-	
+
 	$xtpl->assign( 'ROW', $row );
 	$xtpl->parse( 'main.row' );
 }

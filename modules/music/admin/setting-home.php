@@ -41,14 +41,14 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 {
 	$array['albums'] = nv_substr( $nv_Request->get_title( 'albums', 'post', '', 1 ), 0, 255);
 	$array['videos'] = nv_substr( $nv_Request->get_title( 'videos', 'post', '', 1 ), 0, 255);
-	
+
 	// Chuyen chuoi thanh mang
 	$array['albums'] = $classMusic->string2array( $array['albums'] );
 	$array['videos'] = $classMusic->string2array( $array['videos'] );
-	
+
 	// Xoa het du lieu
 	$db->query( "TRUNCATE TABLE " . $classMusic->table_prefix . "_setting_home" );
-	
+
 	// Luu album
 	$i = 1;
 	foreach( $array['albums'] as $albumid )
@@ -57,7 +57,7 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 		$db->query( $sql );
 		$i ++;
 	}
-	
+
 	// Luu video
 	$i = 1;
 	foreach( $array['videos'] as $videoid )
@@ -81,8 +81,8 @@ $xtpl->assign( 'DATA', $array );
 $xtpl->assign( 'LISTALBUMS', implode( ",", $array['albums'] ) );
 $xtpl->assign( 'LISTVIDEOS', implode( ",", $array['videos'] ) );
 
-$array['albums'] = $classMusic->getalbumbyID( $array['albums'], true );
-$array['videos'] = $classMusic->getvideobyID( $array['videos'], true );
+$array['albums'] = !empty($array['albums']) ? $classMusic->getalbumbyID( $array['albums'], true ): array();
+$array['videos'] = !empty($array['videos']) ? $classMusic->getvideobyID( $array['videos'], true ) : array();
 
 // Xuat album
 foreach( $array['albums'] as $tmp )

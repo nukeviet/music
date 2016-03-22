@@ -19,7 +19,7 @@ $classMusic = new nv_mod_music();
 // lay quang cao
 function getADS()
 {
-	global $module_data, $global_config, $db, $module_file, $lang_module, $nv_Cache;
+	global $module_name, $module_data, $global_config, $db, $module_file, $lang_module, $nv_Cache;
 
 	$ads = array();
 	$ads['link'] = array();
@@ -27,7 +27,7 @@ function getADS()
 	$ads['name'] = array();
 
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads ORDER BY RAND()";
-	$result = $nv_Cache->db( $sql, 'id' );
+	$result = $nv_Cache->db( $sql, 'id', $module_name );
 
 	if( ! empty( $result ) )
 	{
@@ -113,4 +113,6 @@ if( $op == 'main' )
 	}
 }
 
+global $downURL, $setting;
+$setting = setting_music();
 $downURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE . "=down&amp;id=";

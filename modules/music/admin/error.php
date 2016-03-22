@@ -42,7 +42,7 @@ $all_page = $result1->fetchColumn();
 
 $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
 
-$sql2 = "SELECT a.id, a.userid, a.username AS full_name, a.body, a.sid, a.where, b.username, a.addtime, a.ip, a.status " . $sql . " ORDER BY status DESC, addtime DESC LIMIT " . $page . ", " . $per_page;
+$sql2 = "SELECT a.id, a.userid, a.username AS full_name, a.body, a.sid, a.wheres, b.username, a.addtime, a.ip, a.status " . $sql . " ORDER BY status DESC, addtime DESC LIMIT " . $page . ", " . $per_page;
 $result2 = $db->query( $sql2 );
 
 $generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );

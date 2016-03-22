@@ -37,9 +37,9 @@ if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 	else
 	{
 		$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_ads VALUES (
-			NULL, 
-			" . $db->quote( $numadd ) . ", 
-			" . $db->quote( $link ) . ", 
+			NULL,
+			" . $db->quote( $numadd ) . ",
+			" . $db->quote( $link ) . ",
 			" . $db->quote( $name ) . ",
 			" . $db->quote( $url ) . "
 		)";
@@ -108,12 +108,12 @@ $contents .= "</tbody>
 			<td style=\"background: #eee;\">
 				<input style=\"width:400px;\" type=\"text\" name=\"link\" id=\"link\" value=\"" . $link . "\" />
                 <input name=\"select\" type=\"button\" value=\"" . $lang_module['select'] . "\" />
-				<script type=\"text/javascript\">			
+				<script type=\"text/javascript\">
 				$(\"input[name=select]\").click(function()
 				{
 					var area = \"link\"; // return value area
 					var path = \"" . NV_UPLOADS_DIR . "/" . $module_upload . "/ads\";
-					nv_open_browse_file(\"" . NV_BASE_ADMINURL . 'index.php?' . NV_NAME_VARIABLE . '=upload&popup=1&area=" + area+"&path="+path, "NVImg", "850", "500","resizable=no,scrollbars=no,toolbar=no,location=no,status=no' . "\");
+					nv_open_browse(\"" . NV_BASE_ADMINURL . 'index.php?' . NV_NAME_VARIABLE . '=upload&popup=1&area=" + area+"&path="+path, "NVImg", "850", "500","resizable=no,scrollbars=no,toolbar=no,location=no,status=no' . "\");
 					return false;
 				});
 				</script>

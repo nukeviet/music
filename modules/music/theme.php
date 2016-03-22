@@ -1261,3 +1261,67 @@ function nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $ar
 	$xtpl->parse( 'main' );
 	return $xtpl->text( 'main' );
 }
+
+// Giao dien
+// Trang chu module
+function nv_music_main( $array, $array_album, $first_album_data )
+{
+	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $downURL, $op, $main_header_URL, $nv_Request, $array_op;
+
+	$xtpl = new XTemplate( "main.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'GLANG', $lang_global );
+	$xtpl->assign( 'DATA', $array );
+	$xtpl->assign( 'URL_DOWN', $downURL );
+	$xtpl->assign( 'URL_LOAD', $main_header_URL . "=" . ( empty( $array_op ) ? $op : implode( "/", $array_op ) ) . "&load_main_song=" );
+
+	if( empty( $setting['type_main'] ) )
+	{
+		$xtpl->parse( 'main.type_tab1' );
+	}
+	else
+	{
+		$xtpl->parse( 'main.type_tab2' );
+	}
+
+	$i = 1;
+	$j = 0;
+	if( ! empty( $array_album ) )
+	{
+		foreach( $array_album as $album )
+		{
+			$album['tname1'] = nv_clean60( $album['tname'], 30 );
+			$album['casi1'] = nv_clean60( $album['casi'], 30 );
+			$album['tname2'] = nv_clean60( $album['tname'], 40 );
+			$album['casi2'] = nv_clean60( $album['casi'], 40 );
+
+			$xtpl->assign( 'ALBUM', $album );
+
+			if( ( $i++ ) == 1 )
+			{
+				foreach( $first_album_data as $song )
+				{
+					$song['tenthat1'] = nv_clean60( $song['tenthat'], 23 );
+					$xtpl->assign( 'SONG', $song );
+					$xtpl->parse( 'main.data.first.song' );
+				}
+				$xtpl->parse( 'main.data.first' );
+			}
+			else
+			{
+				if( ++$j % 4 == 0 ) $xtpl->parse( 'main.data.old.break' );
+				$xtpl->parse( 'main.data.old' );
+			}
+		}
+
+		$xtpl->parse( 'main.data' );
+		if( $nv_Request->isset_request( 'load_main_song', 'get' ) ) die( $xtpl->text( 'main.data' ) );
+	}
+	elseif( $nv_Request->isset_request( 'load_main_song', 'get' ) )
+	{
+		die( "" );
+	}
+
+	$xtpl->parse( 'main' );
+	return $xtpl->text( 'main' );
+}

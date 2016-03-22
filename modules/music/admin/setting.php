@@ -44,15 +44,15 @@ if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 		if( $key == "root_contain" )
 		{
 			@rename( NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_upload . "/" . $classMusic->setting['root_contain'], NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $value );
-			$query = $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_setting SET char = " . $db->quote( $value ) . " WHERE key = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_setting SET chars = " . $db->quote( $value ) . " WHERE config_key = \"" . $key . "\"  LIMIT 1 " );
 		}
 		elseif( $key == "description" )
 		{
-			$query = $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_setting SET char = " . $db->quote( $value ) . " WHERE key = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_setting SET chars = " . $db->quote( $value ) . " WHERE config_key = \"" . $key . "\"  LIMIT 1 " );
 		}
 		else
 		{
-			$query = $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_setting SET value = " . $db->quote( $value ) . " WHERE key = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_setting SET chars = " . $db->quote( $value ) . " WHERE config_key = \"" . $key . "\"  LIMIT 1 " );
 		}
 	}
 	if( $query )
@@ -230,13 +230,13 @@ $contents .= "
 		<td><strong>" . $lang_module['set_type_main'] . "</strong></td>
 		<td>
 			<select class=\"txt-half\" name=\"type_main\">";
-			
+
 for( $i = 0; $i <= 1; ++ $i )
-{	
+{
 	$contents .= "<option value=\"" . $i . "\"" . ( $i == $classMusic->setting['type_main'] ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_type_main_' . $i ] . "</option>";
 }
-			
-$contents .= "				
+
+$contents .= "
 			</select>
 		</td>
 	</tr>

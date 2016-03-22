@@ -476,11 +476,11 @@ class nv_mod_music
 
 		if( is_array( $id ) )
 		{
-			$result = $this->db->query( " SELECT userid, username, full_name FROM " . $this->db_prefix . "_users WHERE userid IN(" . implode( ",", $id ) . ")" );
+			$result = $this->db->query( " SELECT userid, username, first_name, last_name FROM " . $this->db_prefix . "_users WHERE userid IN(" . implode( ",", $id ) . ")" );
 
 			while( $row = $result->fetch() )
 			{
-				$row['full_name'] = $row['full_name'] == '' ? $row['username'] : $row['full_name'];
+				$row['full_name'] = nv_show_name_user( $row['first_name'], $row['last_name'], $row['username']);
 				$users[$row['userid']] = $row;
 			}
 		}
@@ -501,14 +501,16 @@ class nv_mod_music
 
 		if( is_array( $id ) )
 		{
-			$result = $this->db->query( " SELECT * FROM " . $this->table_prefix . "_singer WHERE id IN(" . implode( ",", $id ) . ")" );
+			if(!empty( $id )){
+				$result = $this->db->query( "SELECT * FROM " . $this->table_prefix . "_singer WHERE id IN(" . implode( ",", $id ) . ")" );
 
-			while( $row = $result->fetch() )
-			{
-				$singer[$row['id']] = $row;
+				while( $row = $result->fetch() )
+				{
+					$singer[$row['id']] = $row;
+				}
+
+				if( $sort === true ) $singer = $this->sortArrayFromArrayKeys( $id, $singer );
 			}
-
-			if( $sort === true ) $singer = $this->sortArrayFromArrayKeys( $id, $singer );
 		}
 		else
 		{
@@ -622,7 +624,7 @@ class nv_mod_music
 	public function getsingerbyName( $name )
 	{
 		$singer = array();
-		$result = $this->db->query( " SELECT * FROM " . $this->table_prefix . "_singer WHERE tenthat=" . $this->db->dbescape( $name ) );
+		$result = $this->db->query( " SELECT * FROM " . $this->table_prefix . "_singer WHERE tenthat=" . $this->db->quote( $name ) );
 		$singer = $result->fetch();
 
 		return $singer;
@@ -632,7 +634,7 @@ class nv_mod_music
 	public function getauthorbyName( $name )
 	{
 		$author = array();
-		$result = $this->db->query( "SELECT * FROM " . $this->table_prefix . "_author WHERE tenthat=" . $this->db->dbescape( $name ) );
+		$result = $this->db->query( "SELECT * FROM " . $this->table_prefix . "_author WHERE tenthat=" . $this->db->quote( $name ) );
 		$author = $result->fetch();
 
 		return $author;
@@ -749,9 +751,9 @@ class nv_mod_music
 	// Them moi mot ca si
 	public function newsinger( $name, $tname )
 	{
-		$sql = "INSERT INTO " . $this->table_prefix . "_singer ( id, ten, tenthat, thumb, introduction, numsong, numalbum, numvideo ) VALUES ( NULL, " . $this->db->dbescape( $name ) . ", " . $this->db->dbescape( $tname ) . ", '', '', 0, 0, 0 )";
+		$sql = "INSERT INTO " . $this->table_prefix . "_singer ( id, ten, tenthat, thumb, introduction, numsong, numalbum, numvideo ) VALUES ( NULL, " . $this->db->quote( $name ) . ", " . $this->db->quote( $tname ) . ", '', '', 0, 0, 0 )";
 
-		$newid = $this->db->query_insert_id( $sql );
+		$newid = $this->db->insert_id( $sql );
 
 		if( $newid )
 		{
@@ -766,9 +768,9 @@ class nv_mod_music
 	// Them moi mot nhac si
 	public function newauthor( $name, $tname )
 	{
-		$sql = "INSERT INTO " . $this->table_prefix . "_author ( id, ten, tenthat, thumb, introduction, numsong, numvideo) VALUES ( NULL, " . $this->db->dbescape( $name ) . ", " . $this->db->dbescape( $tname ) . ", '', '', 0, 0 )";
+		$sql = "INSERT INTO " . $this->table_prefix . "_author ( id, ten, tenthat, thumb, introduction, numsong, numvideo) VALUES ( NULL, " . $this->db->quote( $name ) . ", " . $this->db->quote( $tname ) . ", '', '', 0, 0 )";
 
-		$newid = $this->db->query_insert_id( $sql );
+		$newid = $this->db->insert_id( $sql );
 
 		if( $newid )
 		{
@@ -801,7 +803,7 @@ class nv_mod_music
 		{
 			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . " WHERE theloai=" . $_id . " OR listcat LIKE '%," . $_id . ",%'";
 			$result = $this->db->query( $sql );
-			list( $num ) = $result->fetch();
+			$num = $result->fetchColumn();
 
 			$sql = "UPDATE " . $this->table_prefix . "_category SET numsong=" . $num . " WHERE id=" . $_id;
 			$this->db->query( $sql );
@@ -819,7 +821,7 @@ class nv_mod_music
 		{
 			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . "_video WHERE theloai=" . $_id . " OR listcat LIKE '%," . $_id . ",%'";
 			$result = $this->db->query( $sql );
-			list( $num ) = $result->fetch();
+			$num = $result->fetchColumn();
 
 			$sql = "UPDATE " . $this->table_prefix . "_video_category SET numvideo=" . $num . " WHERE id=" . $_id;
 			$this->db->query( $sql );
@@ -838,7 +840,7 @@ class nv_mod_music
 			// Bai hat
 			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . " WHERE casi LIKE '%," . $_id . ",%'";
 			$result = $this->db->query( $sql );
-			list( $num ) = $result->fetch();
+			$num = $result->fetchColumn();
 
 			$sql = "UPDATE " . $this->table_prefix . "_singer SET numsong=" . $num . " WHERE id=" . $_id;
 			$this->db->query( $sql );
@@ -846,7 +848,7 @@ class nv_mod_music
 			// Album
 			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . "_album WHERE casi LIKE '%," . $_id . ",%'";
 			$result = $this->db->query( $sql );
-			list( $num ) = $result->fetch();
+			$num = $result->fetchColumn();
 
 			$sql = "UPDATE " . $this->table_prefix . "_singer SET numalbum=" . $num . " WHERE id=" . $_id;
 			$this->db->query( $sql );
@@ -854,7 +856,7 @@ class nv_mod_music
 			// Video
 			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . "_video WHERE casi LIKE '%," . $_id . ",%'";
 			$result = $this->db->query( $sql );
-			list( $num ) = $result->fetch();
+			$num = $result->fetchColumn();
 
 			$sql = "UPDATE " . $this->table_prefix . "_singer SET numvideo=" . $num . " WHERE id=" . $_id;
 			$this->db->query( $sql );
@@ -873,7 +875,7 @@ class nv_mod_music
 			// Bai hat
 			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . " WHERE nhacsi LIKE '%," . $_id . ",%'";
 			$result = $this->db->query( $sql );
-			list( $num ) = $result->fetch();
+			$num = $result->fetchColumn();
 
 			$sql = "UPDATE " . $this->table_prefix . "_author SET numsong=" . $num . " WHERE id=" . $_id;
 			$this->db->query( $sql );
@@ -881,7 +883,7 @@ class nv_mod_music
 			// Video
 			$sql = "SELECT COUNT(*) FROM " . $this->table_prefix . "_video WHERE nhacsi LIKE '%," . $_id . ",%'";
 			$result = $this->db->query( $sql );
-			list( $num ) = $result->fetch();
+			$num = $result->fetchColumn();
 
 			$sql = "UPDATE " . $this->table_prefix . "_author SET numvideo=" . $num . " WHERE id=" . $_id;
 			$this->db->query( $sql );
@@ -900,7 +902,7 @@ class nv_mod_music
 			// Lay bai hat cu
 			$sql = "SELECT listsong FROM " . $this->table_prefix . "_album WHERE id=" . $_id;
 			$result = $this->db->query( $sql );
-			list( $list_song ) = $result->fetch();
+			list( $list_song ) = $result->fetchColumn();
 			$list_song = array_filter( array_unique( explode( ',', $list_song ) ) );
 
 			// Lay cau hinh cua cac bai hat them vao danh sach bai hat cua album neu co
@@ -947,20 +949,20 @@ class nv_mod_music
 		$array['is_official'] = ! isset( $array['is_official'] ) ? 0 : $array['is_official'];
 
 		$sql = "UPDATE " . $this->table_prefix . " SET
-			ten=" . $this->db->dbescape( $array['ten'] ) . ",
-			tenthat=" . $this->db->dbescape( $array['tenthat'] ) . ",
+			ten=" . $this->db->quote( $array['ten'] ) . ",
+			tenthat=" . $this->db->quote( $array['tenthat'] ) . ",
 			casi='" . $this->build_query_singer_author( $array['casi'] ) . "',
 			nhacsi='" . $this->build_query_singer_author( $array['nhacsi'] ) . "',
 			album=" . $array['album'] . ",
-			theloai=" . $this->db->dbescape( $array['theloai'] ) . ",
+			theloai=" . $this->db->quote( $array['theloai'] ) . ",
 			listcat='" . $this->build_query_singer_author( $array['listcat'] ) . "',
-			duongdan=" . $this->db->dbescape( $array['duongdan'] ) . ",
+			duongdan=" . $this->db->quote( $array['duongdan'] ) . ",
 			bitrate=" . $array['bitrate'] . " ,
 			size=" . $array['size'] . " ,
 			duration=" . $array['duration'] . ",
 			server=" . $array['server'] . ",
 			userid=" . $array['userid'] . ",
-			upboi=" . $this->db->dbescape( $array['upboi'] ) . ",
+			upboi=" . $this->db->quote( $array['upboi'] ) . ",
 			is_official=" . $array['is_official'] . "
 		WHERE id=" . $array['id'];
 
@@ -989,15 +991,15 @@ class nv_mod_music
 
 				if( $array['lyric_id'] )
 				{
-					$this->db->query( "UPDATE " . $this->table_prefix . "_lyric SET body=" . $this->db->dbescape( $array['lyric'] ) . " WHERE id=" . $array['lyric_id'] );
+					$this->db->query( "UPDATE " . $this->table_prefix . "_lyric SET body=" . $this->db->quote( $array['lyric'] ) . " WHERE id=" . $array['lyric_id'] );
 				}
 				else
 				{
 					$sql = "INSERT INTO " . $this->table_prefix . "_lyric ( id, songid, user, body, active, dt ) VALUES(
 						NULL,
 						" . $array['id'] . ",
-						" . $this->db->dbescape( $array['upboi'] ) . ",
-						" . $this->db->dbescape( $array['lyric'] ) . ",
+						" . $this->db->quote( $array['upboi'] ) . ",
+						" . $this->db->quote( $array['lyric'] ) . ",
 						1,
 						" . $this->currenttime . "
 					)";
@@ -1032,29 +1034,29 @@ class nv_mod_music
 
 		$sql = "INSERT INTO " . $this->table_prefix . " VALUES (
 			NULL,
-			" . $this->db->dbescape( $array['ten'] ) . ",
-			" . $this->db->dbescape( $array['tenthat'] ) . ",
+			" . $this->db->quote( $array['ten'] ) . ",
+			" . $this->db->quote( $array['tenthat'] ) . ",
 			'" . $this->build_query_singer_author( $array['casi'] ) . "',
 			'" . $this->build_query_singer_author( $array['nhacsi'] ) . "',
 			" . $array['album'] . ",
-			" . $this->db->dbescape( $array['theloai'] ) . ",
+			" . $this->db->quote( $array['theloai'] ) . ",
 			'" . $this->build_query_singer_author( $array['listcat'] ) . "',
-			" . $this->db->dbescape( $array['duongdan'] ) . ",
-			" . $this->db->dbescape( $array['upboi'] ) . " ,
+			" . $this->db->quote( $array['duongdan'] ) . ",
+			" . $this->db->quote( $array['upboi'] ) . " ,
 			0,
 			1,
-			" . $this->db->dbescape( $array['bitrate'] ) . " ,
-			" . $this->db->dbescape( $array['size'] ) . " ,
-			" . $this->db->dbescape( $array['duration'] ) . ",
+			" . $this->db->quote( $array['bitrate'] ) . " ,
+			" . $this->db->quote( $array['size'] ) . " ,
+			" . $this->db->quote( $array['duration'] ) . ",
 			" . $array['server'] . ",
 			" . $array['userid'] . ",
 			" . NV_CURRENTTIME . ",
 			0,
-			" . $this->db->dbescape( $array['hit'] ) . ",
+			" . $this->db->quote( $array['hit'] ) . ",
 			" . $array['is_official'] . "
 		)";
 
-		$songid = $this->db->query_insert_id( $sql );
+		$songid = $this->db->insert_id( $sql );
 
 		if( $songid )
 		{
@@ -1069,8 +1071,8 @@ class nv_mod_music
 				$sql = "INSERT INTO " . $this->table_prefix . "_lyric ( id, songid, user, body, active, dt ) VALUES(
 					NULL,
 					" . $songid . ",
-					" . $this->db->dbescape( $array['upboi'] ) . ",
-					" . $this->db->dbescape( $array['lyric'] ) . ",
+					" . $this->db->quote( $array['upboi'] ) . ",
+					" . $this->db->quote( $array['lyric'] ) . ",
 					1,
 					" . $this->currenttime . "
 				)";
