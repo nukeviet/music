@@ -31,7 +31,7 @@
 							}
 							if( confirm(nv_is_del_confirm[0]) ){
 								$('[name="doaction"]').attr('disabled','disabled');
-								$('#result').html('<center><img src="' + nv_siteroot + 'images/load_bar.gif" alt=""/></center>');
+								$('#result').html('<center><img src="' + nv_base_siteurl + 'assets/images/load_bar.gif" alt=""/></center>');
 								$.get('{URL}&get&cat1=' + cat1 + '&cat2=' + cat2,function(e){
 									$('[name="doaction"]').removeAttr('disabled');
 									$('#result').html(e);

@@ -27,19 +27,19 @@ $id = $nv_Request->get_int( 'id', 'get', 0 );
 if( ! empty( $id ) )
 {
 	$row = $classMusic->getalbumbyID( $id );
-	
+
 	if( empty( $row ) ) nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
-	
+
 	$array = $array_old = array(
 		"name" => $row['name'],
 		"tname" => $row['tname'],
 		"casi" => $classMusic->string2array( $row['casi'] ),
 		"casimoi" => '',
 		"thumb" => $row['thumb'],
-		"describe" => nv_editor_br2nl( $row['describe'] ),
+		"description" => nv_editor_br2nl( $row['description'] ),
 		"listsong" => $classMusic->string2array( $row['listsong'] ),
 	);
-	
+
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
 	$table_caption = $page_title = $classMusic->lang('edit_album');
 }
@@ -51,10 +51,10 @@ else
 		"casi" => array(),
 		"casimoi" => '',
 		"thumb" => '',
-		"describe" => '',
+		"description" => '',
 		"listsong" => array(),
 	);
-	
+
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 	$table_caption = $page_title = $classMusic->lang('add_album');
 }
@@ -66,11 +66,11 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 	$array['casi'] = nv_substr( $nv_Request->get_title( 'casi', 'post', '', 1 ), 0, 255);
 	$array['casimoi'] = nv_substr( $nv_Request->get_title( 'casimoi', 'post', '', 1 ), 0, 255);
 	$array['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
-	$array['describe'] = $nv_Request->get_editor( 'describe', '', NV_ALLOWED_HTML_TAGS );
+	$array['description'] = $nv_Request->get_editor( 'description', '', NV_ALLOWED_HTML_TAGS );
 	$array['listsong'] = nv_substr( $nv_Request->get_title( 'listsong', 'post', '', 1 ), 0, 255);
-	
+
 	$array['name'] = empty( $array['name'] ) ? change_alias( $array['tname'] ) : change_alias( $array['name'] );
-	
+
 	// Chuyen ca si, cac bai hat tu chuoi thanh mang
 	$array['casi'] = $classMusic->string2array( $array['casi'] );
 	$array['listsong'] = $classMusic->string2array( $array['listsong'] );
@@ -88,7 +88,7 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 	{
 		$error = $classMusic->lang('album_error_thumb');
 	}
-	
+
 	if( empty( $error ) )
 	{
 		// Them ca si moi
@@ -113,7 +113,7 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 			}
 		}
 	}
-	
+
 	if( empty( $error ) )
 	{
 		// Kiem tra ton tai
@@ -125,29 +125,29 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 		{
 			$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND name=" . $db->quote( $array['name'] );
 		}
-		
+
 		$result = $db->query( $sql );
 		if( $result->rowCount() )
 		{
 			$error = $classMusic->lang('error_exist_album');
 		}
 	}
-	
+
 	if( empty( $error ) )
 	{
 		// Chinh sua mo ta
-		$array['describe'] = ! empty( $array['describe'] ) ? nv_editor_nl2br( $array['describe'] ) : "";
-		
+		$array['description'] = ! empty( $array['description'] ) ? nv_editor_nl2br( $array['description'] ) : "";
+
 		// Sua album
 		if( $id )
 		{
-			$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_album SET 
+			$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_album SET
 				name=" . $db->quote( $array['name'] ) . ",
 				tname=" . $db->quote( $array['tname'] ) . ",
 				casi=" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . ",
 				thumb=" . $db->quote( $array['thumb'] ) . ",
 				numsong=" . sizeof( $array['listsong'] ) . ",
-				describe=" . $db->quote( $array['describe'] ) . ",
+				description=" . $db->quote( $array['description'] ) . ",
 				listsong=" . $db->quote( implode( ",", $array['listsong'] ) ) . "
 			WHERE id =" . $id;
 			$result = $db->query( $sql );
@@ -192,14 +192,14 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 		else
 		{
 			$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_album VALUES (
-				NULL, 
-				" . $db->quote( $array['name'] ) . ", 
-				" . $db->quote( $array['tname'] ) . ", 
-				" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . ", 
-				" . $db->quote( $array['thumb'] ) . ", 
-				0, 
-				" . $db->quote( $admin_info['username'] ) . ",	
-				" . $db->quote( $array['describe'] ) . "	,
+				NULL,
+				" . $db->quote( $array['name'] ) . ",
+				" . $db->quote( $array['tname'] ) . ",
+				" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . ",
+				" . $db->quote( $array['thumb'] ) . ",
+				0,
+				" . $db->quote( $admin_info['username'] ) . ",
+				" . $db->quote( $array['description'] ) . "	,
 				1,
 				" . sizeof( $array['listsong'] ) . ",
 				" . $db->quote( implode( ",", $array['listsong'] ) ) . ",
@@ -212,10 +212,10 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 			if( $newid )
 			{
 				//$xxx->closeCursor();
-				
+
 				// Cap nhat ca si
 				$classMusic->fix_singer( $array['casi'] );
-				
+
 				// Cap nhat album cho cac bai hat
 				if( ! empty( $array['listsong'] ) )
 				{
@@ -238,7 +238,7 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 if( ! empty( $array['listsong'] ) )
 {
 	$songs = $classMusic->getsongbyID( $array['listsong'] , true );
-	
+
 	$array['listsong'] = array();
 	foreach( $songs as $song )
 	{
@@ -254,7 +254,7 @@ else
 if( ! empty( $array['casi'] ) )
 {
 	$singers = $classMusic->getsingerbyID( $array['casi'], true );
-	
+
 	$array['casi'] = array();
 	foreach( $singers as $singer )
 	{
@@ -267,15 +267,15 @@ else
 }
 
 // Sua lai mo ta album
-if ( ! empty( $array['describe'] ) ) $array['describe'] = nv_htmlspecialchars( $array['describe'] );
+if ( ! empty( $array['description'] ) ) $array['description'] = nv_htmlspecialchars( $array['description'] );
 
 if( defined( 'NV_EDITOR' ) and function_exists( 'nv_aleditor' ) )
 {
-	$array['describe'] = nv_aleditor( 'describe', '100%', '250px', $array['describe'] );
+	$array['description'] = nv_aleditor( 'description', '100%', '250px', $array['description'] );
 }
 else
 {
-	$array['describe'] = "<textarea style=\"width: 100%\" value=\"" . $array['describe'] . "\" name=\"describe\" id=\"describe\" cols=\"20\" rows=\"15\"></textarea>\n";
+	$array['description'] = "<textarea style=\"width: 100%\" value=\"" . $array['description'] . "\" name=\"description\" id=\"description\" cols=\"20\" rows=\"15\"></textarea>\n";
 }
 
 $xtpl = new XTemplate( "content-album.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );

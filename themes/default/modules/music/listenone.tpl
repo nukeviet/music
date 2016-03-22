@@ -20,7 +20,7 @@
 			// Install ADS
 			var ads_width = $('#music-ads').width();
 			$('#adscontent').html(
-				'<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="'+ads_width+'" height="120">' + 
+				'<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="'+ads_width+'" height="120">' +
 					'<param name="src" value="{GDATA.ads_data.link}" />' +
 					'<param name="loop" value="true" />' +
 					'<param name="allowscriptaccess" value="always" />' +
@@ -29,7 +29,7 @@
 					'<embed src="{GDATA.ads_data.link}" pluginspage="http://www.adobe.com/shockwave/download/" width="'+ads_width+'" height="120" wmode="transparent" loop="true" menu="false" allowscriptaccess="always"></embed>' +
 				'</object>'
 			);
-			
+
 			// Install Player
 			var player_width = $('#player').width();
 			jwplayer("player").setup({
@@ -113,17 +113,17 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 			var who_receive = $('#who-receive-gift').val();
 			var email_receive = $('#email-receive-gift').val();
 			var body = $('#body-gift').val();
-				
+
 			if( who_send == '' ){ alert('{LANG.error_gift_send}'); $('#who-send-gift').focus(); return; }
 			if( who_receive == '' ){ alert('{LANG.error_gift_recieve}'); $('#who-receive-gift').focus(); return; }
 			if( email_receive == '' ){ alert('{LANG.error_empty_email}'); $('#email-receive-gift').focus(); return; }
 			if( body == '' ){ alert('{LANG.error_gift_body}'); $('#body-gift').focus(); return; }
-				
+
 			$('#send-gift-button').attr('disabled','disabled');
 			$.ajax({
 				type: 'POST',
-				url: nv_siteroot + 'index.php',
-				data: nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&send_gift=1&checksess={GDATA.checksess_gift}&id=' + sid + '&who_send=' + who_send + '&who_receive=' + who_receive + '&email_receive=' + email_receive + '&body=' + encodeURIComponent(body),
+				url: nv_base_siteurl + 'index.php',
+				data: nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&send_gift=1&checksess={GDATA.checksess_gift}&id=' + sid + '&who_send=' + who_send + '&who_receive=' + who_receive + '&email_receive=' + email_receive + '&body=' + encodeURIComponent(body),
 				success: function(data){
 					if(data=='OK'||data=='WAIT'){
 						$('.giftcontent .txt').val('');
@@ -177,12 +177,12 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<!-- END: lyric -->
 		<script type="text/javascript">
 		$(document).ready(function(){
-			$(".playlistitem").hide(); 
-			$(".playlistitem:first").show(); 
+			$(".playlistitem").hide();
+			$(".playlistitem:first").show();
 			$("a.clicknext").click(function(){
-				$(".playlistitem").hide(); 
-				var activeTab = $(this).attr("href"); 
-				$(activeTab).show(); 
+				$(".playlistitem").hide();
+				var activeTab = $(this).attr("href");
+				$(activeTab).show();
 				return false;
 			});
 		});
@@ -217,8 +217,8 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 				$('#send-lyric-button').attr('disabled','disabled');
 				$.ajax({
 					type: 'POST',
-					url: nv_siteroot + 'index.php',
-					data: nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&sendlyric=1&id=' + id + '&user_lyric=' + user_lyric.value +  '&body_lyric=' + encodeURIComponent(body_lyric),
+					url: nv_base_siteurl + 'index.php',
+					data: nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&sendlyric=1&id=' + id + '&user_lyric=' + user_lyric.value +  '&body_lyric=' + encodeURIComponent(body_lyric),
 					success: function(data){
 						if(data=='OK'||data=='WAIT'){
 							$('#body_lyric').val('');
@@ -302,15 +302,15 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	$(".tab_content").hide(); 
+	$(".tab_content").hide();
 	$("ul.mlo-tool li.tool:first").addClass("active").show();
-	$(".tab_content:first").show(); 
+	$(".tab_content:first").show();
 	$("ul.mlo-tool li.tool").click(function(){
 		$("ul.mlo-tool li.tool").removeClass("active");
-		$(this).addClass("active"); 
-		$(".tab_content").hide(); 
-		var activeTab = $(this).find("a").attr("href"); 
-		$(activeTab).show(); 
+		$(this).addClass("active");
+		$(".tab_content").hide();
+		var activeTab = $(this).find("a").attr("href");
+		$(activeTab).show();
 		return !1;
 	});
 });
@@ -422,7 +422,7 @@ $(document).ready(function(){
 	show_comment('{SDATA.song_id}','song',0);
 	$("a#addboxsong").click(function(){
 		if($(this).attr('class')==undefined){
-			$(this).addClass("mloaddedtobox"); 
+			$(this).addClass("mloaddedtobox");
 			addplaylist($(this).attr("name"));
 		}
 	});

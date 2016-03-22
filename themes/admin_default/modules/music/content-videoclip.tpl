@@ -17,7 +17,7 @@
 					<td class="aright"><strong>{LANG.video_name}<span class="requie"> (*)</span></strong></td>
 					<td>
 						<input type="text" class="form-control music-input txt-half" id="idtitle" name="tname" value="{DATA.tname}" original-title="{LANG.tip_video_title}"/>
-						<img class="middle" width="16" height="16" alt="get" onclick="get_alias('idtitle','res_get_alias');" src="{NV_BASE_SITEURL}images/refresh.png"/>
+						<img class="middle" width="16" height="16" alt="get" onclick="get_alias('idtitle','res_get_alias');" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/refresh.png"/>
 					</td>
 				</tr>
 				<tr>
@@ -139,19 +139,19 @@ $(document).ready(function(){
 		get_alias('idtitle', 'res_get_alias');
 	});
 	<!-- END: auto_get_alias -->
-	
+
 	$( "#listsingers-area" ).sortable({
 		cursor: "crosshair",
 		update: function(event, ui) { nv_sort_item('listsingers-area', 'casi'); }
 	});
 	$( "#listsingers-area" ).disableSelection();
-	
+
 	$( "#listauthors-area" ).sortable({
 		cursor: "crosshair",
 		update: function(event, ui) { nv_sort_item('listauthors-area', 'nhacsi'); }
 	});
 	$( "#listauthors-area" ).disableSelection();
-	
+
 	$("a#addonesinger").click(function(){
 		var singers = $("input[name=casi]").attr("value");
 		nv_open_browse( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=singer&findOneAndReturn=1&area=listsingers-area&input=casi&singers=" + singers, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
@@ -160,7 +160,7 @@ $(document).ready(function(){
 		var singers = $("input[name=casi]").attr("value");
 		nv_open_browse( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=singer&findListAndReturn=1&area=listsingers-area&input=casi&singers=" + singers, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
 	});
-	
+
 	$("a#addoneauthor").click(function(){
 		var authors = $("input[name=nhacsi]").attr("value");
 		nv_open_browse( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=author&findOneAndReturn=1&area=listauthors-area&input=nhacsi&authors=" + authors, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );

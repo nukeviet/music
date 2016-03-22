@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
 <div class="alboxw">
 	<div class="alwrap">
-		<div class="alheader"> 
+		<div class="alheader">
 			<span>{LANG.upload_song}</span>
 		</div>
 	</div>
@@ -84,13 +84,13 @@
 			if ($.trim(config.imageLoader) != ''){
 				imageLoader = '<img src="'+ config.imageLoader +'" alt="Uploader" />';
 			}
-			
-			var display = '<div class="uploadData" id="pxupload'+ itr +'_text" title="pxupload'+ itr +'">' + 
+
+			var display = '<div class="uploadData" id="pxupload'+ itr +'_text" title="pxupload'+ itr +'">' +
 			'<div class="close">&nbsp;</div>' +
 			'<strong class="greencolor">' + song + '</strong> - <strong class="greencolor">' + singer + '</strong>' +
 			' <span class="loader" style="display:none">'+ imageLoader +'</span>' +
 			'<div class="status">{LANG.upload_ready}...</div></div>';
-			
+
 			$("#px_display").append(display);
 			$("#pxupload" + itr).hide();
 			px.appendForm();
@@ -108,7 +108,7 @@
 						$(id + "_text").css("background-color", "#FFF0E1");
 						$(id + "_text .loader").show();
 						$(id + "_text .close").hide();
-						
+
 						$(id).submit();
 						$(id +"_frame").load(function(){
 							$(id + "_text .loader").hide();
@@ -179,7 +179,7 @@
 				'<tr><td>{LANG.upload_selectfile}</td><td><input class="txt-full" type="file" name="'+ config.inputName +'" id="'+ inputId +'" size="'+ config.inputSize +'" /></td></tr>' +
 				'<tr><td colspan="2" class="mcenter"><input class="mbutton" id="add' + itr + '" type="button" value="{LANG.add}" onclick="$.fileUploader.change();" /></td></tr>' +
 				'</table>' +
-				'</form>' + 
+				'</form>' +
 				'<iframe id="'+ iframeId +'" name="'+ iframeId +'" src="about:blank" style="display:none"></iframe>';
 				$("#pxupload_form").append(contents);
 			},
@@ -197,7 +197,7 @@
 				}
 			}
 		}
-		px.init(this);	
+		px.init(this);
 		return this;
 	}
 })(jQuery);
@@ -210,7 +210,7 @@
 <script type="text/javascript">
 $(function(){
 	$('#yourInputFileId').fileUploader({
-		imageLoader: nv_siteroot + 'images/load_bar.gif',
+		imageLoader: nv_base_siteurl + 'assets/images/load_bar.gif',
 		allowedExtension: 'mp3'
 	});
 });

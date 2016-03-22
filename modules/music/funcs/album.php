@@ -64,7 +64,7 @@ $array = array();
 while( $row = $result->fetch() )
 {
 	$singername = empty( $row['singername'] ) ? $lang_module['unknow'] : $row['singername'];
-	
+
 	// Check HIT
 	$checkhit = explode( "-", $row['hit'] );
 	$checkhit = $checkhit[0];
@@ -72,7 +72,7 @@ while( $row = $result->fetch() )
 	$array[] = array(
 		"name" => $row['tname'], //
 		"thumb" => $row['thumb'], //
-		"describe" => $row['describe'], //
+		"description" => $row['description'], //
 		"singer" => $singername, //
 		"checkhit" => $checkhit, //
 		"upload" => $row['upboi'], //

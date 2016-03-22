@@ -11,7 +11,7 @@
         </script>
         <!-- END: close -->
         <style type="text/css">
-			body {font-family: arial, Helvetica, sans-serif;font-size: 12px;color: #333333;background-color:#F0F0F0;padding:20px}            
+			body {font-family: arial, Helvetica, sans-serif;font-size: 12px;color: #333333;background-color:#F0F0F0;padding:20px}
             h1{margin:0;padding:0;text-align:center;font-size:22px;margin-bottom:10px}
 			h2{margin:0;padding:0;font-size:16px;line-height:22px}
             em{color:#ff0000}
@@ -68,8 +68,8 @@
                 <em>*</em>
                 <div class="fr" style="width: 250px; display: inline;">
                     <input class="form-control" name="nv_seccode" type="text" id="seccode" maxlength="{GFX_NUM}" style="width: 60px; float: left !important; margin-top: 2px !important;"/>
-					<img class="fl" id="vimg" alt="{N_CAPTCHA}" title="{N_CAPTCHA}" src="{NV_BASE_SITEURL}index.php?scaptcha=captcha" width="{GFX_WIDTH}" height="{GFX_HEIGHT}" />
-					<img alt="{CAPTCHA_REFRESH}" title="{CAPTCHA_REFRESH}" src="{CAPTCHA_REFR_SRC}" width="16" height="16" class="refresh fl resfresh1" onclick="nv_change_captcha('vimg','seccode');"/>
+					<img class="fl captchaImg" alt="{N_CAPTCHA}" title="{N_CAPTCHA}" src="{NV_BASE_SITEURL}index.php?scaptcha=captcha" width="{GFX_WIDTH}" height="{GFX_HEIGHT}" />
+					<img alt="{CAPTCHA_REFRESH}" title="{CAPTCHA_REFRESH}" src="{CAPTCHA_REFR_SRC}" width="16" height="16" class="refresh fl resfresh1" onclick="change_captcha('#seccode')"/>
                 </div>
             </div>
             <!-- END: captcha -->

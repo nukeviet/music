@@ -1,8 +1,8 @@
 <!-- BEGIN: main -->
 <div class="alboxw">
 	<div class="alwrap">
-		<div class="alheader"> 
-			<span><a class="boldcolor{active_1}" href="{GDATA.hot}" title="{LANG.album_hotest}">{LANG.album_hotest}</a></span> - 
+		<div class="alheader">
+			<span><a class="boldcolor{active_1}" href="{GDATA.hot}" title="{LANG.album_hotest}">{LANG.album_hotest}</a></span> -
 			<span><a class="boldcolor{active_2}" href="{GDATA.new}" title="{LANG.album_newest}">{LANG.album_newest}</a></span>
 		</div>
 		<div class="alcontent">
@@ -14,7 +14,7 @@
 				<a class="singer" href="{ROW.url_listen}" title="{LANG.listen_album} {ROW.name}"><strong>{ROW.name}</strong></a> - <a class="singer" title="{ROW.name}" href="{ROW.url_search_singer}"><strong>{ROW.singer}</strong></a>
 				<p>{LANG.who_create_1}: <a class="singer" title="{ROW.upload}" href="{ROW.url_search_upload}">{ROW.upload}</a> | {LANG.view}: {ROW.view}
 				<!-- BEGIN: hit -->&nbsp;&nbsp;<span class="musicicon mhit miconiblock">&nbsp;&nbsp;&nbsp;</span><!-- END: hit --></p>
-				{ROW.describe}
+				{ROW.description}
 				<div class="clear"></div>
 				<div class="hr"></div>
 			<!-- END: loop -->

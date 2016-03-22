@@ -43,7 +43,7 @@ $base_url = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_D
 $data_search = array(
 	"title" => nv_substr( $nv_Request->get_title( 'title', 'get', '', 1 ), 0, 255),
 	"casi" => nv_substr( $nv_Request->get_title( 'casi', 'get', '', 1 ), 0, 255),
-	"describe" => nv_substr( $nv_Request->get_title( 'describe', 'get', '', 1 ), 0, 255),
+	"description" => nv_substr( $nv_Request->get_title( 'description', 'get', '', 1 ), 0, 255),
 	"upboi" => nv_substr( $nv_Request->get_title( 'upboi', 'get', '', 1 ), 0, 255),
 );
 
@@ -60,7 +60,7 @@ if( ! empty( $data_search['title'] ) )
 if( ! empty( $data_search['casi'] ) )
 {
 	$base_url .= "&amp;casi=" . $data_search['casi'];
-	
+
 	// Tim kiem ca si
 	$singer_id = $classMusic->search_singer_id( $data_search['casi'], 3 );
 	if( $singer_id )
@@ -73,10 +73,10 @@ if( ! empty( $data_search['casi'] ) )
 	}
 }
 
-if( ! empty( $data_search['describe'] ) )
+if( ! empty( $data_search['description'] ) )
 {
-	$base_url .= "&amp;describe=" . $data_search['describe'];
-	$sql .= " AND ( describe LIKE '%" . $db->dblikeescape( $data_search['describe'] ) . "%' )";
+	$base_url .= "&amp;description=" . $data_search['description'];
+	$sql .= " AND ( description LIKE '%" . $db->dblikeescape( $data_search['description'] ) . "%' )";
 }
 
 if( ! empty( $data_search['upboi'] ) )

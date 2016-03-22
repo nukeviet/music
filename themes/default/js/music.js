@@ -25,17 +25,17 @@ function senderror(id, where){
 	} else {
 		$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'senderror=1&id=' + id + '&where=' + where + '&user=' + user.value + '&root_error=' + root_error + '&body=' + encodeURIComponent(body), function(res) {
 			resultgift(res);
-		});	
+		});
 	}
 	return;
 }
 
 // Them paylist
-function addplaylist(id) 
+function addplaylist(id)
 {
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'addplaylist=1&id=' + id, function(res) {
 		resultplaylist(res);
-	});	
+	});
 	return;
 }
 function resultplaylist(res) {
@@ -43,17 +43,16 @@ function resultplaylist(res) {
 	if (r_split[0] == 'OK') {
 		$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=showplaylist&nocache=' + new Date().getTime(), '', function(res) {
 			$('#'+playlist).html(res);
-		});	
+		});
 	} else alert(res);
 }
 
 // Xoa paylist (dang luu trong phien lam viec hien tai)
 function delplaylist()
 {
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delplaylist=1' , '', 'resultgift');
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'delplaylist=1', function(res) {
 		resultgift(res);
-	}
+	});
 	return;
 }
 
@@ -72,7 +71,7 @@ function sendcommment(id, where) {
 		sd.disabled = true;
 		$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=postcomment&nocache=' + new Date().getTime(), 'id=' + id + '&where=' + where + '&name=' + name.value + '&body=' + encodeURIComponent(body), function(res) {
 			comment_result(res);
-		}
+		});
 	}
 	return;
 }
@@ -96,7 +95,7 @@ function comment_result(res) {
 function show_comment(id, where, page) {
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=comment&nocache=' + new Date().getTime(), 'id=' + id + '&where=' + where + '&page=' + page, function(res) {
 		$('#comment-content').html(res);
-	}
+	});
 }
 
 // Luu album
@@ -104,7 +103,7 @@ function saveplaylist(name, singer, message){
 	document.getElementById('submitpl').disabled = true;
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'savealbum=1&name=' + name + '&singer=' + singer + '&message=' + encodeURIComponent(message), function(res) {
 		aftersavelist(res);
-	}
+	});
 }
 function aftersavelist(res){
 	var r_split = res.split("_");
@@ -122,7 +121,7 @@ function delsongfrlist(stt, mess) {
 	if ( confirm( mess ) )
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'delsongfrlist=1&stt=' + stt, function(res) {
 		afterdelsong(res);
-	}
+	});
 }
 
 // Xoa mot bai hat tu playlist da luu
@@ -130,7 +129,7 @@ function delsongfrplaylist(id, plid, mess) {
 	if ( confirm( mess ) )
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'delsongfrplaylist=1&id=' + id + '&plid=' + plid, function(res) {
 		afterdelsong(res);
-	}
+	});
 }
 
 // Xoa mot bai hat cua thanh vien
@@ -138,7 +137,7 @@ function delsong(id, mess) {
 	if ( confirm ( mess ) )
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'delsong=1&id=' + id, function(res) {
 		afterdelsong(res);
-	}
+	});
 }
 function afterdelsong(res)
 {
@@ -160,7 +159,7 @@ function dellist(id, mess) {
 	if( confirm( mess ) )
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'dellist=1&id=' + id, function(res) {
 		afterdellist(res);
-	}
+	});
 }
 function afterdellist(res)
 {
@@ -175,14 +174,14 @@ function afterdellist(res)
 function votethissong( id ) {
 	$.post(script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&nocache=' + new Date().getTime(), 'votesong=1&id=' + id, function(res) {
 		aftervote(res);
-	}
+	});
 }
 function aftervote(res)
 {
 	var r_split = res.split("_");
 	if (r_split[0] == "OK") {
 		document.getElementById("vote").innerHTML = "(" + r_split[1] + ")";
-	} 
+	}
 	alert(r_split[2]);
 }
 

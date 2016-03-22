@@ -14,7 +14,7 @@
 					<td class="strong aright">{LANG.album_name}<span class="requie"> (*)</span></td>
 					<td>
 						<input id="idtitle" name="tenthat" class="form-control music-input txt-half" value="{DATA.tname}" type="text" original-title="{LANG.tip_album_title}"/>
-						<img alt="Select" onclick="get_alias('idtitle','res_get_alias');" class="middle" width="16" src="{NV_BASE_SITEURL}images/refresh.png"/>
+						<img alt="Select" onclick="get_alias('idtitle','res_get_alias');" class="middle" width="16" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/refresh.png"/>
 					</td>
 				</tr>
 				<tr>
@@ -55,7 +55,7 @@
 				<tr>
 					<td colspan="3">
 						<p><strong>{LANG.describle}</strong></p>
-						{DATA.describe}
+						{DATA.description}
 					</td>
 				</tr>
 				<tr>
@@ -93,13 +93,13 @@ $(document).ready(function(){
 		nv_open_browse('{NV_BASE_ADMINURL}index.php?' + nv_name_variable + '=upload&popup=1&area=thumb&path={IMG_DIR}&type=image', 'NVImg', '850', '500', 'resizable=no,scrollbars=no,toolbar=no,location=no,status=no');
 		return false;
 	});
-	
+
 	<!-- BEGIN: auto_get_alias -->
 	$("#idtitle").change(function(){
 		get_alias('idtitle', 'res_get_alias');
 	});
 	<!-- END: auto_get_alias -->
-	
+
 	// Tooltip
 	$('.music-input').tipsy({
 		trigger: 'focus',
@@ -124,7 +124,7 @@ $(document).ready(function(){
 		var singers = $("input[name=casi]").attr("value");
 		nv_open_browse( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=singer&findListAndReturn=1&area=listsingers-area&input=casi&singers=" + singers, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
 	});
-	
+
 	// Bai hat
 	$( "#listsong-area" ).sortable({
 		cursor: "crosshair",

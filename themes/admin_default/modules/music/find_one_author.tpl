@@ -5,13 +5,14 @@
         <meta http-equiv="Content-Language" content="vi" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>{LANG.author_add1}</title>
+		<link type="text/css" href="{NV_BASE_SITEURL}themes/default/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="StyleSheet" href="{NV_BASE_SITEURL}themes/{GLOBAL_CONFIG.admin_theme}/css/admin.css" type="text/css" />
 		<link type="text/css" href="{NV_BASE_SITEURL}themes/{GLOBAL_CONFIG.module_theme}/css/{MODULE_FILE}.css" rel="stylesheet" />
-		<script type="text/javascript"> var nv_siteroot = "{NV_BASE_SITEURL}";</script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/language/{NV_LANG_INTERFACE}.js"></script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/global.js"></script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/admin.js"></script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/jquery/jquery.min.js"></script>
+		<script type="text/javascript"> var nv_base_siteurl = "{NV_BASE_SITEURL}";</script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/{NV_LANG_INTERFACE}.js"></script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/global.js"></script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/admin.js"></script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery/jquery.min.js"></script>
 	</head>
 	<body>
 		<div id="getuidcontent">
@@ -66,10 +67,10 @@
 			<script type="text/javascript">
 			function nv_close_pop( id, name ){
 				var authors = "{AUTHORS}";
-				
+
 				if( authors == "" ) authors = id;
 				else authors = authors + "," + id;
-				
+
 				$("#{RETURNAREA}", opener.document).append('<li class="' + id + '">' + name + '<span onclick="nv_del_item_on_list(' + id + ', \'{RETURNAREA}\', \'{LANG.author_del_confirm}\', \'{RETURNINPUT}\');" class="delete-icon">&nbsp;</span></li>');
 				$("input[name={RETURNINPUT}]", opener.document).val(authors);
 				window.close()

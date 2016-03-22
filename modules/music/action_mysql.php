@@ -13,7 +13,6 @@ $sql_drop_module = array();
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ads";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album";
-$sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_category";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_album";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_song";
@@ -74,13 +73,6 @@ $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_
   listsong mediumtext NOT NULL COMMENT 'Danh sách id bài hát có dạng id1,id2,id3...',
   addtime int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
   hit varchar(50) NOT NULL DEFAULT '' COMMENT 'Thông tin HIT của album',
-  PRIMARY KEY (id)
-) ENGINE=MyISAM";
-
-$sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot (
-  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  albumid mediumint(8) unsigned NOT NULL DEFAULT '0',
-  stt mediumint(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
@@ -276,7 +268,7 @@ $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_
 ) ENGINE=MyISAM";
 
 // Cau hinh FTP mac dinh
-$sql_create_module[] = "INSERT INTO " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp 
+$sql_create_module[] = "INSERT INTO " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp
 (id, host, user, pass, fulladdress, subpart, ftppart, active) VALUES
 (2, 'nhaccuatui', 'hoaquynhtim99', 'hoaquynhtim99', 'http://www.nhaccuatui.com/', 'bai-hat', '/', 1),
 (3, 'zing', 'hoaquynhtim99', 'hoaquynhtim99', 'http://mp3.zing.vn/', 'bai-hat', '/', 1),
@@ -301,14 +293,6 @@ $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_
   config_value varchar(255) NOT NULL DEFAULT '' COMMENT 'Giá trị được thiết lập',
   UNIQUE KEY config_key (config_key)
 ) ENGINE=MyISAM";
-
-// Them vao hot album
-$i = 1;
-while( $i <= 9 )
-{
-	$sql_create_module[] = "INSERT INTO " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot (id,albumid,stt) VALUES ('" . $i . "', '0', '" . $i . "')";
-	$i ++;
-}
 
 // Them vao cau hinh
 $sql_create_module[] = "INSERT INTO  " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting (config_key, config_value) VALUES

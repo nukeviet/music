@@ -81,7 +81,7 @@ if( ! empty( $array_singer ) and $query_search['where'] == 'song' )
 if( $query_search['where'] == 'song' )
 {
 	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.ten AS singeralias, b.tenthat AS singername, c.ten AS authoralias, c.tenthat AS authorname FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_author AS c ON a.nhacsi=c.id WHERE a.active=1";
-	
+
 	if( $query_search['SearchBy'] == 'singer' ) // Tim bai hat theo ca si
 	{
 		if( ! empty( $query_search['id'] ) )
@@ -138,7 +138,7 @@ if( $query_search['where'] == 'song' )
 			exit();
 		}
 	}
-	
+
 	if( $query_search['page'] <= 1 )
 	{
 		$first_page = 0;
@@ -147,13 +147,13 @@ if( $query_search['where'] == 'song' )
 	{
 		$first_page = ( $query_search['page'] - 1 ) * 20;
 	}
-	
+
 	$sql .= " ORDER BY a.id DESC LIMIT " . $first_page . ", 20";
-	
+
 	$result = $db->query( $sql );
 	$query = $db->query( "SELECT FOUND_ROWS()" );
 	$all_page = $query->fetchColumn();
-	
+
 	while( $row = $result->fetch() )
 	{
 		$checkhit = explode( "-", $row['hit'] );
@@ -172,7 +172,7 @@ if( $query_search['where'] == 'song' )
 		// Check HIT
 		$checkhit = explode( "-", $row['hit'] );
 		$checkhit = $checkhit[0];
-		
+
 		$array_song[] = array(
 			"id" => $row['id'], //
 			"name" => $row['tenthat'], //
@@ -191,7 +191,7 @@ if( $query_search['where'] == 'song' )
 			"checkhit" => $checkhit //
 		);
 	}
-	
+
 	if( $query_search['page'] <= 1 ) // Hien thi ket qua album va video
 	{
 		if( ! empty( $array_singer ) )
@@ -202,7 +202,7 @@ if( $query_search['where'] == 'song' )
 		{
 			$sub_sql = " a.tname LIKE '%" . $DB_LikeKey . "%'";
 		}
-	
+
 		$sqlvideo = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE" . $sub_sql . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,3";
 		$sqlalbum = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE" . $sub_sql . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,4";
 
@@ -214,7 +214,7 @@ if( $query_search['where'] == 'song' )
 			while( $rsv = $resultvideo->fetch() )
 			{
 				$singername = $rsv['singername'] ? $rsv['singername'] : $lang_module['unknow'];
-				
+
 				$array_video[] = array(
 					"videoname" => $rsv['tname'], //
 					"videosinger" => $singername, //
@@ -224,13 +224,13 @@ if( $query_search['where'] == 'song' )
 				);
 			}
 		}
-		
+
 		if( $resultalbum->rowCount() > 0 )
 		{
 			while( $rsa = $resultalbum->fetch() )
 			{
 				$singername = $rsa['singername'] ? $rsa['singername'] : $lang_module['unknow'];
-				
+
 				$array_album[] = array(
 					"albumname" => $rsa['tname'], //
 					"albumsinger" => $singername, //
@@ -245,7 +245,7 @@ if( $query_search['where'] == 'song' )
 elseif( $query_search['where'] == 'album' ) // Tim kiem album
 {
 	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1";
-	
+
 	if( $query_search['SearchBy'] == 'singer' ) // Tim album theo ca si
 	{
 		if( ! empty( $query_search['id'] ) )
@@ -272,7 +272,7 @@ elseif( $query_search['where'] == 'album' ) // Tim kiem album
 	{
 		$sql .= " AND a.upboi LIKE '%" . $DB_LikeKey . "%'";
 	}
-	
+
 	if( $query_search['page'] <= 1 )
 	{
 		$first_page = 0;
@@ -281,13 +281,13 @@ elseif( $query_search['where'] == 'album' ) // Tim kiem album
 	{
 		$first_page = ( $query_search['page'] - 1 ) * 20;
 	}
-	
+
 	$sql .= " ORDER BY a.id DESC LIMIT " . $first_page . ", 20";
-	
+
 	$result = $db->query( $sql );
 	$query = $db->query( "SELECT FOUND_ROWS()" );
 	$all_page = $query->fetchColumn();
-	
+
 	while( $row = $result->fetch() )
 	{
 		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
@@ -295,7 +295,7 @@ elseif( $query_search['where'] == 'album' ) // Tim kiem album
 		// Check HIT
 		$checkhit = explode( "-", $row['hit'] );
 		$checkhit = $checkhit[0];
-		
+
 		$array_album[] = array(
 			"albumname" => $row['tname'], //
 			"albumsinger" => $singername, //
@@ -303,7 +303,7 @@ elseif( $query_search['where'] == 'album' ) // Tim kiem album
 			"thumb" => $row['thumb'], //
 			"upboi" => $row['upboi'], //
 			"numview" => $row['numview'], //
-			"describe" => $row['describe'], //
+			"description" => $row['description'], //
 			"albumview" => $mainURL . "=listenlist/" . $row['id'] . "/" . $row['name'], //
 			"url_search_upload" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $row['upboi'] ) . "&amp;id=0&amp;type=upload", //
 			"url_search_singer" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer" //
@@ -313,7 +313,7 @@ elseif( $query_search['where'] == 'album' ) // Tim kiem album
 elseif( $query_search['where'] == 'playlist' )
 {
 	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.username, b.full_name FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist AS a LEFT JOIN " . NV_USERS_GLOBALTABLE . " AS b ON a.userid=b.userid WHERE a.active=1";
-	
+
 	if( $query_search['SearchBy'] == 'singer' ) // Tim playlist theo ca si
 	{
 		$sql .= " AND a.singer LIKE '%" . $DB_LikeKey . "%'";
@@ -326,7 +326,7 @@ elseif( $query_search['where'] == 'playlist' )
 	{
 		$sql .= " AND a.username LIKE '%" . $DB_LikeKey . "%'";
 	}
-	
+
 	if( $query_search['page'] <= 1 )
 	{
 		$first_page = 0;
@@ -335,13 +335,13 @@ elseif( $query_search['where'] == 'playlist' )
 	{
 		$first_page = ( $query_search['page'] - 1 ) * 20;
 	}
-	
+
 	$sql .= " ORDER BY a.id DESC LIMIT " . $first_page . ", 20";
-	
+
 	$result = $db->query( $sql );
 	$query = $db->query( "SELECT FOUND_ROWS()" );
 	$all_page = $query->fetchColumn();
-	
+
 	while( $row = $result->fetch() )
 	{
 		$array_playlist[] = array(
@@ -359,7 +359,7 @@ elseif( $query_search['where'] == 'playlist' )
 elseif( $query_search['where'] == 'video' )
 {
 	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.ten AS singeralias, b.tenthat AS singername, c.ten AS authoralias, c.tenthat AS authorname FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_author AS c ON a.nhacsi=c.id WHERE a.active=1";
-	
+
 	if( $query_search['SearchBy'] == 'singer' ) // Tim video theo ca si
 	{
 		if( ! empty( $query_search['id'] ) )
@@ -405,7 +405,7 @@ elseif( $query_search['where'] == 'video' )
 			exit();
 		}
 	}
-	
+
 	if( $query_search['page'] <= 1 )
 	{
 		$first_page = 0;
@@ -414,13 +414,13 @@ elseif( $query_search['where'] == 'video' )
 	{
 		$first_page = ( $query_search['page'] - 1 ) * 20;
 	}
-	
+
 	$sql .= " ORDER BY a.id DESC LIMIT " . $first_page . ", 20";
-	
+
 	$result = $db->query( $sql );
 	$query = $db->query( "SELECT FOUND_ROWS()" );
 	$all_page = $query->fetchColumn();
-	
+
 	while( $row = $result->fetch() )
 	{
 		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
@@ -428,7 +428,7 @@ elseif( $query_search['where'] == 'video' )
 		// Check HIT
 		$checkhit = explode( "-", $row['hit'] );
 		$checkhit = $checkhit[0];
-		
+
 		$array_video[] = array(
 			"videoname" => $row['tname'], //
 			"videosinger" => $singername, //
@@ -450,7 +450,7 @@ $contents = nv_music_search( $array_song, $array_album, $array_video, $array_sin
 if( ! empty( $array_singer ) )
 {
 	$page_title = $array_singer['tenthat'] . " " . NV_TITLEBAR_DEFIS . " " . $lang_module['singer'] . " " . $array_singer['tenthat'] . " " . NV_TITLEBAR_DEFIS . " " . $page_title;
-	
+
 	$description = $array_singer['introduction'];
 }
 elseif( $query_search['where'] == "song" )

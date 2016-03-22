@@ -9,7 +9,7 @@
 		<div class="ms-shdetail" id="singersdetail">
 			<h2 class="medium greencolor mlotitle">{ALBUM.name} - <a class="singer" href="{ALBUM.url_search_singer}" title="{ALBUM.singer}">{ALBUM.singer}</a><!-- BEGIN: hit --><span class="musicicon mhit hitsong">&nbsp;&nbsp;&nbsp;</span><!-- END: hit --></h2>
 			<span class="msmall">{LANG.who_post}: <a class="singer" href="{ALBUM.url_search_upload}" title="{ALBUM.who_post}">{ALBUM.who_post}</a> | {LANG.view}: {ALBUM.numview}</span><br />
-			{ALBUM.describe}
+			{ALBUM.description}
 		</div>
 		<div class="ms-shshow">
 			<a href="javascript:void(0);" rel="0|{LANG.view_expand}|{LANG.view_collapse}|singersdetail" class="musicicon zoomin greencolor ms-shd" title="{LANG.view_expand}">{LANG.view_expand}</a>
@@ -30,7 +30,7 @@
 			// Install ADS
 			var ads_width = $('#music-ads').width();
 			$('#adscontent').html(
-				'<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="'+ads_width+'" height="120">' + 
+				'<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="'+ads_width+'" height="120">' +
 					'<param name="src" value="{ads.link}" />' +
 					'<param name="loop" value="true" />' +
 					'<param name="allowscriptaccess" value="always" />' +
@@ -58,7 +58,7 @@
 				<div class="clear"></div>
 			</div>
 			<!-- END: song -->
-		</div>	
+		</div>
 	</div>
 </div>
 <div class="clear"></div>
@@ -137,15 +137,15 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	$(".tab_content").hide(); 
+	$(".tab_content").hide();
 	$("ul.mlo-tool li.tool:first").addClass("active").show();
-	$(".tab_content:first").show(); 
+	$(".tab_content:first").show();
 	$("ul.mlo-tool li.tool").click(function(){
 		$("ul.mlo-tool li.tool").removeClass("active");
-		$(this).addClass("active"); 
-		$(".tab_content").hide(); 
-		var activeTab = $(this).find("a").attr("href"); 
-		$(activeTab).show(); 
+		$(this).addClass("active");
+		$(".tab_content").hide();
+		var activeTab = $(this).find("a").attr("href");
+		$(activeTab).show();
 		return !1;
 	});
 });

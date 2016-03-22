@@ -21,7 +21,7 @@
 					<td class="text-center"><span class="requie">*</span></td>
 					<td>
 						<input class="form-control music-input txt-half" id="idtitle" name="tenthat" value="{DATA.tenthat}" type="text"/>
-						<img height="16" alt="Refreshing" onclick="get_alias('idtitle','res_get_alias');" style="cursor:pointer;vertical-align:middle;" width="16" src="{NV_BASE_SITEURL}images/refresh.png"/>
+						<img height="16" alt="Refreshing" onclick="get_alias('idtitle','res_get_alias');" style="cursor:pointer;vertical-align:middle;" width="16" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/refresh.png"/>
 					</td>
 				</tr>
 				<tr>

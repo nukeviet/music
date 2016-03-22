@@ -108,7 +108,7 @@ if( $error )
 }
 
 $contents .= "
-	<form method=\"post\"> 
+	<form method=\"post\">
 	<table class=\"tab1\">
 		<thead>
 			<tr>
@@ -140,7 +140,7 @@ $contents .= "
 				<td>" . $lang_module['content'] . "
 				</td>
 				<td>
-					<textarea style=\"width: 680px\" value=\"\" name=\"body\" id=\"describe\" cols=\"20\" rows=\"15\">" . nv_htmlspecialchars( $comment['body'] ) . "</textarea>\n
+					<textarea style=\"width: 680px\" value=\"\" name=\"body\" id=\"description\" cols=\"20\" rows=\"15\">" . nv_htmlspecialchars( $comment['body'] ) . "</textarea>\n
 				</td>
 			</tr>
 			<tr>

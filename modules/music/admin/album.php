@@ -134,7 +134,7 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 	$array_singer_ids = $classMusic->string2array( $array_singer_ids );
 
 	if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
-	
+
 	$a = 0;
 	foreach( $array as $row )
 	{
@@ -165,12 +165,12 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 {
 	$listalbum = nv_substr( $nv_Request->get_title( 'listalbum', 'get', '', 1 ), 0, 255);
-	
+
 	$returnArea = nv_substr( $nv_Request->get_title( 'area', 'get', '', 1 ), 0, 255);
 	$returnInput = nv_substr( $nv_Request->get_title( 'input', 'get', '', 1 ), 0, 255);
-	
+
 	if( $nv_Request->isset_request( 'loadname', 'get' ) )
-	{		
+	{
 		$sql = "SELECT id, tname FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id IN(" . $listalbum . ")";
 		$result = $db->query( $sql );
 
@@ -180,7 +180,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		{
 			$_tmp[$albumid] = $albumname;
 		}
-		
+
 		$listalbum = $classMusic->string2array( $listalbum );
 		foreach( $listalbum as $_sid )
 		{
@@ -198,7 +198,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		include NV_ROOTDIR . '/includes/footer.php';
 		die();
 	}
-	
+
 	$listalbum = $classMusic->string2array( $listalbum );
 
 	$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_album";
@@ -255,7 +255,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		$array_singer_ids = $classMusic->string2array( $array_singer_ids );
 
 		if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
-		
+
 		$a = 0;
 		foreach( $array as $row )
 		{
@@ -296,12 +296,12 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-    
+
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     $list_levelid = $nv_Request->get_title( 'listid', 'post', '' );
-    
+
     if ( empty( $id ) and empty ( $list_levelid ) ) die( 'NO' );
-    
+
 	$listid = array();
 	if ( $id )
 	{
@@ -317,21 +317,13 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$listid = $list_levelid;
 		$num = sizeof( $list_levelid );
 	}
-	
+
 	$albums = $classMusic->getalbumbyID( $listid );
-	
+
 	if( sizeof( $albums ) != $num ) die( 'NO' );
-	
+
 	foreach( $albums as $id => $album )
 	{
-		// Xoa trong album trang chu
-		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_main_album WHERE albumid=" . $id;
-		$db->query( $sql );
-
-		// Xoa album HOT
-		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_album_hot WHERE albumid=" . $id;
-		$db->query( $sql );
-
 		// Xoa album
 		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id=" . $id;
 		$db->query( $sql );
@@ -341,11 +333,11 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$classMusic->delerror( 'album', $album['id'] );
 
 		$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET album=0 WHERE album=" . $id );
-	}	
-    
+	}
+
     $nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_album'), implode( ", ", array_keys( $albums ) ), $admin_info['userid'] );
-	
+
     die( 'OK' );
 }
 
@@ -353,13 +345,13 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-    
+
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     $controlstatus = $nv_Request->get_int( 'status', 'post', 0 );
     $array_id = $nv_Request->get_title( 'listid', 'post', '' );
-    
+
     if ( empty( $id ) and empty ( $array_id ) ) die( 'NO' );
-    
+
 	$listid = array();
 	if ( $id )
 	{
@@ -375,18 +367,18 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 		$listid = $array_id;
 		$num = sizeof( $array_id );
 	}
-	
+
 	$albums = $classMusic->getalbumbyID( $listid );
-	
+
 	if( sizeof( $albums ) != $num ) die( 'NO' );
-	
+
 	$array_status = array();
-	
+
 	foreach( $albums as $album )
 	{
 		$id = $album['id'];
-		$active = $album['active'];
-		
+		$active = $album['is_active'];
+
 		if ( empty ( $controlstatus ) )
 		{
 			$array_status[$id] = $active ? 0 : 1;
@@ -396,15 +388,15 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 			$array_status[$id] = ( $controlstatus == 1 ) ? 1 : 0;
 		}
 	}
-	
+
 	foreach( $array_status as $id => $active )
 	{
-		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_album SET active=" . $active . " WHERE id=" . $id;
-		$db->query( $sql );	
-	}	
-    
+		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_album SET is_active=" . $active . " WHERE id=" . $id;
+		$db->query( $sql );
+	}
+
     $nv_Cache->delMod( $module_name );
-	
+
     die( 'OK' );
 }
 
@@ -478,7 +470,7 @@ foreach ( $order as $key => $check )
 		"url" => $base_url . "&amp;order_" . $key . "=" . $opposite_order[$order[$key]['order']],
 		"title" => sprintf ( $lang_module['filter_order_by'], "&quot;" . $lang_order_2[$key] . "&quot;" ) . " " . $lang_order_1[$order[$key]['order']]
 	);
-	
+
 	if ( ! in_array ( $check['order'], $check_order ) )
 	{
 		$order[$key]['order'] = "NO";
@@ -522,7 +514,7 @@ while( $row = $result->fetch() )
 {
 	$array_singer_ids = $array_singer_ids == '' ? $row['casi'] : $array_singer_ids . "," . $row['casi'];
 	$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-avatar.gif";
-	
+
 	$array[] = array(
 		"id" => $row['id'],
 		"title" => $row['tname'],
@@ -531,7 +523,7 @@ while( $row = $result->fetch() )
 		"numview" => $row['numview'],
 		"numsong" => $row['numsong'],
 		"addtime" => nv_date( "H:i d/m/Y", $row['addtime'] ),
-		"status" => $row['active'] ? " checked=\"checked\"" : "",
+		"status" => $row['is_active'] ? " checked=\"checked\"" : "",
 		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-album&amp;id=" . $row['id'],
 		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : ""
 	);
@@ -587,7 +579,7 @@ if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( 
 foreach( $array as $row )
 {
 	$row['singers'] = $classMusic->build_author_singer_2string( $array_singers, $row['singers'] );
-	
+
 	$xtpl->assign( 'ROW', $row );
 	$xtpl->parse( 'main.row' );
 }

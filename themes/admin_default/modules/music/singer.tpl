@@ -24,7 +24,7 @@ $(document).ready(function(){
 
 		if( f_q != '' ){
 			$('#filter-form input, #filter-form select').attr('disabled', 'disabled');
-			window.location = '{NV_BASE_ADMINURL}index.php?{NV_NAME_VARIABLE}={MODULE_NAME}&{NV_OP_VARIABLE}={OP}&q=' + f_q;	
+			window.location = '{NV_BASE_ADMINURL}index.php?{NV_NAME_VARIABLE}={MODULE_NAME}&{NV_OP_VARIABLE}={OP}&q=' + f_q;
 		}else{
 			alert ('{LANG.filter_err_submit}');
 		}
