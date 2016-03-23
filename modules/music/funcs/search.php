@@ -204,7 +204,7 @@ if( $query_search['where'] == 'song' )
 		}
 
 		$sqlvideo = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE" . $sub_sql . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,3";
-		$sqlalbum = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE" . $sub_sql . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,4";
+		$sqlalbum = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE" . $sub_sql . " AND a.is_active=1 ORDER BY a.id DESC LIMIT 0,4";
 
 		$resultvideo = $db->query( $sqlvideo );
 		$resultalbum = $db->query( $sqlalbum );

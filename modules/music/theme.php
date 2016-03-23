@@ -1048,7 +1048,7 @@ function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $arra
 	$xtpl->assign( 'GDATA', $g_array );
 	$xtpl->assign( 'DATA', $array );
 	$xtpl->assign( 'base_url', NV_BASE_SITEURL . "modules/" . $module_file . "/data/" );
-	$xtpl->assign( 'ads', getADS() );
+	//$xtpl->assign( 'ads', getADS() );
 	$xtpl->assign( 'playerurl', $global_config['site_url'] . "/modules/" . $module_file . "/data/" );
 	$xtpl->assign( 'thisurl', $mainURL . "=video" );
 

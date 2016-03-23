@@ -58,11 +58,11 @@ while( $row = $result2->fetch() )
 	$xtpl->assign( 'atitle', $row['status'] ? $lang_module['error_check_viewed'] : "" );
 	$xtpl->assign( 'addtime', nv_date( "d/m/Y H:i", $row['addtime'] ) );
 
-	if( $row['where'] == 'song' )
+	if( $row['wheres'] == 'song' )
 	{
 		$album = getsongbyID( $row['sid'] );
 		$xtpl->assign( 'what', $lang_module['song'] . ' ' . $album['tenthat'] );
-		$xtpl->assign( 'url_edit', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=addsong&amp;id=" . $row['sid'] );
+		$xtpl->assign( 'url_edit', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-song&amp;id=" . $row['sid'] );
 
 		$xtpl->assign( 'SONG', $row['sid'] );
 		$xtpl->parse( 'main.row.check' );
@@ -74,7 +74,6 @@ while( $row = $result2->fetch() )
 		$xtpl->assign( 'url_edit', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=addalbum&amp;id=" . $row['sid'] );
 	}
 
-	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_error&id=" . $row['id'] );
 	$xtpl->parse( 'main.row' );
 }

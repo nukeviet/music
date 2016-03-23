@@ -13,7 +13,7 @@
 		var player_width = $('#player').width();
 		var player_height = parseInt(player_width * 9.65 / 16);
 		jwplayer("player").setup({
-			flashplayer: "{base_url}player.swf", file: "{DATA.link}", image: "{ads}", controlbar: "bottom",menu:false,
+			flashplayer: "{base_url}player.swf", file: "{DATA.duongdan}", image: "{ads}", controlbar: "bottom",menu:false,
 			volume: 100, height: player_height, width: player_width, repeat: "always", autostart: "true"
 		});
 		</script>
@@ -35,7 +35,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 	<li><a class="musicicon mzingme" href="javascript:void(0);" onclick="share_zingme();"></a></li>
 	<li><a class="musicicon myahoo" href="javascript:void(0);" onclick="share_yahoo();"></a></li>
 	<li><g:plusone size="small" annotation="none"></g:plusone></li>
-	<li><a rel="nofollow" class="musicicon memail" href="javascript:void(0);" onclick="NewWindow('{DATA.URL_SENDMAIL}','{DATA.TITLE}','500','500','no');return false" ></a></li>
+	<li><a rel="nofollow" class="musicicon memail" href="javascript:void(0);" onclick="nv_open_browse('{DATA.URL_SENDMAIL}','{DATA.TITLE}','500','500','no');return false" ></a></li>
 </ul>
 <div class="clear"></div>
 <!-- Gift Tab -->

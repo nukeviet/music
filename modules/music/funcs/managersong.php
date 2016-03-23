@@ -61,22 +61,22 @@ if( ! empty( $userid ) )
 			$song['nhacsi'] = $songdata['nhacsi'] = $nv_Request->get_int( 'nhacsi', 'post', 0 );
 			$songdata['nhacsimoi'] = $nv_Request->get_title( 'nhacsimoi', 'post', '' );
 			$song['theloai'] = $songdata['theloai'] = $nv_Request->get_int( 'theloai', 'post', 0 );
-			
+
 			if( $songdata['casimoi'] != '' )
 			{
 				$song['casi'] = $songdata['casi'] = newsinger( change_alias( $songdata['casimoi'] ), $songdata['casimoi'] );
 			}
-			
+
 			if( $songdata['nhacsimoi'] != '' )
 			{
 				$song['nhacsi'] = $songdata['nhacsi'] = newauthor( change_alias( $songdata['nhacsimoi'] ), $songdata['nhacsimoi'] );
 			}
 
-			$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET 
-				tenthat=" . $db->quote( $song['tenthat'] ) . ", 
-				ten=" . $db->quote( $song['ten'] ) . ", 
-				casi=" . $song['casi'] . ", 
-				theloai=" . $db->quote( $song['theloai'] ) . ", 
+			$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET
+				tenthat=" . $db->quote( $song['tenthat'] ) . ",
+				ten=" . $db->quote( $song['ten'] ) . ",
+				casi=" . $song['casi'] . ",
+				theloai=" . $db->quote( $song['theloai'] ) . ",
 				nhacsi=" . $song['nhacsi'] . "
 			WHERE id=" . $id;
 			$update = $db->query( $sql );
@@ -145,7 +145,7 @@ if( ! empty( $userid ) )
 		$num = $db->query( $sqlnum );
 		$output = $num->fetchColumn();
 		$ts = ceil( $output / 20 );
-		
+
 		$result = $db->query( $sql );
 		while( $row = $result->fetch() )
 		{

@@ -38,7 +38,7 @@ if( ! empty( $row['listcat'] ) )
 	foreach( $list_cat as $cat )
 	{
 		$catname = isset( $category[$cat] ) ? $category[$cat]['title'] : $category[0]['title'];
-	
+
 		$row['listcat'][] = array( "name" => $catname, "url" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $catname ) . "&amp;id=" . $cat . "&amp;type=category" );
 	}
 }
@@ -66,6 +66,7 @@ $array = array(
 	"url_search_singer" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
 	"url_search_category" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $category[$row['theloai']]['title'] ) . "&amp;id=" . $row['theloai'] . "&amp;type=category", //
 	"link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/video/" . $row['id'] . "/" . $row['name'], true ), //
+	"duongdan" => $row['duongdan'],
 	"URL_SONG" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=viewvideo/' . $row['id'] . '/' . $row['name'], true ) //
 );
 
@@ -76,7 +77,7 @@ if( $row['casi'] != 0 )
 	// Danh sach album
 	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $row['casi'] . " AND active=1 ORDER BY addtime DESC LIMIT 0,4";
 	$list = $nv_Cache->db( $sql, 'id' );
-	
+
 	foreach( $list as $r )
 	{
 		$array_album[] = array(
@@ -86,11 +87,11 @@ if( $row['casi'] != 0 )
 			"url_search_singer" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $singername ) . "&amp;id=" . $r['casi'] . "&amp;type=singer", //
 		);
 	}
-	
+
 	// Danh sach video
 	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE casi=" . $row['casi'] . " AND active=1 ORDER BY dt DESC LIMIT 0,3";
 	$list = $nv_Cache->db( $sql, 'id' );
-	
+
 	foreach( $list as $r )
 	{
 		$array_video[] = array(
@@ -100,11 +101,11 @@ if( $row['casi'] != 0 )
 			"url_search_singer" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $r['casi'] . "&amp;type=singer", //
 		);
 	}
-	
+
 	// Chi tiet ca si
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id=" . $row['casi'] . " AND thumb!='' AND introduction!=''";
 	$list = $nv_Cache->db( $sql, 'id' );
-	
+
 	foreach( $list as $r )
 	{
 		$array_singer = $r;

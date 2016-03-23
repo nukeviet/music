@@ -675,3 +675,32 @@ function getallauthor( $reverse = false )
 	}
 	return $allsinger;
 }
+
+// lay thong tin the loai video
+function get_videocategory()
+{
+	global $module_name, $module_data, $db, $lang_module, $nv_Cache;
+	$category = array();
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video_category ORDER BY `weight` ASC";
+	$result = $nv_Cache->db( $sql, 'id', $module_name );
+
+	$category[0] = array(
+		'id' => 0, //
+		'title' => $lang_module['unknow'], //
+		'keywords' => '', //
+		'description' => '' //
+	);
+	if( ! empty( $result ) )
+	{
+		foreach( $result as $row )
+		{
+			$category[$row['id']] = array(
+				'id' => $row['id'], //
+				'title' => $row['title'], //
+				'keywords' => $row['keywords'], //
+				'description' => $row['description'] //
+			);
+		}
+	}
+	return $category;
+}
