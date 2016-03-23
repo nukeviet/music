@@ -135,15 +135,12 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 
 	if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
 
-	$a = 0;
 	foreach( $array as $row )
 	{
 		$row['singers'] = $classMusic->build_author_singer_2string( $array_singers, $row['singers'] );
 
-		$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
 		$xtpl->assign( 'ROW', $row );
 		$xtpl->parse( 'main.row' );
-		$a++;
 	}
 
 	if( ! empty( $generate_page ) )
@@ -256,15 +253,12 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 
 		if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
 
-		$a = 0;
 		foreach( $array as $row )
 		{
 			$row['singers'] = $classMusic->build_author_singer_2string( $array_singers, $row['singers'] );
 
-			$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.data.row' );
-			$a++;
 		}
 
 		if( ! empty( $generate_page ) )

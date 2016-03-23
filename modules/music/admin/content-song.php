@@ -24,14 +24,14 @@ if( $id )
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id=" . $id;
 	$result = $db->query( $sql );
 	$check = $result->rowCount();
-	
+
 	if ( $check != 1 )
 	{
 		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 	}
-	
+
 	$row = $result->fetch();
-	
+
 	$array_old = $array = array(
 		"ten" => $row['ten'],
 		"tenthat" => $row['tenthat'],
@@ -51,18 +51,18 @@ if( $id )
 		"lyric_id" => 0,
 		"server" => $row['server'],
 	);
-	
+
 	// Lay loi bai hat
 	$sql = "SELECT id, body FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE songid=" . $id . " ORDER BY dt ASC LIMIT 0,1";
 	$result = $db->query( $sql );
-	
+
 	if( $result->rowCount() )
 	{
 		list( $lyric_id, $lyric_body ) = $result->fetch( 3 );
 		$array_old['lyric'] = $array['lyric'] = nv_br2nl( $lyric_body );
 		$array_old['lyric_id'] = $array['lyric_id'] = $lyric_id;
 	}
-	
+
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
 	$table_caption = $classMusic->lang('edit_song');
 }
@@ -70,7 +70,7 @@ else
 {
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 	$table_caption = $classMusic->lang('add_song');
-	
+
 	$array = array(
 		"ten" => '',
 		"tenthat" => '',
@@ -117,7 +117,7 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 	// Chuyen ca si, nhac si tu chuoi thanh mang
 	$array['casi'] = $classMusic->string2array( $array['casi'] );
 	$array['nhacsi'] = $classMusic->string2array( $array['nhacsi'] );
-	
+
 	// Kiem tra loi
 	if( empty( $array['ten'] ) )
 	{
@@ -131,7 +131,7 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 	{
 		$error = $classMusic->lang('song_error_duongdan');
 	}
-	
+
 	if( empty( $error ) )
 	{
 		// Them ca si moi
@@ -155,7 +155,7 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 				}
 			}
 		}
-		
+
 		// Them nhac si moi
 		if( $array['nhacsimoi'] != '' )
 		{
@@ -177,9 +177,9 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 				}
 			}
 		}
-		
+
 	}
-	
+
 	if( empty( $error ) )
 	{
 		if( $id )
@@ -242,7 +242,7 @@ $array['duongdan'] = $classMusic->admin_outputURL( $array['server'], $array['duo
 if( ! empty( $array['casi'] ) )
 {
 	$singers = $classMusic->getsingerbyID( $array['casi'], true );
-	
+
 	$array['casi'] = array();
 	foreach( $singers as $singer )
 	{
@@ -258,7 +258,7 @@ else
 if( ! empty( $array['nhacsi'] ) )
 {
 	$authors = $classMusic->getauthorbyID( $array['nhacsi'], true );
-	
+
 	$array['nhacsi'] = array();
 	foreach( $authors as $author )
 	{
@@ -294,11 +294,11 @@ foreach( $global_array_cat_song as $theloai )
 	$theloai['selected'] = $array['theloai'] == $theloai['id'] ? " selected=\"selected\"" : "";
 	$theloai['disabled'] = $array['theloai'] == $theloai['id'] ? " disabled=\"disabled\"" : "";
 	$theloai['checked'] = in_array( $theloai['id'], $array['listcat'] ) ? " checked=\"checked\"" : "";
-	
+
 	$xtpl->assign( 'THELOAI', $theloai );
-	
+
 	$xtpl->parse( 'main.theloai' );
-	
+
 	if( $theloai['id'] )
 	{
 		$xtpl->parse( 'main.listcat' );

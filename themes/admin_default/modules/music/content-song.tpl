@@ -94,9 +94,8 @@
 					<td>
 						<div class="autoscroll">
 							<!-- BEGIN: listcat -->
-							<label><input type="checkbox" name="listcat[]" value="{THELOAI.id}"{THELOAI.checked}{THELOAI.disabled}/> {THELOAI.title}</label>
+							<label class="show"><input type="checkbox" name="listcat[]" value="{THELOAI.id}"{THELOAI.checked}{THELOAI.disabled}/> {THELOAI.title}</label>
 							<!-- END: listcat -->
-							<div class="clear"></div>
 						</div>
 					</td>
 				</tr>

@@ -100,7 +100,7 @@ $sdata = array(
 	"song_singer" => $singername, //
 	"song_singer_id" => $row['casi'], //
 	"song_author" => $row['authorname'] ? $row['authorname'] : $lang_module['unknow'], //
-	"song_cat" => $category[$row['theloai']]['title'], //
+	"song_cat" => isset($category[$row['theloai']]) ? $category[$row['theloai']]['title'] : '', //
 	"song_listcat" => $listcat, //
 	"song_vote" => $row['binhchon'], //
 	"song_numview" => $row['numview'], //
@@ -133,7 +133,7 @@ $array_album = $array_video = $array_singer = array();
 if( $row['casi'] != 0 )
 {
 	// Danh sach album
-	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $row['casi'] . " AND active=1 ORDER BY addtime DESC LIMIT 0,4";
+	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $row['casi'] . " AND is_active=1 ORDER BY addtime DESC LIMIT 0,4";
 	$list = $nv_Cache->db( $sql, 'id', $module_name );
 
 	foreach( $list as $r )

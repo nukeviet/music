@@ -118,7 +118,6 @@ elseif( $q == 'detected-and-delete-duplicate-singer' )
 			$array_allow_singer_id = array();
 			while( $row = $result->fetch() )
 			{
-				$row['class'] = $i ++ % 2 ? " class=\"second\"" : "";
 				$array_allow_singer_id[$row['id']] = $row['id'];
 
 				$xtpl->assign( 'ROW', $row );
@@ -216,11 +215,9 @@ elseif( $q == 'detected-and-delete-duplicate-singer' )
 	$generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
 
 	$array = array();
-	$i = 1;
 
 	while( $row = $result->fetch() )
 	{
-		$row['class'] = $i ++ % 2 ? " class=\"second\"" : "";
 		$row['link'] = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer&singer=" . urlencode( $row['tenthat'] ) . "&amp;checksess=" . $checksess;
 
 		$xtpl->assign( 'ROW', $row );

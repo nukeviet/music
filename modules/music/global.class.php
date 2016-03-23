@@ -148,7 +148,7 @@ class nv_mod_music
 
 	private function db_cache( $sql, $id = '', $module_name = '' )
 	{
-		global $nv_Cache;
+		global $nv_Cache, $module_name;
 
 		return $nv_Cache->db( $sql, $id, $module_name );
 	}
@@ -357,10 +357,12 @@ class nv_mod_music
 	// Lay thong tin the loai bai hat
 	public function get_category()
 	{
+		global $module_name, $nv_Cache;
+
 		$category = array();
 
 		$sql = "SELECT * FROM " . $this->table_prefix . "_category ORDER BY weight ASC";
-		$result = $this->db_cache( $sql, 'id' );
+		$result = $this->db_cache( $sql, 'id', $module_name );
 
 		$category[0] = array(
 			'id' => 0,

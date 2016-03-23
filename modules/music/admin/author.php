@@ -90,7 +90,7 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 	while( $row = $result->fetch() )
 	{
 		$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-avatar.gif";
-	
+
 		$array[$row['id']] = array(
 			"id" => $row['id'],
 			"title" => $row['tenthat'],
@@ -118,13 +118,10 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 	$xtpl->assign( 'SEARCH', $data_search );
 	$xtpl->assign( 'URLCANCEL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op . "&findOneAndReturn=1&area=" . $returnArea . "&input=" . $returnInput . "&authors=" . $authors );
 
-	$a = 0;
 	foreach( $array as $row )
 	{
-		$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
 		$xtpl->assign( 'ROW', $row );
 		$xtpl->parse( 'main.row' );
-		$a++;
 	}
 
 	if( ! empty( $generate_page ) )
@@ -146,12 +143,12 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 {
 	$authors = nv_substr( $nv_Request->get_title( 'authors', 'get', '', 1 ), 0, 255);
-	
+
 	$returnArea = nv_substr( $nv_Request->get_title( 'area', 'get', '', 1 ), 0, 255);
 	$returnInput = nv_substr( $nv_Request->get_title( 'input', 'get', '', 1 ), 0, 255);
-	
+
 	if( $nv_Request->isset_request( 'loadname', 'get' ) )
-	{		
+	{
 		$sql = "SELECT id, tenthat FROM " . NV_PREFIXLANG . "_" . $module_data . "_author WHERE id IN(" . $authors . ")";
 		$result = $db->query( $sql );
 
@@ -161,7 +158,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		{
 			$_tmp[$authorid] = $authorname;
 		}
-		
+
 		$authors = $classMusic->string2array( $authors );
 		foreach( $authors as $_sid )
 		{
@@ -179,7 +176,7 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		include NV_ROOTDIR . '/includes/footer.php';
 		die();
 	}
-	
+
 	$authors = $classMusic->string2array( $authors );
 
 	$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_author";
@@ -230,13 +227,10 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 
 	if( ! empty( $array ) )
 	{
-		$a = 0;
 		foreach( $array as $row )
 		{
-			$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.data.row' );
-			$a++;
 		}
 
 		if( ! empty( $generate_page ) )
@@ -278,12 +272,12 @@ if( ! defined( 'SHADOWBOX' ) )
 if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-    
+
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     $list_levelid = $nv_Request->get_title( 'listid', 'post', '' );
-    
+
     if ( empty( $id ) and empty ( $list_levelid ) ) die( 'NO' );
-    
+
 	$listid = array();
 	if ( $id )
 	{
@@ -299,20 +293,20 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$listid = $list_levelid;
 		$num = sizeof( $list_levelid );
 	}
-	
+
 	$authors = $classMusic->getauthorbyID( $listid );
-	
+
 	if( sizeof( $authors ) != $num ) die( 'NO' );
-	
+
 	foreach( $authors as $id => $author )
 	{
 		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_author WHERE id=" . $id;
 		$db->query( $sql );
-	}	
-    
+	}
+
     $nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_author'), implode( ", ", array_keys( $authors ) ), $admin_info['userid'] );
-	
+
     die( 'OK' );
 }
 
@@ -379,7 +373,7 @@ foreach ( $order as $key => $check )
 		"url" => $base_url . "&amp;order_" . $key . "=" . $opposite_order[$order[$key]['order']],
 		"title" => sprintf ( $lang_module['filter_order_by'], "&quot;" . $lang_order_2[$key] . "&quot;" ) . " " . $lang_order_1[$order[$key]['order']]
 	);
-	
+
 	if ( ! in_array ( $check['order'], $check_order ) )
 	{
 		$order[$key]['order'] = "NO";
@@ -421,7 +415,7 @@ $array = array();
 while( $row = $result->fetch() )
 {
 	$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-avatar.gif";
-	
+
 	$array[] = array(
 		"id" => $row['id'],
 		"title" => $row['tenthat'],

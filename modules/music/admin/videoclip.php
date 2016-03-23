@@ -147,16 +147,13 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 	if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
 	if( ! empty( $array_author_ids ) ) $array_authors = $classMusic->getauthorbyID( $array_author_ids );
 
-	$a = 0;
 	foreach( $array as $row )
 	{
 		$row['singers'] = $classMusic->build_author_singer_2string( $array_singers, $row['singers'] );
 		$row['authors'] = $classMusic->build_author_singer_2string( $array_authors, $row['authors'] );
 
-		$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
 		$xtpl->assign( 'ROW', $row );
 		$xtpl->parse( 'main.row' );
-		$a++;
 	}
 
 	if( ! empty( $generate_page ) )
@@ -273,16 +270,13 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
 		if( ! empty( $array_author_ids ) ) $array_authors = $classMusic->getauthorbyID( $array_author_ids );
 
-		$a = 0;
 		foreach( $array as $row )
 		{
 			$row['singers'] = $classMusic->build_author_singer_2string( $array_singers, $row['singers'] );
 			$row['authors'] = $classMusic->build_author_singer_2string( $array_authors, $row['authors'] );
 
-			$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.data.row' );
-			$a++;
 		}
 
 		if( ! empty( $generate_page ) )
@@ -424,7 +418,7 @@ $page_title = $classMusic->lang('video_list');
 $classMusic->callJqueryPlugin('shadowbox');
 
 // Thong tin phan trang
-$page = $nv_Request->get_int( 'page', 'get', 0 );
+$page = $nv_Request->get_int( 'page', 'get', 1 );
 $per_page = 50;
 
 // Query, url co so
@@ -538,7 +532,7 @@ $all_page = $result1->fetchColumn();
 
 // Xay dung du lieu videoclip
 $i = 1;
-$sql = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
+$sql = "SELECT * " . $sql . " LIMIT " . $per_page . "  offset " . (($page - 1) * $per_page);
 $result = $db->query( $sql );
 
 $array = $array_singers = $array_authors =  array();

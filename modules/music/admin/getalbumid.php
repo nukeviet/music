@@ -125,13 +125,10 @@ $generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
 
 if( ! empty( $array ) )
 {
-	$a = 0;
 	foreach( $array as $row )
 	{
-		$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
 		$xtpl->assign( 'ROW', $row );
 		$xtpl->parse( 'main.resultdata.data.row' );
-		$a++;
 	}
 
 	if( ! empty( $generate_page ) )

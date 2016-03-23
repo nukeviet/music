@@ -114,8 +114,6 @@ while( $row = $result->fetch() )
 	$xtpl->assign( 'name', $row['name'] );
 	$xtpl->assign( 'album', $row['tname'] );
 
-	$class = ( $i % 2 ) ? " class=\"second\"" : "";
-	$xtpl->assign( 'class', $class );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_comment_album&id=" . $row['id'] );
 	$xtpl->assign( 'URL_EDIT', $link_edit . "&id=" . $row['id'] );
 

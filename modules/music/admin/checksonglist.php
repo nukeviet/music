@@ -32,7 +32,6 @@ $link_edit_song = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . N
 $sql = "SELECT id, sid, where FROM " . NV_PREFIXLANG . "_" . $module_data . "_error WHERE id IN(" . implode( ",", $array_id ) . ")";
 $result = $db->query( $sql );
 
-$i = 1;
 while( $row = $result->fetch() )
 {
 	if( $row['where'] == "album" )
@@ -71,10 +70,7 @@ while( $row = $result->fetch() )
 		}
 	}
 
-	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
-
 	$xtpl->parse( 'main.loop' );
-	++$i;
 }
 
 $xtpl->parse( 'main' );

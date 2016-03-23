@@ -98,7 +98,7 @@ $array_album = $array_video = $array_singer = array();
 if( $album_array['singerid'] != 0 )
 {
 	// Danh sach album
-	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $album_array['singerid'] . " AND active=1 ORDER BY addtime DESC LIMIT 0,4";
+	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $album_array['singerid'] . " AND is_active=1 ORDER BY addtime DESC LIMIT 0,4";
 	$list = $nv_Cache->db( $sql, 'id', $module_name );
 
 	foreach( $list as $r )

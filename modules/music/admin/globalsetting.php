@@ -38,14 +38,11 @@ $array[] = array(
 	"guide" => $classMusic->lang('guide_setting')
 );
 
-$i = 1;
 foreach( $array as $row )
 {
 	$xtpl->assign( 'ROW', $row );
-	$xtpl->assign( 'CLASS', ( $i % 2 == 0 ) ? " class=\"second\"" : "" );
 
 	$xtpl->parse( 'main.loop' );
-	++$i;
 }
 
 $xtpl->parse( 'main' );

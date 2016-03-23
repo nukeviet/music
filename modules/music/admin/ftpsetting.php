@@ -13,27 +13,27 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
 	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-	
+
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
-	
+
 	if ( empty( $id ) ) die( 'NO' );
-	
+
 	$sql = "SELECT host FROM " . NV_PREFIXLANG . "_" . $module_data . "_ftp WHERE id=" . $id;
 	$result = $db->query( $sql );
 	$host = $result->fetchColumn();
-	
+
 	if ( empty( $host ) ) die( 'NO' );
-	
+
 	// Xoa FTP
 	$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_ftp WHERE id=" . $id;
 	$db->query( $sql );
-	
+
 	// Cap nhat cac bai hat
 	$classMusic->updatewhendelFTP( $id, 0 );
 
 	$nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, 'Delete FTP', $host, $admin_info['userid'] );
-	
+
 	die( 'OK' );
 }
 
@@ -41,27 +41,27 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 {
 	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-	
+
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
-	
+
 	if ( empty( $id ) ) die( 'NO' );
-	
+
 	$sql = "SELECT active FROM " . NV_PREFIXLANG . "_" . $module_data . "_ftp WHERE id=" . $id;
 	$result = $db->query( $sql );
 	$numrows = $result->rowCount();
 	if ( $numrows != 1 ) die( 'NO' );
-	
+
 	$active = $result->fetchColumn();
 	$active = $active ? 0 : 1;
-	
+
 	// Cap nhat cac bai hat
 	$classMusic->updatewhendelFTP( $id, $active );
-	
+
 	$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_ftp SET active=" . $active . " WHERE id=" . $id;
 	$db->query( $sql );
-	
+
 	$nv_Cache->delMod( $module_name );
-	
+
 	die( 'OK' );
 }
 
@@ -74,11 +74,11 @@ if( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 {
 	$newid = $nv_Request->get_int( 'newid', 'post', 0 );
 	$lastid = $nv_Request->get_int( 'lastid', 'post', 0 );
-	
+
 	for( $i = 1; $i <= $newid; $i++ )
 	{
 		if( ( $nv_Request->get_title( 'host' . $i . '', 'post', '' ) == '' ) || ( $nv_Request->get_title( 'user' . $i . '', 'post', '' ) == '' ) || ( $nv_Request->get_title( 'pass' . $i . '', 'post', '' ) == '' ) || ( $nv_Request->get_title( 'fulladdress' . $i . '', 'post', '' ) == '' ) || ( $nv_Request->get_title( 'subpart' . $i . '', 'post', '' ) == '' ) ) continue;
-		
+
 		$array[$i] = array(
 			"host" => $nv_Request->get_title( 'host' . $i . '', 'post', '' ),
 			"user" => $nv_Request->get_title( 'user' . $i . '', 'post', '' ),
@@ -88,7 +88,7 @@ if( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 			"ftppart" => $nv_Request->get_string( 'ftppart' . $i . '', 'post', '' )
 		);
 	}
-	
+
 	foreach( $array as $i => $data )
 	{
 		if( $i > $lastid )
@@ -145,12 +145,10 @@ if ( ! empty ( $error ) )
 	$xtpl->parse( 'main.error' );
 }
 
-$i = 1;
 ksort( $array );
 foreach( $array as $j => $row )
 {
 	$row['key'] = $j;
-	$row['class'] = $i ++ % 2 == 0 ? " class=\"second\"" : "";
 	$row['status'] = $row['status'] ? " checked=\"checked\"" : "";
 
 	$xtpl->assign( 'ROW', $row );

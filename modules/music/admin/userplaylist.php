@@ -70,7 +70,6 @@ while( $row = $result->fetch() )
 	$xtpl->assign( 'singer', $row['singer'] );
 	$xtpl->assign( 'username', $row['userid'] ? "<a href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=edit&amp;userid=" . $row['userid'] . "\" title=\"" . $row['username'] . "\">" . $row['username'] . "</a>" : $row['full_name'] . " - " . $lang_module['visittor'] );
 
-	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_playlist&id=" . $row['id'] );
 	$xtpl->assign( 'URL_EDIT', $link_edit . "&id=" . $row['id'] );
 
