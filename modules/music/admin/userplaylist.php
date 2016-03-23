@@ -60,6 +60,7 @@ $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_V
 $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=editplaylist";
 $link_active = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=active&where=_playlist&id=";
 
+$i=0;
 $sql = "SELECT * " . $sql . " ORDER BY active ASC, time DESC LIMIT " . $first_page . ",50";
 $result = $db->query( $sql );
 while( $row = $result->fetch() )

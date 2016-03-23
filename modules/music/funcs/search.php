@@ -59,7 +59,7 @@ $DB_LikeKey = $db->dblikeescape( $query_search['key'] );
 
 // Hien thi thong tin ca si - Lay ra 10 ca si "Kha nghi nhat"
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE tenthat LIKE '%" . $DB_LikeKey . "%' AND thumb!='' AND introduction!='' ORDER BY RAND() LIMIT 10";
-$list = $nv_Cache->db( $sql, 'id' );
+$list = $nv_Cache->db( $sql, 'id',$module_name );
 
 foreach( $list as $row )
 {
@@ -244,7 +244,7 @@ if( $query_search['where'] == 'song' )
 }
 elseif( $query_search['where'] == 'album' ) // Tim kiem album
 {
-	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1";
+	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.is_active=1";
 
 	if( $query_search['SearchBy'] == 'singer' ) // Tim album theo ca si
 	{
@@ -312,7 +312,7 @@ elseif( $query_search['where'] == 'album' ) // Tim kiem album
 }
 elseif( $query_search['where'] == 'playlist' )
 {
-	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.username, b.full_name FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist AS a LEFT JOIN " . NV_USERS_GLOBALTABLE . " AS b ON a.userid=b.userid WHERE a.active=1";
+	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.username, b.first_name, b.last_name FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist AS a LEFT JOIN " . NV_USERS_GLOBALTABLE . " AS b ON a.userid=b.userid WHERE a.active=1";
 
 	if( $query_search['SearchBy'] == 'singer' ) // Tim playlist theo ca si
 	{

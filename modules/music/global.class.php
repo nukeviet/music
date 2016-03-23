@@ -422,7 +422,7 @@ class nv_mod_music
 		$limit = $limit ? ( int ) $limit : 100;
 		$array = array();
 
-		$sql = "SELECT id FROM " . $this->table_prefix . "_singer WHERE tenthat LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
+		$sql = "SELECT id FROM " . $this->table_prefix . "_singer WHERE tenthat LIKE '%" . $this->db->quote( $q ) . "%' LIMIT 0," . $limit;
 		$result = $this->db->query( $sql );
 		while( $row = $result->fetch() )
 		{
@@ -438,7 +438,7 @@ class nv_mod_music
 		$limit = $limit ? ( int ) $limit : 100;
 		$array = array();
 
-		$sql = "SELECT id FROM " . $this->table_prefix . "_author WHERE tenthat LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
+		$sql = "SELECT id FROM " . $this->table_prefix . "_author WHERE tenthat LIKE '%" . $this->db->quote( $q ) . "%' LIMIT 0," . $limit;
 		$result = $this->db->query( $sql );
 		while( $row = $result->fetch() )
 		{
@@ -454,7 +454,7 @@ class nv_mod_music
 		$limit = $limit ? ( int ) $limit : 100;
 		$array = array();
 
-		$sql = "SELECT id FROM " . $this->table_prefix . " WHERE tenthat LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
+		$sql = "SELECT id FROM " . $this->table_prefix . " WHERE tenthat LIKE '%" . $this->db->quote( $q ) . "%' LIMIT 0," . $limit;
 		$result = $this->db->query( $sql );
 		while( $row = $result->fetch() )
 		{

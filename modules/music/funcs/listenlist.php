@@ -22,7 +22,7 @@ $row['singeralias'] = '';
 $row['singername'] = $lang_module['unknow'];
 
 // Lay ca si
-$sql = "SELECT ten, tenthat FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id=" . $row['casi'];
+$sql = "SELECT ten, tenthat FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id IN (" . $row['casi'] . ")";
 $list = $nv_Cache->db( $sql, 'id', $module_name );
 
 if( ! empty( $list ) )

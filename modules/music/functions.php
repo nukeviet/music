@@ -16,6 +16,114 @@ require_once NV_ROOTDIR . "/modules/" . $module_file . '/global.functions.php';
 
 $classMusic = new nv_mod_music();
 
+// Hien thi cac trang
+function new_page( $ts, $now_page, $link, $rewrite = true )
+{
+	$page = '';
+	if( $ts > 1 )
+	{
+		$page = "<div id=\"numpage\"><p>";
+		if( $ts > 5 && $now_page > 3 )
+		{
+			$page .= "<a href=\"" . $link . "";
+			$page .= ( $rewrite ? "/1" : "&amp;page=1" ) . "\" class=\"next\">&lt;&lt;</a> ... ";
+		}
+		if( $now_page > 1 )
+		{
+			$now_page_min = $now_page - 1;
+			$page .= "<a href=\"" . $link . "";
+			$page .= ( $rewrite ? ( "/" . $now_page_min ) : ( "&amp;page=" . $now_page_min ) ) . "\" class=\"next\">&lt;</a> ";
+		}
+		if( $ts <= 5 )
+		{
+			$i = 1;
+			while( $i <= $ts )
+			{
+				if( $i == $now_page )
+				{
+					$page .= "<b> " . $i . " </b>";
+				}
+				else
+				{
+					$page .= "<a href=\"" . $link . "";
+					$page .= ( $rewrite ? ( "/" . $i ) : ( "&amp;page=" . $i ) ) . "\">" . $i . "</a> ";
+				}
+				$i++;
+			}
+		}
+		else
+			if( $now_page <= 2 )
+			{
+				$i = 1;
+				while( $i <= 5 )
+				{
+					if( $now_page == $i )
+					{
+						$page .= "<b> " . $i . " </b>";
+					}
+					else
+					{
+						$page .= "<a href=\"" . $link . "";
+						$page .= ( $rewrite ? ( "/" . $i ) : ( "&amp;page=" . $i ) ) . "\">" . $i . "</a> ";
+					}
+					$i++;
+				}
+			}
+			else
+				if( $now_page < ( $ts - 2 ) )
+				{
+					$i = 1;
+					$j = $now_page - 2;
+					while( $i <= 5 )
+					{
+						if( $now_page == $j )
+						{
+							$page .= "<b> " . $j . " </b>";
+						}
+						else
+						{
+							$page .= "<a href=\"" . $link . "";
+							$page .= ( $rewrite ? ( "/" . $j ) : ( "&amp;page=" . $j ) ) . "\">" . $j . "</a> ";
+						}
+						$i++;
+						$j++;
+					}
+				}
+				else
+				{
+					$i = 1;
+					$j = $ts - 4;
+					while( $i <= 5 )
+					{
+						if( $now_page == $j )
+						{
+							$page .= "<b> " . $j . " </b>";
+						}
+						else
+						{
+							$page .= "<a href=\"" . $link . "";
+							$page .= ( $rewrite ? ( "/" . $j ) : ( "&amp;page=" . $j ) ) . "\">" . $j . "</a> ";
+						}
+						$i++;
+						$j++;
+					}
+				}
+				if( $now_page < $ts )
+				{
+					$now_page_max = $now_page + 1;
+					$page .= " <a href=\"" . $link . "";
+					$page .= ( $rewrite ? ( "/" . $now_page_max ) : ( "&amp;page=" . $now_page_max ) ) . "\" class=\"next\">&gt;</a>";
+				}
+		if( ( $ts > 5 ) && ( $now_page < ( $ts - 2 ) ) )
+		{
+			$page .= " ... <a href=\"" . $link . "";
+			$page .= ( $rewrite ? ( "/" . $ts ) : ( "&amp;page=" . $ts ) ) . "\" class=\"next\">&gt;&gt;</a>";
+		}
+		$page .= "</p></div>";
+	}
+	return $page;
+}
+
 // lay quang cao
 function getADS()
 {

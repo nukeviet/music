@@ -40,7 +40,7 @@ else
 	$first_page = ( $now_page - 1 ) * 20;
 }
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist" . $data . " ORDER BY " . $type . " DESC LIMIT " . $first_page . ",20";
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist " . $data . " ORDER BY " . $type . " DESC LIMIT " . $first_page . ",20";
 $sqlnum = "SELECT COUNT(*) AS num FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist " . $data;
 
 // Tinh so trang

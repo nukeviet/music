@@ -12,11 +12,11 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 $page_title = $lang_module['playlist_edit'];
 
 // Java sap xep
-$my_head = "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . "js/ui/jquery.ui.core.css\" rel=\"stylesheet\" />\n";
-$my_head .= "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . "js/ui/jquery.ui.theme.css\" rel=\"stylesheet\" />\n";
+$my_head = "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/ui/jquery.ui.core.css\" rel=\"stylesheet\" />\n";
+$my_head .= "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/ui/jquery.ui.theme.css\" rel=\"stylesheet\" />\n";
 
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/ui/jquery.ui.core.min.js\"></script>\n";
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/ui/jquery.ui.sortable.min.js\"></script>\n";
+$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/ui/jquery.ui.core.min.js\"></script>\n";
+$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/ui/jquery.ui.sortable.min.js\"></script>\n";
 
 $contents = "";
 $error = "";
@@ -47,9 +47,9 @@ if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 	$array['songdata'] = $nv_Request->get_string( 'listsong', 'post', '' );
 
 	$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_playlist SET
-		name=" . $db->quote( $array['name'] ) . ", 
-		singer=" . $db->quote( $array['singer'] ) . ", 
-		message=" . $db->quote( $array['message'] ) . ", 
+		name=" . $db->quote( $array['name'] ) . ",
+		singer=" . $db->quote( $array['singer'] ) . ",
+		message=" . $db->quote( $array['message'] ) . ",
 		songdata=" . $db->quote( $array['songdata'] ) . "
 	WHERE id=" . $id;
 
@@ -97,7 +97,7 @@ if( ! empty( $error ) )
 
 // Noi dung
 $contents .= "
-	<form method=\"post\"> 
+	<form method=\"post\">
 	<table class=\"tab1\">
 		<thead>
 			<tr>
@@ -158,9 +158,9 @@ $contents .= "</ul></td>
 	</table></form>";
 
 $contents .= '<script type="text/javascript">
-$(document).ready(function() 
+$(document).ready(function()
 {
-	$( "#listsong-area" ).sortable({ 
+	$( "#listsong-area" ).sortable({
 		cursor: "crosshair",
 		update: function(event, ui) { nv_soft_song(); }
 	});

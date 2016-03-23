@@ -28,11 +28,11 @@ $data = '';
 if( $key != '-' )
 {
 	if( $key == '-' ) $key = '';
-	$data = "WHERE a.name LIKE '%" . $db->dblikeescape( $key ) . "%' AND a.active=1";
+	$data = "WHERE a.name LIKE '%" . $db->dblikeescape( $key ) . "%' AND a.is_active=1";
 }
 else
 {
-	$data = "WHERE a.active=1";
+	$data = "WHERE a.is_active=1";
 }
 
 // Xu li du lieu

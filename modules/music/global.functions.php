@@ -643,3 +643,35 @@ function getalbumbyID( $id )
 
 	return $album;
 }
+
+// lay tat ca nhac si
+function getallauthor( $reverse = false )
+{
+	global $module_name, $module_data, $db, $lang_module, $nv_Cache;
+	$allsinger = array();
+	if( $reverse === true )
+	{
+		$allsinger[$lang_module['unknow']] = 0;
+	}
+	else
+	{
+		$allsinger[0] = $lang_module['unknow'];
+	}
+	$sql = "SELECT id, tenthat FROM " . NV_PREFIXLANG . "_" . $module_data . "_author ORDER BY ten ASC";
+	$result = $nv_Cache->db( $sql, 'ten', $module_name );
+	if( ! empty( $result ) )
+	{
+		foreach( $result as $row )
+		{
+			if( $reverse === true )
+			{
+				$allsinger[$row['tenthat']] = $row['id'];
+			}
+			else
+			{
+				$allsinger[$row['id']] = $row['tenthat'];
+			}
+		}
+	}
+	return $allsinger;
+}

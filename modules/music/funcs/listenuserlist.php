@@ -58,7 +58,7 @@ $listsong_id = explode( ",", $row['songdata'] );
 $listsong_id = array_filter( $listsong_id );
 
 $sql = "SELECT a.id, a.ten, a.tenthat, a.casi, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.id IN (" . implode( ",", $listsong_id ) . ") AND a.active=1";
-$list = $nv_Cache->db( $sql, 'id' );
+$list = $nv_Cache->db( $sql, 'id', $module_name );
 $gdata['numsong'] = sizeof( $list );
 
 foreach( $listsong_id as $sid )
@@ -66,7 +66,7 @@ foreach( $listsong_id as $sid )
 	if( isset( $list[$sid] ) )
 	{
 		$singername = $list[$sid]['singername'] ? $list[$sid]['singername'] : $lang_module['unknow'];
-	
+
 		$sdata[] = array(
 			"id" => $list[$sid]['id'], //
 			"song_name" => $list[$sid]['tenthat'], //
