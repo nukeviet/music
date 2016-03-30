@@ -20,7 +20,7 @@
 			// Install ADS
 			var ads_width = $('#music-ads').width();
 			$('#adscontent').html(
-				'<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="'+ads_width+'" height="120">' + 
+				'<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="'+ads_width+'" height="120">' +
 					'<param name="src" value="{GDATA.ads_data.link}" />' +
 					'<param name="loop" value="true" />' +
 					'<param name="allowscriptaccess" value="always" />' +
@@ -29,7 +29,7 @@
 					'<embed src="{GDATA.ads_data.link}" pluginspage="http://www.adobe.com/shockwave/download/" width="'+ads_width+'" height="120" wmode="transparent" loop="true" menu="false" allowscriptaccess="always"></embed>' +
 				'</object>'
 			);
-			
+
 			// Install Player
 			var player_width = $('#player').width();
 			jwplayer("player").setup({
@@ -72,15 +72,15 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td class="left">{LANG.link_song}:</td>
-				<td><input class="txt-full" id="linksong" onclick="Select_all('linksong');" type="text" value="{GDATA.selfurl_base}" readonly="readonly"/></td>
+				<td><input class="form-control" id="linksong" onclick="Select_all('linksong');" type="text" value="{GDATA.selfurl_base}" readonly="readonly"/></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.blog_song}:</td>
-				<td><input class="txt-full" id="blogsong" onclick="Select_all('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{GDATA.full_data_url}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={GDATA.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{GDATA.full_data_url}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={GDATA.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /></td>
+				<td><input class="form-control" id="blogsong" onclick="Select_all('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{GDATA.full_data_url}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={GDATA.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{GDATA.full_data_url}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={GDATA.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.forum_song}:</td>
-				<td><input class="txt-full" id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{GDATA.full_data_url}player.swf?playlistfile={GDATA.creat_link_url}[/FLASH]" readonly="readonly"/></td>
+				<td><input class="form-control" id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{GDATA.full_data_url}player.swf?playlistfile={GDATA.creat_link_url}[/FLASH]" readonly="readonly"/></td>
 			</tr>
 		</table>
 		<div class="hr"></div>
@@ -89,15 +89,15 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td class="left">{LANG.enter_name}:</td>
-				<td><input class="txt-full" id="who-send-gift" type="text" value="{GDATA.username}" {CDATA.no_change} /></td>
+				<td><input class="form-control" id="who-send-gift" type="text" value="{GDATA.username}" {CDATA.no_change} /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.who_recive}:</td>
-				<td><input class="txt-full" id="who-receive-gift" type="text" value="" /></td>
+				<td><input class="form-control" id="who-receive-gift" type="text" value="" /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.email_receive}:</td>
-				<td><input class="txt-full" id="email-receive-gift" type="text" value="" /></td>
+				<td><input class="form-control" id="email-receive-gift" type="text" value="" /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.message}:</td>
@@ -113,17 +113,17 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 			var who_receive = $('#who-receive-gift').val();
 			var email_receive = $('#email-receive-gift').val();
 			var body = $('#body-gift').val();
-				
+
 			if( who_send == '' ){ alert('{LANG.error_gift_send}'); $('#who-send-gift').focus(); return; }
 			if( who_receive == '' ){ alert('{LANG.error_gift_recieve}'); $('#who-receive-gift').focus(); return; }
 			if( email_receive == '' ){ alert('{LANG.error_empty_email}'); $('#email-receive-gift').focus(); return; }
 			if( body == '' ){ alert('{LANG.error_gift_body}'); $('#body-gift').focus(); return; }
-				
+
 			$('#send-gift-button').attr('disabled','disabled');
 			$.ajax({
 				type: 'POST',
-				url: nv_siteroot + 'index.php',
-				data: nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&send_gift=1&checksess={GDATA.checksess_gift}&id=' + sid + '&who_send=' + who_send + '&who_receive=' + who_receive + '&email_receive=' + email_receive + '&body=' + encodeURIComponent(body),
+				url: nv_base_siteurl + 'index.php',
+				data: nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&send_gift=1&checksess={GDATA.checksess_gift}&id=' + sid + '&who_send=' + who_send + '&who_receive=' + who_receive + '&email_receive=' + email_receive + '&body=' + encodeURIComponent(body),
 				success: function(data){
 					if(data=='OK'||data=='WAIT'){
 						$('.giftcontent .txt').val('');
@@ -177,12 +177,12 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<!-- END: lyric -->
 		<script type="text/javascript">
 		$(document).ready(function(){
-			$(".playlistitem").hide(); 
-			$(".playlistitem:first").show(); 
+			$(".playlistitem").hide();
+			$(".playlistitem:first").show();
 			$("a.clicknext").click(function(){
-				$(".playlistitem").hide(); 
-				var activeTab = $(this).attr("href"); 
-				$(activeTab).show(); 
+				$(".playlistitem").hide();
+				var activeTab = $(this).attr("href");
+				$(activeTab).show();
 				return false;
 			});
 		});
@@ -193,7 +193,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table id="sendlyric" cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td class="left">{LANG.enter_name}:</td>
-				<td><input class="txt-full" id="user_lyric" type="text" value="{GDATA.username}" {CDATA.no_change} /></td>
+				<td><input class="form-control" id="user_lyric" type="text" value="{GDATA.username}" {CDATA.no_change} /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.content}:</td>
@@ -217,8 +217,8 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 				$('#send-lyric-button').attr('disabled','disabled');
 				$.ajax({
 					type: 'POST',
-					url: nv_siteroot + 'index.php',
-					data: nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&sendlyric=1&id=' + id + '&user_lyric=' + user_lyric.value +  '&body_lyric=' + encodeURIComponent(body_lyric),
+					url: nv_base_siteurl + 'index.php',
+					data: nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&sendlyric=1&id=' + id + '&user_lyric=' + user_lyric.value +  '&body_lyric=' + encodeURIComponent(body_lyric),
 					success: function(data){
 						if(data=='OK'||data=='WAIT'){
 							$('#body_lyric').val('');
@@ -264,7 +264,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td colspan="2">
-					<select class="txt-full" id="root_error" name="root_error">
+					<select class="form-control" id="root_error" name="root_error">
 						<option value="">{LANG.error_choose}</option>
 						<option value="check">{LANG.error_s_1}</option>
 						<option>{LANG.error_s_2}</option>
@@ -280,7 +280,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 			</tr>
 			<tr>
 				<td class="left">{LANG.enter_name}:</td>
-				<td><input class="txt-full" id="user" type="text" value="{GDATA.username}" {CDATA.no_change}/></td>
+				<td><input class="form-control" id="user" type="text" value="{GDATA.username}" {CDATA.no_change}/></td>
 			</tr>
 			<tr>
 				<td colspan="2">{LANG.give_error_diff}</td>
@@ -302,15 +302,15 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	$(".tab_content").hide(); 
+	$(".tab_content").hide();
 	$("ul.mlo-tool li.tool:first").addClass("active").show();
-	$(".tab_content:first").show(); 
+	$(".tab_content:first").show();
 	$("ul.mlo-tool li.tool").click(function(){
 		$("ul.mlo-tool li.tool").removeClass("active");
-		$(this).addClass("active"); 
-		$(".tab_content").hide(); 
-		var activeTab = $(this).find("a").attr("href"); 
-		$(activeTab).show(); 
+		$(this).addClass("active");
+		$(".tab_content").hide();
+		var activeTab = $(this).find("a").attr("href");
+		$(activeTab).show();
 		return !1;
 	});
 });
@@ -397,7 +397,7 @@ $(document).ready(function() {
 			<table cellpadding="0" cellspacing="0" class="musictable">
 				<tr>
 					<td class="left">{LANG.your_name}:</td>
-					<td><input class="txt-full" type="text" name="name" id="name" value="{GDATA.username}" {CDATA.no_change}/></td>
+					<td><input class="form-control" type="text" name="name" id="name" value="{GDATA.username}" {CDATA.no_change}/></td>
 				</tr>
 				<tr>
 					<td class="left">{LANG.content}:</td>
@@ -422,7 +422,7 @@ $(document).ready(function(){
 	show_comment('{SDATA.song_id}','song',0);
 	$("a#addboxsong").click(function(){
 		if($(this).attr('class')==undefined){
-			$(this).addClass("mloaddedtobox"); 
+			$(this).addClass("mloaddedtobox");
 			addplaylist($(this).attr("name"));
 		}
 	});

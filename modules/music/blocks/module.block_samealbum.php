@@ -9,7 +9,7 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $array_op, $op, $module_name;
+global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $array_op, $op, $module_name, $nv_Cache;
 
 if( $op == "listenone" )
 {
@@ -18,9 +18,9 @@ if( $op == "listenone" )
 
 	$songid = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
-	$sql = "SELECT `id`, `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` = 1 AND `id`!=" . $songid . " AND `album` =( SELECT `album` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $songid . " LIMIT 1 ) ORDER BY `id` DESC LIMIT 0,10";
+	$sql = "SELECT id, ten, tenthat FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE active = 1 AND id!=" . $songid . " AND album =( SELECT album FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id=" . $songid . " LIMIT 1 ) ORDER BY id DESC LIMIT 0,10";
 
-	$list = nv_db_cache( $sql, 'id', $module_name );
+	$list = $nv_Cache->db( $sql, 'id', $module_name );
 
 	if( ! empty( $list ) )
 	{
@@ -35,5 +35,3 @@ if( $op == "listenone" )
 		$content = $xtpl->text( 'main' );
 	}
 }
-
-?>

@@ -5,31 +5,30 @@
         <meta http-equiv="Content-Language" content="vi" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>{LANG.author_add1}</title>
+		<link type="text/css" href="{NV_BASE_SITEURL}themes/default/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="StyleSheet" href="{NV_BASE_SITEURL}themes/{GLOBAL_CONFIG.admin_theme}/css/admin.css" type="text/css" />
 		<link type="text/css" href="{NV_BASE_SITEURL}themes/{GLOBAL_CONFIG.module_theme}/css/{MODULE_FILE}.css" rel="stylesheet" />
-		<script type="text/javascript"> var nv_siteroot = "{NV_BASE_SITEURL}";</script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/language/{NV_LANG_INTERFACE}.js"></script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/global.js"></script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/admin.js"></script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/jquery/jquery.min.js"></script>
+		<script type="text/javascript"> var nv_base_siteurl = "{NV_BASE_SITEURL}";</script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/{NV_LANG_INTERFACE}.js"></script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/global.js"></script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/admin.js"></script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery/jquery.min.js"></script>
 	</head>
 	<body>
 		<div id="getuidcontent">
-			<form id="formgetuid" method="get" action="{FORM_ACTION}">
+			<form class="form-inline" id="formgetuid" method="get" action="{FORM_ACTION}">
 			<input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}" />
 			<input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}" />
 			<input type="hidden" name="findOneAndReturn" value="1" />
 			<input type="hidden" name="authors" value="{AUTHORS}" />
 			<input type="hidden" name="area" value="{RETURNAREA}" />
 			<input type="hidden" name="input" value="{RETURNINPUT}" />
-			<table class="tab1">
-				<tbody class="second">
-					<tr><td colspan="4" class="center green"><strong>{LANG.author_add1}</strong></td></tr>
-				</tbody>
+			<table class="table table-striped table-bordered table-hover">
 				<tbody>
+					<tr><td colspan="4" class="center green"><strong>{LANG.author_add1}</strong></td></tr>
 					<tr>
 						<td>{LANG.author_name}</td>
-						<td><input class="music-input txt-fullmini" type="text" name="q" value="{SEARCH.q}"/></td>
+						<td><input class="form-control music-input txt-fullmini" type="text" name="q" value="{SEARCH.q}"/></td>
 						<td class="col-status"><input type="submit" name="submit" value="{LANG.search}" class="music-button"/></td>
 						<td class="col-status"><input type="button" onclick="window.location='{URLCANCEL}';" value="{LANG.filter_cancel}" class="music-button"/></td>
 					</tr>
@@ -38,7 +37,7 @@
 			</form>
 		</div>
 		<div id="resultdata">
-			<table class="tab1">
+			<table class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
 						<td class="col-id center">ID</td>
@@ -47,31 +46,31 @@
 						<td class="center col-feature">{LANG.select}</td>
 					</tr>
 				</thead>
+				<tbody>
 				<!-- BEGIN: row -->
-				<tbody{CLASS}>
 					<tr>
-						<td class="center"><strong>{ROW.id}</strong></td>
-						<td class="center"><img src="{ROW.thumb}" alt="{ROW.title}" width="50" height="50"/></td>
+						<td class="text-center"><strong>{ROW.id}</strong></td>
+						<td class="text-center"><img src="{ROW.thumb}" alt="{ROW.title}" width="50" height="50"/></td>
 						<td>{ROW.title}</td>
-						<td class="center"><a class="select-icon nounderline" title="{LANG.select}" onclick="nv_close_pop('{ROW.id}','{ROW.title}');" href="javascript:void(0);">{LANG.select}</a></td>
+						<td class="text-center"><a class="select-icon nounderline" title="{LANG.select}" onclick="nv_close_pop('{ROW.id}','{ROW.title}');" href="javascript:void(0);">{LANG.select}</a></td>
 					</tr>
-				</tbody>
 				<!-- END: row -->
+				<tbody>
 				<!-- BEGIN: generate_page -->
 				<tbody>
 					<tr>
-						<td colspan="4" class="center">{GENERATE_PAGE}</td>
+						<td colspan="4" class="text-center">{GENERATE_PAGE}</td>
 					</tr>
-				</tbody>
 				<!-- END: generate_page -->
+				<tbody>
 			</table>
 			<script type="text/javascript">
 			function nv_close_pop( id, name ){
 				var authors = "{AUTHORS}";
-				
+
 				if( authors == "" ) authors = id;
 				else authors = authors + "," + id;
-				
+
 				$("#{RETURNAREA}", opener.document).append('<li class="' + id + '">' + name + '<span onclick="nv_del_item_on_list(' + id + ', \'{RETURNAREA}\', \'{LANG.author_del_confirm}\', \'{RETURNINPUT}\');" class="delete-icon">&nbsp;</span></li>');
 				$("input[name={RETURNINPUT}]", opener.document).val(authors);
 				window.close()

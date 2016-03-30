@@ -20,39 +20,34 @@ $array = array();
 // Cau hinh FTP
 $array[] = array(
 	"title" => $classMusic->lang('ftpsetting'),
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ftpsetting",
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ftpsetting",
 	"guide" => $classMusic->lang('guide_ftpsetting')
 );
 
 // Cau hinh lien ket tinh
 $array[] = array(
 	"title" => $classMusic->lang('setting_alias'),
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting-alias",
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting-alias",
 	"guide" => ""
 );
 
 // Cau hinh chinh cua module
 $array[] = array(
 	"title" => $classMusic->lang('music_setting'),
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting",
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting",
 	"guide" => $classMusic->lang('guide_setting')
 );
 
-$i = 1;
 foreach( $array as $row )
 {
 	$xtpl->assign( 'ROW', $row );
-	$xtpl->assign( 'CLASS', ( $i % 2 == 0 ) ? " class=\"second\"" : "" );
 
 	$xtpl->parse( 'main.loop' );
-	++$i;
 }
 
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

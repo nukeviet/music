@@ -31,5 +31,3 @@ $module_version = array(
 		$module_name . "/authorthumb"
 	)
 );
-
-?>

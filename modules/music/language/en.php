@@ -306,5 +306,3 @@ $lang_module['gift_list'] = "The list of musical gifts";
 $lang_module['down_info1'] = "Click at";
 $lang_module['down_info2'] = "to download the song";
 $lang_module['down_info3'] = "Download song";
-
-?>

@@ -127,35 +127,35 @@ function nv_music_listenone( $gdata, $sdata, $cdata, $ldata, $array_album, $arra
 		$xtpl->assign( 'SINGER_INFO', $array_singer );
 		$xtpl->parse( 'main.singer_info' );
 	}
-	
+
 	// Album cung ca si
 	if( ! empty( $array_album ) )
 	{
 		$xtpl->assign( 'SEARCH_ALL_ALBUM', $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $sdata['song_singer'] ) . "&amp;id=" . $sdata['song_singer_id'] . "&amp;type=singer");
-		
+
 		foreach( $array_album as $row )
 		{
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.other_album.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.other_album' );
 	}
-	
+
 	// Video cung ca si
 	if( ! empty( $array_video ) )
 	{
 		$xtpl->assign( 'SEARCH_ALL_VIDEO', $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $sdata['song_singer'] ) . "&amp;id=" . $sdata['song_singer_id'] . "&amp;type=singer");
-		
+
 		foreach( $array_video as $row )
 		{
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.other_video.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.other_video' );
 	}
-	
+
 	// Comment
 	if( ( $setting['who_comment'] == 0 ) && ! defined( 'NV_IS_USER' ) && ! defined( 'NV_IS_ADMIN' ) )
 	{
@@ -233,14 +233,14 @@ function nv_music_album( $g_array, $array )
 
 	foreach( $array as $row )
 	{
-		$row['describe'] = nv_clean60( strip_tags( $row['describe'] ), 200 );
+		$row['description'] = nv_clean60( strip_tags( $row['description'] ), 200 );
 		$xtpl->assign( 'ROW', $row );
 
 		if( $row['checkhit'] >= 20 )
 		{
 			$xtpl->parse( 'main.loop.hit' );
 		}
-		
+
 		$xtpl->parse( 'main.loop' );
 	}
 
@@ -447,32 +447,32 @@ function nv_music_listenlist( $g_array, $album_array, $song_array, $array_album,
 		$xtpl->assign( 'SINGER_INFO', $array_singer );
 		$xtpl->parse( 'main.singer_info' );
 	}
-	
+
 	// Album cung ca si
 	if( ! empty( $array_album ) )
 	{
 		$xtpl->assign( 'SEARCH_ALL_ALBUM', $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $album_array['singer'] ) . "&amp;id=" . $album_array['singerid'] . "&amp;type=singer");
-		
+
 		foreach( $array_album as $row )
 		{
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.other_album.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.other_album' );
 	}
-	
+
 	// Video cung ca si
 	if( ! empty( $array_video ) )
 	{
 		$xtpl->assign( 'SEARCH_ALL_VIDEO', $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $album_array['singer'] ) . "&amp;id=" . $album_array['singerid'] . "&amp;type=singer");
-		
+
 		foreach( $array_video as $row )
 		{
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.other_video.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.other_video' );
 	}
 
@@ -608,7 +608,7 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 	$xtpl->assign( 'URL_DOWN', $downURL );
 	$xtpl->assign( 'allvideo', $mainURL . "=search&where=video&q=" . urlencode( $query_search['key'] ) );
 	$xtpl->assign( 'allalbum', $mainURL . "=search&where=album&q=" . urlencode( $query_search['key'] ) );
-	
+
 	$xtpl->assign( 'NUM_RESULT', $all_page );
 	$xtpl->assign( 'QUERY_SEARCH', $query_search );
 
@@ -628,23 +628,23 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 	}
 
 	$xtpl->assign( 'TITLE_SEARCH', $array_where_search[$query_search['where']] );
-	
+
 	// Tim theo
 	$array_type_search = array(
 		'name' => $lang_module['search_adv_search_name'],
 		'singer' => $lang_module['singer']
 	);
-	
+
 	if( in_array( $query_search['where'], array( 'song', 'video' ) ) )
 	{
 		$array_type_search['author'] = $lang_module['author_1'];
 	}
-	
+
 	if( in_array( $query_search['where'], array( 'song', 'video', 'playlist' ) ) )
 	{
 		$array_type_search['upload'] = $lang_module['who_post'];
 	}
-	
+
 	foreach( $array_type_search as $k => $v )
 	{
 		$xtpl->assign( 'CURRENT', $k == $query_search['SearchBy'] ? ' boldcolor' : '' );
@@ -652,14 +652,14 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 		$xtpl->assign( 'TITLE', $v );
 		$xtpl->parse( 'main.typesearch' );
 	}
-	
+
 	// Thong tin ca si
 	if( ! empty( $array_singer ) and $query_search['where'] == "song" )
 	{
 		$xtpl->assign( 'SDATA', $array_singer );
 		$xtpl->parse( 'main.singer_info' );
 	}
-	
+
 	// Hien thi ket qua bai hat
 	if( $query_search['where'] == 'song' )
 	{
@@ -709,25 +709,25 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 			$xtpl->parse( 'main.typesong.loop' );
 			$i++;
 		}
-		
+
 		$xtpl->parse( 'main.typesong' );
 	}
 	elseif( $query_search['where'] == 'album' )
 	{
 		foreach( $array_album as $album )
-		{	
-			$album['describe'] = nv_clean60( strip_tags( $album['describe'] ), 200 );
-		
+		{
+			$album['description'] = nv_clean60( strip_tags( $album['description'] ), 200 );
+
 			$xtpl->assign( 'ALBUM', $album );
 
 			if( $album['checkhit'] >= 20 )
 			{
 				$xtpl->parse( 'main.typealbum.loop.hit' );
 			}
-			
+
 			$xtpl->parse( 'main.typealbum.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.typealbum' );
 	}
 	elseif( $query_search['where'] == 'video' )
@@ -735,41 +735,41 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 		foreach( $array_video as $video )
 		{
 			$video['dt'] = nv_date( 'd/m/Y H:i', $video['dt'] );
-			
+
 			$xtpl->assign( 'VIDEO', $video );
 
 			if( $video['checkhit'] >= 20 )
 			{
 				$xtpl->parse( 'main.typevideo.loop.hit' );
 			}
-			
+
 			$xtpl->parse( 'main.typevideo.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.typevideo' );
 	}
 	elseif( $query_search['where'] == 'playlist' )
 	{
 		foreach( $array_playlist as $playlist )
-		{	
+		{
 			$playlist['message'] = nv_clean60( strip_tags( $playlist['message'] ), 200 );
 			$playlist['thumb'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/randimg/img(' . rand(1, 10) . ').jpg';
-		
+
 			$xtpl->assign( 'PLAYLIST', $playlist );
 			$xtpl->parse( 'main.typeplaylist.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.typeplaylist' );
 	}
 
 	$gennerate_page = new_page( $ts, $query_search['page'], $base_url, false );
-	
+
 	if( ! empty( $gennerate_page ) )
 	{
 		$xtpl->assign( 'GENNERATE_PAGE', $gennerate_page );
 		$xtpl->parse( 'main.gennerate_page' );
 	}
-	
+
 	$xtpl->parse( 'main' );
 	return $xtpl->text( 'main' );
 }
@@ -788,12 +788,12 @@ function nv_music_searchvideo( $g_array, $array )
 	{
 		$row['creat'] = nv_date( "H:i d/m/Y", $row['creat'] );
 		$xtpl->assign( 'ROW', $row );
-		
+
 		if( $row['checkhit'] >= 20 )
 		{
 			$xtpl->parse( 'main.loop.hit' );
 		}
-		
+
 		$xtpl->parse( 'main.loop' );
 	}
 
@@ -1000,7 +1000,7 @@ function nv_music_video( $category, $array_new, $array_hot )
 	foreach( $category as $key => $value )
 	{
 		if( $key == 0 ) continue;
-		
+
 		$xtpl->assign( 'name', $value['title'] );
 		$xtpl->assign( 'url_view_category', $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $value['title'] ) . "&amp;id=" . $key . "&amp;type=category" );
 
@@ -1048,7 +1048,7 @@ function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $arra
 	$xtpl->assign( 'GDATA', $g_array );
 	$xtpl->assign( 'DATA', $array );
 	$xtpl->assign( 'base_url', NV_BASE_SITEURL . "modules/" . $module_file . "/data/" );
-	$xtpl->assign( 'ads', getADS() );
+	//$xtpl->assign( 'ads', getADS() );
 	$xtpl->assign( 'playerurl', $global_config['site_url'] . "/modules/" . $module_file . "/data/" );
 	$xtpl->assign( 'thisurl', $mainURL . "=video" );
 
@@ -1056,48 +1056,48 @@ function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $arra
 	{
 		$xtpl->parse( 'main.hit' );
 	}
-	
+
 	foreach( $array['listcat'] as $cat )
 	{
 		$xtpl->assign( 'SUBCAT', $cat );
 		$xtpl->parse( 'main.subcat' );
 	}
-	
+
 	// Thong tin ca si
 	if( ! empty( $array_singer ) )
 	{
 		$xtpl->assign( 'SINGER_INFO', $array_singer );
 		$xtpl->parse( 'main.singer_info' );
 	}
-	
+
 	// Album cung ca si
 	if( ! empty( $array_album ) )
 	{
 		$xtpl->assign( 'SEARCH_ALL_ALBUM', $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $array['singer'] ) . "&amp;id=" . $array['singerid'] . "&amp;type=singer");
-		
+
 		foreach( $array_album as $row )
 		{
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.other_album.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.other_album' );
 	}
-	
+
 	// Video cung ca si
 	if( ! empty( $array_video ) )
 	{
 		$xtpl->assign( 'SEARCH_ALL_VIDEO', $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $array['singer'] ) . "&amp;id=" . $array['singerid'] . "&amp;type=singer");
-		
+
 		foreach( $array_video as $row )
 		{
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.other_video.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.other_video' );
 	}
-	
+
 	// Binh luan
 	if( ( $setting['who_comment'] == 0 ) and ! defined( 'NV_IS_USER' ) and ! defined( 'NV_IS_ADMIN' ) )
 	{
@@ -1184,22 +1184,22 @@ function nv_emotion_theme()
 function nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $array_video, $array_playlist )
 {
 	global $module_info, $module_file, $lang_module, $lang_global, $main_header_URL;
-	
+
 	$xtpl = new XTemplate( "quicksearch.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
 	$xtpl->assign( 'GLANG', $lang_global );
-	
+
 	// Ket qua ca si
 	if( ! empty( $array_singer ) )
 	{
 		foreach( $array_singer as $singer )
 		{
 			if( empty( $singer['thumb'] ) ) $singer['thumb'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/d-img.png';
-			
+
 			$xtpl->assign( 'SINGER', $singer );
 			$xtpl->parse( 'main.singer.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.singer' );
 	}
 
@@ -1207,38 +1207,38 @@ function nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $ar
 	if( ! empty( $array_album ) )
 	{
 		foreach( $array_album as $album )
-		{			
+		{
 			if( empty( $album['singer'] ) ) $album['singer'] = $lang_module['unknow'];
 
 			$xtpl->assign( 'ALBUM', $album );
 			$xtpl->parse( 'main.album.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.album' );
 	}
 
 	if( ! empty( $array_playlist ) )
 	{
 		foreach( $array_playlist as $playlist )
-		{			
+		{
 			$playlist['thumb'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/randimg/img(' . rand(1, 10) . ').jpg';
 			$xtpl->assign( 'PLAYLIST', $playlist );
 			$xtpl->parse( 'main.playlist.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.playlist' );
 	}
 
 	if( ! empty( $array_video ) )
 	{
 		foreach( $array_video as $video )
-		{			
+		{
 			if( empty( $video['singer'] ) ) $video['singer'] = $lang_module['unknow'];
 
 			$xtpl->assign( 'VIDEO', $video );
 			$xtpl->parse( 'main.video.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.video' );
 	}
 
@@ -1247,19 +1247,81 @@ function nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $ar
 		foreach( $array_song as $song )
 		{
 			if( empty( $song['singer'] ) ) $song['singer'] = $lang_module['unknow'];
-			
+
 			$xtpl->assign( 'SONG', $song );
 			$xtpl->parse( 'main.song.loop' );
 		}
-		
+
 		$xtpl->parse( 'main.song' );
 	}
-	
+
 	$xtpl->assign( 'Q', $q );
 	$xtpl->assign( 'URL_SEARCH', nv_url_rewrite( $main_header_URL . "=search&where=song&q=" . urlencode( $q ), true ) );
-	
+
 	$xtpl->parse( 'main' );
 	return $xtpl->text( 'main' );
 }
 
-?>
+// Giao dien
+// Trang chu module
+function nv_music_main( $array, $array_album, $first_album_data )
+{
+	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $downURL, $op, $main_header_URL, $nv_Request, $array_op;
+
+	$xtpl = new XTemplate( "main.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'GLANG', $lang_global );
+	$xtpl->assign( 'DATA', $array );
+	$xtpl->assign( 'URL_DOWN', $downURL );
+	$xtpl->assign( 'URL_LOAD', $main_header_URL . "=" . ( empty( $array_op ) ? $op : implode( "/", $array_op ) ) . "&load_main_song=" );
+
+	if( empty( $setting['type_main'] ) )
+	{
+		$xtpl->parse( 'main.type_tab1' );
+	}
+	else
+	{
+		$xtpl->parse( 'main.type_tab2' );
+	}
+
+	$i = 1;
+	$j = 0;
+	if( ! empty( $array_album ) )
+	{
+		foreach( $array_album as $album )
+		{
+			$album['tname1'] = nv_clean60( $album['tname'], 30 );
+			$album['casi1'] = nv_clean60( $album['casi'], 30 );
+			$album['tname2'] = nv_clean60( $album['tname'], 40 );
+			$album['casi2'] = nv_clean60( $album['casi'], 40 );
+
+			$xtpl->assign( 'ALBUM', $album );
+
+			if( ( $i++ ) == 1 )
+			{
+				foreach( $first_album_data as $song )
+				{
+					$song['tenthat1'] = nv_clean60( $song['tenthat'], 23 );
+					$xtpl->assign( 'SONG', $song );
+					$xtpl->parse( 'main.data.first.song' );
+				}
+				$xtpl->parse( 'main.data.first' );
+			}
+			else
+			{
+				if( ++$j % 4 == 0 ) $xtpl->parse( 'main.data.old.break' );
+				$xtpl->parse( 'main.data.old' );
+			}
+		}
+
+		$xtpl->parse( 'main.data' );
+		if( $nv_Request->isset_request( 'load_main_song', 'get' ) ) die( $xtpl->text( 'main.data' ) );
+	}
+	elseif( $nv_Request->isset_request( 'load_main_song', 'get' ) )
+	{
+		die( "" );
+	}
+
+	$xtpl->parse( 'main' );
+	return $xtpl->text( 'main' );
+}

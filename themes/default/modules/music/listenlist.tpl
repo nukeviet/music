@@ -9,7 +9,7 @@
 		<div class="ms-shdetail" id="singersdetail">
 			<h2 class="medium greencolor mlotitle">{ALBUM.name} - <a class="singer" href="{ALBUM.url_search_singer}" title="{ALBUM.singer}">{ALBUM.singer}</a><!-- BEGIN: hit --><span class="musicicon mhit hitsong">&nbsp;&nbsp;&nbsp;</span><!-- END: hit --></h2>
 			<span class="msmall">{LANG.who_post}: <a class="singer" href="{ALBUM.url_search_upload}" title="{ALBUM.who_post}">{ALBUM.who_post}</a> | {LANG.view}: {ALBUM.numview}</span><br />
-			{ALBUM.describe}
+			{ALBUM.description}
 		</div>
 		<div class="ms-shshow">
 			<a href="javascript:void(0);" rel="0|{LANG.view_expand}|{LANG.view_collapse}|singersdetail" class="musicicon zoomin greencolor ms-shd" title="{LANG.view_expand}">{LANG.view_expand}</a>
@@ -30,7 +30,7 @@
 			// Install ADS
 			var ads_width = $('#music-ads').width();
 			$('#adscontent').html(
-				'<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="'+ads_width+'" height="120">' + 
+				'<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="'+ads_width+'" height="120">' +
 					'<param name="src" value="{ads.link}" />' +
 					'<param name="loop" value="true" />' +
 					'<param name="allowscriptaccess" value="always" />' +
@@ -58,7 +58,7 @@
 				<div class="clear"></div>
 			</div>
 			<!-- END: song -->
-		</div>	
+		</div>
 	</div>
 </div>
 <div class="clear"></div>
@@ -86,15 +86,15 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td class="left">Link Album:</td>
-				<td><input class="txt-full" id="albumlink" onclick="Select_all('albumlink')" type="text" value="{ALBUM.URL_ALBUM}" readonly="readonly"/></td>
+				<td><input class="form-control" id="albumlink" onclick="Select_all('albumlink')" type="text" value="{ALBUM.URL_ALBUM}" readonly="readonly"/></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.blog_song}:</td>
-				<td><input class="txt-full" id="blogsong" onclick="Select_all('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{playerurl}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={ALBUM.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{playerurl}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={ALBUM.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /></td>
+				<td><input class="form-control" id="blogsong" onclick="Select_all('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{playerurl}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={ALBUM.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{playerurl}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={ALBUM.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.forum_song}:</td>
-				<td><input class="txt-full" id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{playerurl}player.swf?playlistfile={ALBUM.creat_link_url}[/FLASH]" readonly="readonly"/></td>
+				<td><input class="form-control" id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{playerurl}player.swf?playlistfile={ALBUM.creat_link_url}[/FLASH]" readonly="readonly"/></td>
 			</tr>
 		</table>
 	</div>
@@ -106,7 +106,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td colspan="2">
-					<select class="txt-full" id="root_error" name="root_error">
+					<select class="form-control" id="root_error" name="root_error">
 						<option value="">{LANG.error_choose}</option>
 						<option>{LANG.error_a_1}</option>
 						<option>{LANG.error_a_2}</option>
@@ -121,7 +121,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 			</tr>
 			<tr>
 				<td class="left">{LANG.enter_name}:</td>
-				<td><input class="txt-full" id="user" type="text" value="{USER_NAME}" {NO_CHANGE}/></td>
+				<td><input class="form-control" id="user" type="text" value="{USER_NAME}" {NO_CHANGE}/></td>
 			</tr>
 			<tr>
 				<td colspan="2">{LANG.give_error_diff}</td>
@@ -137,15 +137,15 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	$(".tab_content").hide(); 
+	$(".tab_content").hide();
 	$("ul.mlo-tool li.tool:first").addClass("active").show();
-	$(".tab_content:first").show(); 
+	$(".tab_content:first").show();
 	$("ul.mlo-tool li.tool").click(function(){
 		$("ul.mlo-tool li.tool").removeClass("active");
-		$(this).addClass("active"); 
-		$(".tab_content").hide(); 
-		var activeTab = $(this).find("a").attr("href"); 
-		$(activeTab).show(); 
+		$(this).addClass("active");
+		$(".tab_content").hide();
+		var activeTab = $(this).find("a").attr("href");
+		$(activeTab).show();
 		return !1;
 	});
 });
@@ -232,7 +232,7 @@ $(document).ready(function() {
 			<table cellpadding="0" cellspacing="0" class="musictable">
 				<tr>
 					<td class="left">{LANG.your_name}:</td>
-					<td><input class="txt-full" type="text" name="name" id="name" value="{GDATA.username}" {CDATA.no_change}/></td>
+					<td><input class="form-control" type="text" name="name" id="name" value="{GDATA.username}" {CDATA.no_change}/></td>
 				</tr>
 				<tr>
 					<td class="left">{LANG.content}:</td>

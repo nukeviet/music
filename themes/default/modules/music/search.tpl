@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
 <div class="alboxw mssearch-adv">
 	<div class="alwrap">
-		<div class="alheader"> 
+		<div class="alheader">
 			<span>{LANG.search_song1} &quot;{TITLE_SEARCH}&quot;</span>
 			<div class="mss-advtool" id="mss-advtool" onclick="NVMS.advsearch.prosess();">
 				{LANG.search_adv} <span class="musicicon madvance">&nbsp;</span>
@@ -84,7 +84,7 @@
 <!-- BEGIN: loop -->
 <div class="topalbum_item">
 	<div class="alcontent">
-		<a href="{ALBUM.albumview}" title="{ALBUM.albumname} - {ALBUM.albumsinger}">			 
+		<a href="{ALBUM.albumview}" title="{ALBUM.albumname} - {ALBUM.albumsinger}">
 			<img class="musicsmalllalbum mmimgalbum" src="{ALBUM.thumb}" width="90" height="90" alt="{ALBUM.albumname}"/>
 		</a>
 		<div class="alcontent">
@@ -110,12 +110,12 @@
 		<img alt="{ALBUM.albumname}" class="musicsmalllalbum fl" width="100" height="100" src="{ALBUM.thumb}" />
 	</a>
 	<h2 class="medium">
-		<a href="{ALBUM.albumview}" title="{LANG.listen_album} {ALBUM.albumname}">{ALBUM.albumname}</a> - 
+		<a href="{ALBUM.albumview}" title="{LANG.listen_album} {ALBUM.albumname}">{ALBUM.albumname}</a> -
 		<a title="{ALBUM.albumsinger}" href="{ALBUM.url_search_singer}">{ALBUM.albumsinger}</a>
 		<!-- BEGIN: hit --><span class="musicicon mhit hitsong">&nbsp;&nbsp;&nbsp;</span><!-- END: hit -->
 	</h2>
 	<p>{LANG.who_create_1}: <a class="singer" title="{ALBUM.upboi}" href="{ALBUM.url_search_upload}">{ALBUM.upboi}</a> | {LANG.view}: {ALBUM.numview}</p>
-	{ALBUM.describe}
+	{ALBUM.description}
 	<div class="clear"></div>
 	<div class="hr"></div>
 <!-- END: loop -->
@@ -127,7 +127,7 @@
 		<img alt="{PLAYLIST.name}" class="musicsmalllalbum fl" width="100" height="100" src="{PLAYLIST.thumb}" />
 	</a>
 	<h2 class="medium">
-		<a href="{PLAYLIST.link}" title="{LANG.playlist_listen} {PLAYLIST.name}">{PLAYLIST.name}</a> - 
+		<a href="{PLAYLIST.link}" title="{LANG.playlist_listen} {PLAYLIST.name}">{PLAYLIST.name}</a> -
 		<a title="{PLAYLIST.singer}" href="{PLAYLIST.url_search_singer}">{PLAYLIST.singer}</a>
 	</h2>
 	<p>{LANG.who_create_1}: <a class="singer" title="{PLAYLIST.username}" href="{PLAYLIST.url_search_upload}">{PLAYLIST.username}</a> | {LANG.view}: {PLAYLIST.view}</p>

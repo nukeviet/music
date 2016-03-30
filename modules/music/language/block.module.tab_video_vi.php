@@ -24,5 +24,3 @@ $lang_block['view_all'] = "Xem tất cả";
 $lang_block['hot_video'] = "Video HOT nhất";
 $lang_block['new_video'] = "Video mới nhất";
 $lang_block['ns'] = "Chưa biết";
-
-?>

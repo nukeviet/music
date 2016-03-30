@@ -13,56 +13,56 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
 	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-	
+
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
-	
-	if ( empty( $id ) ) die( "NO" );
-	
-	$sql = "SELECT `host` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` WHERE `id`=" . $id;
-	$result = $db->sql_query( $sql );
-	list( $host ) = $db->sql_fetchrow( $result );
-	
-	if ( empty( $host ) ) die( "NO" );
-	
+
+	if ( empty( $id ) ) die( 'NO' );
+
+	$sql = "SELECT host FROM " . NV_PREFIXLANG . "_" . $module_data . "_ftp WHERE id=" . $id;
+	$result = $db->query( $sql );
+	$host = $result->fetchColumn();
+
+	if ( empty( $host ) ) die( 'NO' );
+
 	// Xoa FTP
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` WHERE `id`=" . $id;
-	$db->sql_query( $sql );
-	
+	$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_ftp WHERE id=" . $id;
+	$db->query( $sql );
+
 	// Cap nhat cac bai hat
 	$classMusic->updatewhendelFTP( $id, 0 );
 
-	nv_del_moduleCache( $module_name );
+	$nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, 'Delete FTP', $host, $admin_info['userid'] );
-	
-	die( "OK" );
+
+	die( 'OK' );
 }
 
 // Thay doi hoat dong
 if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 {
 	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-	
+
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
-	
-	if ( empty( $id ) ) die( "NO" );
-	
-	$sql = "SELECT `active` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` WHERE `id`=" . $id;
-	$result = $db->sql_query( $sql );
-	$numrows = $db->sql_numrows( $result );
+
+	if ( empty( $id ) ) die( 'NO' );
+
+	$sql = "SELECT active FROM " . NV_PREFIXLANG . "_" . $module_data . "_ftp WHERE id=" . $id;
+	$result = $db->query( $sql );
+	$numrows = $result->rowCount();
 	if ( $numrows != 1 ) die( 'NO' );
-	
-	list( $active ) = $db->sql_fetchrow( $result );
+
+	$active = $result->fetchColumn();
 	$active = $active ? 0 : 1;
-	
+
 	// Cap nhat cac bai hat
 	$classMusic->updatewhendelFTP( $id, $active );
-	
-	$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` SET `active`=" . $active . " WHERE `id`=" . $id;
-	$db->sql_query( $sql );
-	
-	nv_del_moduleCache( $module_name );
-	
-	die( "OK" );
+
+	$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_ftp SET active=" . $active . " WHERE id=" . $id;
+	$db->query( $sql );
+
+	$nv_Cache->delMod( $module_name );
+
+	die( 'OK' );
 }
 
 $page_title = $classMusic->lang('ftpsetting');
@@ -74,30 +74,30 @@ if( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 {
 	$newid = $nv_Request->get_int( 'newid', 'post', 0 );
 	$lastid = $nv_Request->get_int( 'lastid', 'post', 0 );
-	
+
 	for( $i = 1; $i <= $newid; $i++ )
 	{
-		if( ( filter_text_input( 'host' . $i . '', 'post', '' ) == '' ) || ( filter_text_input( 'user' . $i . '', 'post', '' ) == '' ) || ( filter_text_input( 'pass' . $i . '', 'post', '' ) == '' ) || ( filter_text_input( 'fulladdress' . $i . '', 'post', '' ) == '' ) || ( filter_text_input( 'subpart' . $i . '', 'post', '' ) == '' ) ) continue;
-		
+		if( ( $nv_Request->get_title( 'host' . $i . '', 'post', '' ) == '' ) || ( $nv_Request->get_title( 'user' . $i . '', 'post', '' ) == '' ) || ( $nv_Request->get_title( 'pass' . $i . '', 'post', '' ) == '' ) || ( $nv_Request->get_title( 'fulladdress' . $i . '', 'post', '' ) == '' ) || ( $nv_Request->get_title( 'subpart' . $i . '', 'post', '' ) == '' ) ) continue;
+
 		$array[$i] = array(
-			"host" => filter_text_input( 'host' . $i . '', 'post', '' ),
-			"user" => filter_text_input( 'user' . $i . '', 'post', '' ),
-			"pass" => filter_text_input( 'pass' . $i . '', 'post', '' ),
+			"host" => $nv_Request->get_title( 'host' . $i . '', 'post', '' ),
+			"user" => $nv_Request->get_title( 'user' . $i . '', 'post', '' ),
+			"pass" => $nv_Request->get_title( 'pass' . $i . '', 'post', '' ),
 			"fulladdress" => $nv_Request->get_string( 'fulladdress' . $i . '', 'post', '' ),
 			"subpart" => $nv_Request->get_string( 'subpart' . $i . '', 'post', '' ),
 			"ftppart" => $nv_Request->get_string( 'ftppart' . $i . '', 'post', '' )
 		);
 	}
-	
+
 	foreach( $array as $i => $data )
 	{
 		if( $i > $lastid )
 		{
-			$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ( `id`, `host`, `user`, `pass`, `fulladdress`, `subpart`, `ftppart`, `active` ) VALUES ( " . $i . ", " . $db->dbescape( $data['host'] ) . ", " . $db->dbescape( $data['user'] ) . ", " . $db->dbescape( $data['pass'] ) . ", " . $db->dbescape( $data['fulladdress'] ) . ", " . $db->dbescape( $data['subpart'] ) . ", " . $db->dbescape( $data['ftppart'] ) . ", 1 ) ";
-			if( $db->sql_query_insert_id( $sql ) )
+			$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_ftp ( id, host, user, pass, fulladdress, subpart, ftppart, active ) VALUES ( " . $i . ", " . $db->quote( $data['host'] ) . ", " . $db->quote( $data['user'] ) . ", " . $db->quote( $data['pass'] ) . ", " . $db->quote( $data['fulladdress'] ) . ", " . $db->quote( $data['subpart'] ) . ", " . $db->quote( $data['ftppart'] ) . ", 1 ) ";
+			if( $db->insert_id( $sql ) )
 			{
-				$db->sql_freeresult();
-				nv_del_moduleCache( $module_name );
+				//$xxx->closeCursor();
+				$nv_Cache->delMod( $module_name );
 			}
 			else
 			{
@@ -109,13 +109,13 @@ if( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 		{
 			foreach( $data as $key => $value )
 			{
-				if( ! $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` SET `" . $key . "` = " . $db->dbescape( $value ) . " WHERE `id` = " . $i . "  LIMIT 1 " ) )
+				if( ! $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_ftp SET " . $key . " = " . $db->quote( $value ) . " WHERE id = " . $i . "  LIMIT 1 " ) )
 				{
 					$error .= $classMusic->lang('error_save');
 					break;
 				}
 			}
-			nv_del_moduleCache( $module_name );
+			$nv_Cache->delMod( $module_name );
 		}
 	}
 }
@@ -145,12 +145,10 @@ if ( ! empty ( $error ) )
 	$xtpl->parse( 'main.error' );
 }
 
-$i = 1;
 ksort( $array );
 foreach( $array as $j => $row )
 {
 	$row['key'] = $j;
-	$row['class'] = $i ++ % 2 == 0 ? " class=\"second\"" : "";
 	$row['status'] = $row['status'] ? " checked=\"checked\"" : "";
 
 	$xtpl->assign( 'ROW', $row );
@@ -160,8 +158,6 @@ foreach( $array as $j => $row )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

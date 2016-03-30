@@ -32,9 +32,9 @@ if( $contents != "" )
 	$page_title = $lang_module['down_info3'] . " - " . $id . " - " . $module_info['custom_title'];
 	$key_words = $module_info['keywords'];
 
-	include ( NV_ROOTDIR . "/includes/header.php" );
+	include NV_ROOTDIR . '/includes/header.php';
 	echo nv_site_theme( $contents );
-	include ( NV_ROOTDIR . "/includes/footer.php" );
+	include NV_ROOTDIR . '/includes/footer.php';
 }
 else
 {
@@ -55,9 +55,8 @@ else
 			exit();
 		}
 
-		require_once ( NV_ROOTDIR . '/includes/class/download.class.php' );
 		$song_name = change_alias( $song['tenthat'] ) . "-" . $song['casi'] . ".mp3";
-		$song_url = NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'];
+		$song_url = NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_upload . "/" . $setting['root_contain'] . "/" . $song['duongdan'];
 		$x = explode( "/", $song['duongdan'] );
 		$base = '';
 		for( $i = 0; $i < ( count( $x ) - 1 ); $i++ )
@@ -65,13 +64,9 @@ else
 			( $i == 0 ) ? ( $add = "" ) : ( $add = "/" );
 			$base .= $add . $x[$i];
 		}
-		$base = NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $base;
-		$download = new download( $song_url, $base, $song_name, true );
+		$base = NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_upload . "/" . $setting['root_contain'] . "/" . $base;
+		$download = new NukeViet\Files\Download( $song_url, $base, $song_name, true );
 		$download->download_file();
 	}
 	exit();
 }
-
-?>
-
-

@@ -29,11 +29,10 @@ $link_edit_album = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . 
 $link_edit_song = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong";
 
 // Lay du lieu
-$sql = "SELECT `id`, `sid`, `where` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_error` WHERE `id` IN(" . implode( ",", $array_id ) . ")";
-$result = $db->sql_query( $sql );
+$sql = "SELECT id, sid, where FROM " . NV_PREFIXLANG . "_" . $module_data . "_error WHERE id IN(" . implode( ",", $array_id ) . ")";
+$result = $db->query( $sql );
 
-$i = 1;
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	if( $row['where'] == "album" )
 	{
@@ -71,17 +70,12 @@ while( $row = $db->sql_fetchrow( $result ) )
 		}
 	}
 
-	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
-
 	$xtpl->parse( 'main.loop' );
-	++$i;
 }
 
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

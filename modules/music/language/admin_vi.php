@@ -231,7 +231,7 @@ $lang_module['sub_error'] = "Báo lỗi";
 $lang_module['sub_gift'] = "Quà tặng âm nhạc";
 $lang_module['sub_lyric'] = "Quản lý lời bài hát";
 $lang_module['sub_singer'] = "Quản lý ca sĩ";
-$lang_module['sub_videocategory'] = "Quản lý thể loại videoclip";
+$lang_module['sub_videocategory'] = "QL thể loại videoclip";
 
 $lang_module['song'] = "Bài hát";
 $lang_module['song_name'] = "Tên bài hát";
@@ -357,6 +357,7 @@ $lang_module['addFromOtherSite_title'] = "Thêm nhạc từ Site khác";
 $lang_module['addFromOtherSite_listSong'] = "Danh sách các link nhạc";
 $lang_module['addFromOtherSite_site'] = "Site cần lấy";
 
+$lang_module['filter_enterkey'] = "Nhập từ khóa";
 $lang_module['filter_song'] = "Tên bài hát, lời bài hát";
 $lang_module['filter_album'] = "Tên album, mô tả album";
 $lang_module['filter_singer'] = "Tên ca sĩ";
@@ -386,7 +387,7 @@ $lang_module['tip_video_singer'] = "Bạn có thể chọn một hoặc nhiều 
 $lang_module['tip_video_author'] = "Bạn có thể chọn một hoặc nhiều nhạc sĩ cho videoclip, các nhạc sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
 $lang_module['tip_user'] = "Nhập tên người đăng, khuyến cáo nên nhập tên đăng nhập của thành viên";
 
-$lang_module['home_setting'] = "Quản lý dữ liệu trang chủ";
+$lang_module['home_setting'] = "QL dữ liệu trang chủ";
 $lang_module['home_setting_note'] = "Nếu trên trang chủ của module, bạn chỉ muốn hiển thị các album và videoclip với thứ tự sắp xếp theo ý muốn hãy sử dụng khu vực này. Dể sử dụng dữ liệu tại khu vực này bạn cần thêm block ngoài site, sau đó chọn kiểu hiển thị dữ liệu trong cấu hình trang chủ. Lưu ý: Nếu bạn chưa cấu hình hoặc cấu hình không đủ số lượng album hoặc videoclip thì có thể số lượng lấy được sẽ ít hơn với số lượng thiết đặt lúc thêm block";
 $lang_module['home_setting_order_note'] = "Ghi chú: Kéo thả các album hoặc video để sắp xếp thứ tự";
 $lang_module['home_setting_select_one'] = "Chọn một";
@@ -406,5 +407,15 @@ $lang_module['block_album_cap_pos_1'] = "Nằm bên dưới ảnh";
 $lang_module['block_album_num_cols'] = "Số album trên một hàng";
 $lang_module['block_album_image_size'] = "Kích thước ảnh";
 $lang_module['block_album_num_albums'] = "Số album";
-
-?>
+$lang_module['ads_del_confirm'] = "Bạn có chắc chắn muốn xóa quảng cáo này?";
+$lang_module['active_yes'] = "Có";
+$lang_module['active_no'] = "Không";
+$lang_module['album_error_title'] = "Lỗi: Tên đầy đủ của album còn trống";
+$lang_module['album_error_alias'] = "Lỗi: Tên ngắn gọn của album còn trống";
+$lang_module['album_error_thumb'] = "Lỗi: Chưa có ảnh hiển thị cho album";
+$lang_module['album_confirm_delsong'] = "Bạn có muốn xóa không?";
+$lang_module['album_add_list_song'] = "Thêm nhiều bài hát";
+$lang_module['album_add_a_song'] = "Thêm một bài hát";
+$lang_module['album_list_comment'] = "Danh sách các bình luận Album";
+$lang_module['active_succer'] = "Đã thay đổi hoạt động thành";
+$lang_module['active_succer1'] = "Đã thay đổi hoạt động thành công";

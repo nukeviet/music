@@ -5,17 +5,18 @@
         <meta http-equiv="Content-Language" content="vi" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>{LANG.getsongid_title}</title>
+		<link type="text/css" href="{NV_BASE_SITEURL}themes/default/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="{NV_BASE_SITEURL}themes/{GLOBAL_CONFIG.admin_theme}/css/admin.css" type="text/css" />
 		<link type="text/css" href="{NV_BASE_SITEURL}themes/{GLOBAL_CONFIG.module_theme}/css/{MODULE_FILE}.css" rel="stylesheet" />
-		<script type="text/javascript">var nv_siteroot = "{NV_BASE_SITEURL}";</script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/language/{NV_LANG_INTERFACE}.js"></script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/global.js"></script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/admin.js"></script>
-		<script type="text/javascript" src="{NV_BASE_SITEURL}js/jquery/jquery.min.js"></script>
+		<script type="text/javascript">var nv_base_siteurl = "{NV_BASE_SITEURL}";</script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/{NV_LANG_INTERFACE}.js"></script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/global.js"></script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/admin.js"></script>
+		<script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery/jquery.min.js"></script>
 	</head>
 	<body>
 	<div style="padding:5px">
-	<table class="tab1">
+	<table class="table table-striped table-bordered table-hover">
 		<thead>
 			<tr>
 				<td class="col-id center">ID</td>
@@ -28,9 +29,9 @@
 	</table>
 	<div id="data">
 		<!-- BEGIN: data -->
-		<table class="tab1">
+		<table class="table table-striped table-bordered table-hover">
+			<tbody>
 			<!-- BEGIN: row -->
-			<tbody{CLASS}>
 				<tr>
 					<td class="center col-id"><strong>{ROW.id}</strong></td>
 					<td>{ROW.title}</td>
@@ -38,21 +39,21 @@
 					<td class="col-sathor">{ROW.authors}</td>
 					<td class="center col-feature"><input type="checkbox" name="songid" value="{ROW.id}"{ROW.checked} /></td>
 				</tr>
-			</tbody>
 			<!-- END: row -->
+			<tbody>
 			<!-- BEGIN: generate_page -->
 			<tbody>
 				<tr>
-					<td colspan="5" class="center">
+					<td colspan="5" class="text-center">
 						<div id="loadpage">{GENERATE_PAGE}</div>
 					</td>
 				</tr>
-			</tbody>
 			<!-- END: generate_page -->
+			<tbody>
 			<tfoot>
 				<tr>
 					<td colspan="5" style="text-align:right">
-						<input class="music-button-2" type="button" value="{LANG.checkall}" id="checkall" /> 
+						<input class="music-button-2" type="button" value="{LANG.checkall}" id="checkall" />
 						<input class="music-button-2" type="button" value="{LANG.uncheckall}" id="uncheckall" />
 						<script type="text/javascript">
 						$(document).ready(function(){
@@ -70,13 +71,13 @@
 										}
 									}
 									if ( inlist == 0 ){
-										songs.push($(this).attr('value'));				
+										songs.push($(this).attr('value'));
 									}
 									songs = songs.toString();
 									$(this).attr('checked', 'checked');
 								});
 							});
-							
+
 							$('#uncheckall').click(function(){
 								$('input:checkbox').each(function(){
 									songs = songs.split( "," );
@@ -89,7 +90,7 @@
 											listtemp.push(songs[i]);
 										}
 									}
-									songs = listtemp;				
+									songs = listtemp;
 									songs = songs.toString();
 									$(this).removeAttr('checked');
 								});
@@ -107,9 +108,9 @@
 										}
 									}
 									if ( inlist == 0 ){
-										songs.push($(this).attr('value'));				
+										songs.push($(this).attr('value'));
 									}
-								}else{								
+								}else{
 									var listtemp = new Array();
 									var i = 0;
 									for ( i = 0; i < songs.length; i ++ ){
@@ -117,7 +118,7 @@
 											listtemp.push(songs[i]);
 										}
 									}
-									songs = listtemp;				
+									songs = listtemp;
 								}
 								songs = songs.toString();
 							});
@@ -131,7 +132,7 @@
 	</div>
 	<div style="text-align:center"><input type="button" value="{LANG.complete}" name="complete" id="complete" class="music-button"/></div>
 	<script type="text/javascript">
-		var songs = "{LISTSONG}"; 
+		var songs = "{LISTSONG}";
 		function nv_load_page( url, tagsid ){
 			url = rawurldecode ( url ) + "&getdata=1&area={RETURNAREA}&input={RETURNINPUT}&listsong=" + songs;
 			$('div#data').html('<div style="padding:5px;text-align:center"><img alt="Loading" src="{NV_BASE_SITEURL}images/load_bar.gif" /></div>');
@@ -143,7 +144,7 @@
 			$('#tmp-data').load( '{NV_BASE_ADMINURL}index.php?{NV_NAME_VARIABLE}={MODULE_NAME}&{NV_OP_VARIABLE}={OP}&findListAndReturn=1&loadname=1&area={RETURNAREA}&input={RETURNINPUT}&listsong=' + songs, function(){
 				nv_return();
 			});
-		});		
+		});
 		function nv_return(){
 			$("#{RETURNAREA}", opener.document).html($('#tmp-data').html());
 			$("input[name={RETURNINPUT}]", opener.document).val(songs);

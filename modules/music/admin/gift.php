@@ -12,13 +12,13 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 $page_title = $lang_module['list_gift'];
 
 // Call jquery datepicker + shadowbox
-$my_head .= "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . "js/ui/jquery.ui.core.css\" rel=\"stylesheet\" />\n";
-$my_head .= "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . "js/ui/jquery.ui.theme.css\" rel=\"stylesheet\" />\n";
-$my_head .= "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . "js/ui/jquery.ui.datepicker.css\" rel=\"stylesheet\" />\n";
+$my_head .= "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/ui/jquery.ui.core.css\" rel=\"stylesheet\" />\n";
+$my_head .= "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/ui/jquery.ui.theme.css\" rel=\"stylesheet\" />\n";
+$my_head .= "<link type=\"text/css\" href=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/ui/jquery.ui.datepicker.css\" rel=\"stylesheet\" />\n";
 
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/ui/jquery.ui.core.min.js\"></script>\n";
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/ui/jquery.ui.datepicker.min.js\"></script>\n";
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/language/jquery.ui.datepicker-" . NV_LANG_INTERFACE . ".js\"></script>\n";
+$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/ui/jquery.ui.core.min.js\"></script>\n";
+$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/ui/jquery.ui.datepicker.min.js\"></script>\n";
+$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . NV_ASSETS_DIR . "/js/language/jquery.ui.datepicker-" . NV_LANG_INTERFACE . ".js\"></script>\n";
 
 $now_page = $nv_Request->get_int( 'now_page', 'get', 0 );
 
@@ -32,14 +32,14 @@ else
 	$first_page = ( $now_page - 1 ) * 50;
 }
 
-$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id WHERE a.id!=0";
-$link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
+$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_gift AS a INNER JOIN " . NV_PREFIXLANG . "_" . $module_data . " AS b ON a.songid=b.id WHERE a.id!=0";
+$link = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 
 // Search data
 $data_search = array(
-	"q" => filter_text_input( 'q', 'get', $lang_module['filter_enterkey'], 1, 100 ), //
-	"from" => filter_text_input( 'from', 'get', '', 1, 100 ), //
-	"to" => filter_text_input( 'to', 'get', '', 1, 100 ), //
+	"q" => nv_substr( $nv_Request->get_title( 'q', 'get', $lang_module['filter_enterkey'], 1 ), 0, 100), //
+	"from" => nv_substr( $nv_Request->get_title( 'from', 'get', '', 1 ), 0, 100), //
+	"to" => nv_substr( $nv_Request->get_title( 'to', 'get', '', 1 ), 0, 100), //
 	"disabled" => " disabled=\"disabled\"" //
 );
 
@@ -81,8 +81,8 @@ $sql .= " ORDER BY a.id DESC";
 
 // Get num row
 $sql1 = "SELECT COUNT(*) " . $sql;
-$result1 = $db->sql_query( $sql1 );
-list( $output ) = $db->sql_fetchrow( $result1 );
+$result1 = $db->query( $sql1 );
+$output = $result1->fetchColumn();
 $ts = ceil( $output / 50 );
 
 $xtpl = new XTemplate( "gift.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
@@ -98,24 +98,22 @@ $xtpl->assign( 'MODULE_NAME', $module_name );
 $xtpl->assign( 'OP', $op );
 
 $xtpl->assign( 'DATA_SEARCH', $data_search );
-$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
 
 $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
 $link_active = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=active&where=_gift&id=";
 $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=editgift";
 
 $sql = "SELECT a.*, b.tenthat " . $sql . " LIMIT " . $first_page . ", 50";
-$result = $db->sql_query( $sql );
+$result = $db->query( $sql );
 
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$xtpl->assign( 'id', $row['id'] );
 	$xtpl->assign( 'body', nv_clean60( strip_tags( $row['body'] ), 200 ) );
 	$xtpl->assign( 'name', $row['who_send'] );
 	$xtpl->assign( 'song', $row['tenthat'] );
 
-	$class = ( $i % 2 ) ? " class=\"second\"" : "";
-	$xtpl->assign( 'class', $class );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_gift&id=" . $row['id'] );
 	$xtpl->assign( 'URL_EDIT', $link_edit . "&id=" . $row['id'] );
 
@@ -132,8 +130,6 @@ $contents .= "<div align=\"center\" style=\"width:300px;margin:0px auto 0px auto
 // $contents .= new_page_admin( $ts, $now_page, $link );
 $contents .= "</div>\n";
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';
