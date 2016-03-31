@@ -22,7 +22,7 @@ function nv_music_main_show_loader(show){
 </script>
 <div class="alboxw">
 	<div class="alwrap">
-		<div id="music-main-tabs" class="alheader"> 
+		<div id="music-main-tabs" class="alheader">
 			<!-- BEGIN: type_tab1 -->
 			<a id="music-main-tabs-1" onclick="nv_tool_music_main_tabalbum(1);" class="boldcolor" href="javascript:void(0);">{LANG.album_hotest}</a>
 			&nbsp;|&nbsp;
@@ -39,16 +39,15 @@ function nv_music_main_show_loader(show){
 				<!-- BEGIN: first -->
 				<div class="maintopal">
 					<a href="{ALBUM.url_album}" title="{ALBUM.tname} - {ALBUM.casi}">
-						<img class="main-imgtop musicsmalllalbum" src="{ALBUM.thumb}" width="100" height="100" alt="{ALBUM.tname}" />
+						<img class="main-imgtop musicsmalllalbum pull-left" src="{ALBUM.thumb}" width="100" height="100" alt="{ALBUM.tname}" />
 					</a>
 					<h2 class="large"><a href="{ALBUM.url_album}" title="{ALBUM.tname}">{ALBUM.tname2}</a></h2>
-					<p>{LANG.show}: <a href="{ALBUM.url_search_singer}" title="{ALBUM.casi}">{ALBUM.casi2}</a></p>						
-					<ul class="mmainsong">
+					<p>{LANG.show}: <a href="{ALBUM.url_search_singer}" title="{ALBUM.casi}">{ALBUM.casi2}</a></p>
+					<div class="clearfix m-bottom"></div>
+					<ul class="mmainsongsub">
 						<!-- BEGIN: song -->
 						<li>
-							<div class="alcontent">
-								{SONG.stt}. <a class="song" href="{SONG.url}" title="{SONG.tenthat}">{SONG.tenthat1}</a>
-							</div>
+						  {SONG.stt}. <a class="song" href="{SONG.url}" title="{SONG.tenthat}">{SONG.tenthat1}</a>
 						</li>
 						<!-- END: song -->
 					</ul>
@@ -56,20 +55,22 @@ function nv_music_main_show_loader(show){
 				</div>
 				<!-- END: first -->
 				<div class="clear"></div>
+				<div class="row">
 				<!-- BEGIN: old -->
-				<div class="topalbum_item">
-					<div class="alcontent">
-						<a href="{ALBUM.url_album}" title="{ALBUM.tname} - {ALBUM.casi}">			 
-							<img class="musicsmalllalbum mmimgalbum" src="{ALBUM.thumb}" width="90" height="90" alt="{ALBUM.tname}"/>
-						</a>
-						<div class="alcontent">
-							<a href="{ALBUM.url_album}" title="{ALBUM.tname}">{ALBUM.tname1}</a><br />
-							<a class="singer" href="{ALBUM.url_search_singer}" title="{ALBUM.casi}">{ALBUM.casi1}</a>
-						</div>
-					</div>
+    				<div class="col-xs-24 col-sm-8 col-md-8">
+    					<div class="alcontent">
+    						<a href="{ALBUM.url_album}" title="{ALBUM.tname} - {ALBUM.casi}">
+    							<img class="musicsmalllalbum mmimgalbum" src="{ALBUM.thumb}" width="90" height="90" alt="{ALBUM.tname}"/>
+    						</a>
+    						<div class="alcontent">
+    							<h3><a href="{ALBUM.url_album}" title="{ALBUM.tname}">{ALBUM.tname1}</a></h3>
+    							<a class="singer" href="{ALBUM.url_search_singer}" title="{ALBUM.casi}">{ALBUM.casi1}</a>
+    						</div>
+    					</div>
+    				</div>
+    				<!-- BEGIN: break --><div class="clear"></div><!-- END: break -->
+    				<!-- END: old -->
 				</div>
-				<!-- BEGIN: break --><div class="clear"></div><!-- END: break -->
-				<!-- END: old -->
 			<div class="clear"></div>
 			<p class="alright alcontent"><a class="musicicon mforward" title="{LANG.view_all}" href="{DATA.url_more}" >&nbsp;{LANG.view_all}</a></p>
 			<!-- END: data -->

@@ -1133,13 +1133,6 @@ class nv_mod_music
 		return $songdata;
 	}
 
-	// Xoa cac binh luan
-	public function delcomment( $delwwhat, $where )
-	{
-		$sql = "DELETE FROM " . $this->table_prefix . "_comment_" . $delwwhat . " WHERE what=" . $where;
-		return $this->db->query( $sql );
-	}
-
 	// Xoa cac loi bai hat
 	public function dellyric( $songid )
 	{

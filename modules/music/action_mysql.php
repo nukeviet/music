@@ -14,9 +14,6 @@ $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lan
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ads";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_category";
-$sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_album";
-$sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_song";
-$sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_video";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_error";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_gift";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_lyric";
@@ -29,6 +26,13 @@ $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lan
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_author";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp";
 $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_topsong";
+
+$result = $db->query( "SHOW TABLE STATUS LIKE '" . $db_config['prefix'] . "\_" . $lang . "\_comment'" );
+$rows = $result->fetchAll( );
+if( sizeof( $rows ) )
+{
+	$sql_drop_module[] = "DELETE FROM " . $db_config['prefix'] . "_" . $lang . "_comment WHERE module='" . $module_name . "'";
+}
 
 $sql_create_module = $sql_drop_module;
 
@@ -103,30 +107,6 @@ $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_
   link varchar(255) NOT NULL DEFAULT '' COMMENT 'Đường dẫn quảng cáo',
   name varchar(100) NOT NULL DEFAULT '' COMMENT 'Tiêu đề quảng cáo',
   url varchar( 255 ) NOT NULL DEFAULT '' COMMENT 'Đường dẫn file ảnh, flash',
-  PRIMARY KEY (id)
-) ENGINE=MyISAM";
-
-// Binh luan bai hat
-$sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_song (
-  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người bình luận',
-  body text NOT NULL COMMENT 'Nội dung bình luận',
-  dt int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian bình luận',
-  what varchar(255) NOT NULL DEFAULT '' COMMENT 'ID bài hát bình chọn',
-  userid mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'ID thành viên bình luận',
-  active smallint(2) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (id)
-) ENGINE=MyISAM";
-
-// Binh luan album
-$sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_album (
-  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(255) NOT NULL DEFAULT '',
-  body text NOT NULL,
-  dt int(11) unsigned NOT NULL DEFAULT '0',
-  what varchar(255) NOT NULL DEFAULT '',
-  userid mediumint(8) unsigned NOT NULL DEFAULT '0',
-  active smallint(2) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
@@ -214,18 +194,6 @@ $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_
   weight smallint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY title (title)
-) ENGINE=MyISAM";
-
-// Binh luan album
-$sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_video (
-  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(255) NOT NULL DEFAULT '',
-  body text NOT NULL,
-  dt int(11) unsigned NOT NULL DEFAULT '0',
-  what varchar(255) NOT NULL DEFAULT '',
-  userid mediumint(8) unsigned NOT NULL DEFAULT '0',
-  active smallint(2) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
 // Ca si
@@ -319,3 +287,14 @@ $sql_create_module[] = "INSERT INTO  " . $db_config['prefix'] . "_" . $lang . "_
 ('alias_view_album', 'album'),
 ('alias_view_videoclip', 'video-clip')
 ";
+
+// Comments
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . NV_LANG_DATA . "', '" . $module_name . "', 'auto_postcomm', '1')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . NV_LANG_DATA . "', '" . $module_name . "', 'allowed_comm', '6')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . NV_LANG_DATA . "', '" . $module_name . "', 'view_comm', '6')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . NV_LANG_DATA . "', '" . $module_name . "', 'setcomm', '4')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . NV_LANG_DATA . "', '" . $module_name . "', 'activecomm', '1')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . NV_LANG_DATA . "', '" . $module_name . "', 'emailcomm', '0')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . NV_LANG_DATA . "', '" . $module_name . "', 'adminscomm', '')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . NV_LANG_DATA . "', '" . $module_name . "', 'sortcomm', '0')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . NV_LANG_DATA . "', '" . $module_name . "', 'captcha', '1')";

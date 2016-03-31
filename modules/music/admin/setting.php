@@ -14,9 +14,7 @@ $page_title = $classMusic->lang('music_setting');
 if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
 	$array['root_contain'] = md5( $nv_Request->get_title( 'root_contain', 'post', '' ) );
-	$array['who_comment'] = $nv_Request->get_int( 'who_comment', 'post', 0 );
 	$array['who_download'] = $nv_Request->get_int( 'who_download', 'post', 0 );
-	$array['auto_comment'] = $nv_Request->get_int( 'auto_comment', 'post', 0 );
 	$array['who_lyric'] = $nv_Request->get_int( 'who_lyric', 'post', 0 );
 	$array['auto_lyric'] = $nv_Request->get_int( 'auto_lyric', 'post', 0 );
 	$array['who_gift'] = $nv_Request->get_int( 'who_gift', 'post', 0 );
@@ -71,24 +69,6 @@ $contents .= "<form action=\"" . NV_BASE_ADMINURL . "index.php\" method=\"post\"
 $contents .= "<input type=\"hidden\" name =\"" . NV_NAME_VARIABLE . "\"value=\"" . $module_name . "\" />";
 $contents .= "<input type=\"hidden\" name =\"" . NV_OP_VARIABLE . "\"value=\"" . $op . "\" />";
 $contents .= "<table class=\"tab1\">
-<tr>
-    <td style=\"width: 170px;\"><strong>" . $lang_module['set_who_comment'] . "</strong></td>
-    <td>
-		<select name=\"who_comment\">
-			<option value=\"2\"" . ( $classMusic->setting['who_comment'] == 2 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_no'] . "</option>\n
-			<option value=\"1\"" . ( $classMusic->setting['who_comment'] == 1 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_all'] . "</option>\n
-			<option value=\"0\"" . ( $classMusic->setting['who_comment'] == 0 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_user'] . "</option>\n
-		</select>
-	</td>
-</tr>
-<tbody class=\"second\">
-<tr>
-    <td><strong>" . $lang_module['set_auto_comment'] . "</strong></td>
-    <td>
-        <input type=\"checkbox\" value=\"1\" name=\"auto_comment\" " . ( ( $classMusic->setting['auto_comment'] ) ? "checked=\"checked\"" : "" ) . ">
-    </td>
-</tr>
-</tbody>
 
 <tr>
     <td><strong>" . $lang_module['set_who_lyric'] . "</strong></td>

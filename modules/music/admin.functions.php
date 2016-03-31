@@ -25,11 +25,10 @@ $submenu['error'] = $classMusic->lang('sub_error');
 $submenu['ads'] = $classMusic->lang('sub_ads');
 $submenu['lyric'] = $classMusic->lang('sub_lyric');
 $submenu['gift'] = $classMusic->lang('sub_gift');
-$submenu['comment'] = $classMusic->lang('sub_comment');
 $submenu['userplaylist'] = $classMusic->lang('userplaylist');
 $submenu['category'] = $classMusic->lang('sub_category');
 $submenu['video_category'] = $classMusic->lang('sub_videocategory');
 $submenu['utilities'] = $classMusic->lang('utilities');
 $submenu['globalsetting'] = $classMusic->lang('set_global');
 
-$allow_func = array( 'main', 'content-song', 'category', 'album', 'content-album', 'alias', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'ads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'content-lyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite', 'utilities', 'setting-alias', 'setting-home', 'delads', 'del', 'delall', 'active', 'listactive' );
+$allow_func = array( 'main', 'content-song', 'category', 'album', 'content-album', 'alias', 'maincategory', 'mainalbum', 'ads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'content-lyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite', 'utilities', 'setting-alias', 'setting-home', 'delads', 'del', 'delall', 'active', 'listactive' );

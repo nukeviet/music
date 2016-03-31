@@ -19,9 +19,6 @@ if( empty( $id ) ) die( "Stop!!!" );
 if( ! in_array( $where, array(
 	"",
 	"_album",
-	"_comment_album",
-	"_comment_song",
-	"_comment_video",
 	"_ftp",
 	"_gift",
 	"_lyric",

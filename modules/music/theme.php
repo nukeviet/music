@@ -19,7 +19,7 @@ else
 }
 
 // Nghe mot bai hat
-function nv_music_listenone( $gdata, $sdata, $cdata, $ldata, $array_album, $array_video, $array_singer )
+function nv_music_listenone( $gdata, $sdata, $cdata, $ldata, $array_album, $array_video, $array_singer, $content_comment )
 {
 	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $my_head, $main_header_URL, $mainURL;
 
@@ -167,6 +167,11 @@ function nv_music_listenone( $gdata, $sdata, $cdata, $ldata, $array_album, $arra
 	}
 	else
 	{
+		$xtpl->parse( 'main.comment' );
+	}
+
+	if(!empty($content_comment)){
+		$xtpl->assign( 'COMMENT', $content_comment );
 		$xtpl->parse( 'main.comment' );
 	}
 
@@ -398,7 +403,7 @@ function nv_music_editplaylist( $g_array, $array, $row )
 }
 
 // Nghe album
-function nv_music_listenlist( $g_array, $album_array, $song_array, $array_album, $array_video, $array_singer )
+function nv_music_listenlist( $g_array, $album_array, $song_array, $array_album, $array_video, $array_singer, $content_comment )
 {
 	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL, $my_head, $main_header_URL, $downURL;
 	// My Head
@@ -477,20 +482,8 @@ function nv_music_listenlist( $g_array, $album_array, $song_array, $array_album,
 	}
 
 	// Binh luan
-	if( ( $setting['who_comment'] == 0 ) && ! defined( 'NV_IS_USER' ) && ! defined( 'NV_IS_ADMIN' ) )
-	{
-		$xtpl->assign( 'USER_LOGIN', $g_array['user_login'] );
-		$xtpl->assign( 'USER_REGISTER', $g_array['user_register'] );
-		$xtpl->parse( 'main.nocomment' );
-	}
-	elseif( $setting['who_comment'] == 2 )
-	{
-		$xtpl->parse( 'main.stopcomment' );
-	}
-	else
-	{
-		$xtpl->assign( 'USER_NAME', $g_array['name'] );
-		$xtpl->assign( 'NO_CHANGE', ( $g_array['name'] == '' ) ? '' : 'readonly="readonly"' );
+	if(!empty($content_comment)){
+		$xtpl->assign( 'COMMENT', $content_comment );
 		$xtpl->parse( 'main.comment' );
 	}
 
@@ -1029,7 +1022,7 @@ function nv_music_video( $category, $array_new, $array_hot )
 }
 
 // Xem video
-function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $array_singer )
+function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $array_singer, $content_comment )
 {
 	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL, $my_head, $main_header_URL;
 
@@ -1099,20 +1092,8 @@ function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $arra
 	}
 
 	// Binh luan
-	if( ( $setting['who_comment'] == 0 ) and ! defined( 'NV_IS_USER' ) and ! defined( 'NV_IS_ADMIN' ) )
-	{
-		$xtpl->assign( 'USER_LOGIN', $g_array['user_login'] );
-		$xtpl->assign( 'USER_REGISTER', $g_array['user_register'] );
-		$xtpl->parse( 'main.nocomment' );
-	}
-	elseif( $setting['who_comment'] == 2 )
-	{
-		$xtpl->parse( 'main.stopcomment' );
-	}
-	else
-	{
-		$xtpl->assign( 'USER_NAME', $g_array['name'] );
-		$xtpl->assign( 'NO_CHANGE', ( $g_array['name'] == '' ) ? '' : 'readonly="readonly"' );
+	if(!empty($content_comment)){
+		$xtpl->assign( 'COMMENT', $content_comment );
 		$xtpl->parse( 'main.comment' );
 	}
 
@@ -1290,8 +1271,8 @@ function nv_music_main( $array, $array_album, $first_album_data )
 	{
 		foreach( $array_album as $album )
 		{
-			$album['tname1'] = nv_clean60( $album['tname'], 30 );
-			$album['casi1'] = nv_clean60( $album['casi'], 30 );
+			$album['tname1'] = nv_clean60( $album['tname'], 20 );
+			$album['casi1'] = nv_clean60( $album['casi'], 20 );
 			$album['tname2'] = nv_clean60( $album['tname'], 40 );
 			$album['casi2'] = nv_clean60( $album['casi'], 40 );
 
@@ -1301,7 +1282,7 @@ function nv_music_main( $array, $array_album, $first_album_data )
 			{
 				foreach( $first_album_data as $song )
 				{
-					$song['tenthat1'] = nv_clean60( $song['tenthat'], 23 );
+					$song['tenthat1'] = nv_clean60( $song['tenthat'], 0 );
 					$xtpl->assign( 'SONG', $song );
 					$xtpl->parse( 'main.data.first.song' );
 				}
@@ -1309,7 +1290,7 @@ function nv_music_main( $array, $array_album, $first_album_data )
 			}
 			else
 			{
-				if( ++$j % 4 == 0 ) $xtpl->parse( 'main.data.old.break' );
+				if( ++$j % 3 == 0 ) $xtpl->parse( 'main.data.old.break' );
 				$xtpl->parse( 'main.data.old' );
 			}
 		}

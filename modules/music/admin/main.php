@@ -338,7 +338,6 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		if( $song['album'] != 0 ) $classMusic->fix_album( $song['album'] );
 		$classMusic->fix_singer( $classMusic->string2array( $song['casi'] ) );
 		$classMusic->fix_author( $classMusic->string2array( $song['nhacsi'] ) );
-		$classMusic->delcomment( 'song', $song['id'] );
 		$classMusic->dellyric( $song['id'] );
 		$classMusic->delerror( 'song', $song['id'] );
 		$classMusic->delgift( $song['id'] );

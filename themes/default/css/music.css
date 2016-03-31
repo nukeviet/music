@@ -250,11 +250,18 @@ h2.gift{padding:0;margin:0;font-size:14px}
 .music-av-gird .item .item-content .caption.inset .ct a:hover{text-decoration:underline}
 .music-av-gird .item .item-content .caption h3{font-size:inherit;font-weight:bold;padding:0;margin:0;line-height:15px}
 
+.maintopal{
+	padding: 10px
+}
 
+ul.mmainsongsub{
+	padding: 0;
+}
 
+ul.mmainsongsub li{
+	line-height: 23px
+}
 
-
-
-
-
-
+.alcontent{
+	text-align: center
+}

@@ -140,7 +140,34 @@ $page_title = $lang_module['album'] . " " . $album_array['name'] . NV_TITLEBAR_D
 $key_words = $album_array['name'] . " - " . $album_array['singer'];
 $description = isset( $album_array['description']{50} ) ? $album_array['describe'] : sprintf( $lang_module['share_descreption_album'], $album_array['name'], $album_array['singer'], NV_MY_DOMAIN );
 
-$contents = nv_music_listenlist( $g_array, $album_array, $song_array, $array_album, $array_video, $array_singer );
+// comment
+if( isset( $site_mods['comment'] ) and isset( $module_config[$module_name]['activecomm'] ) )
+{
+	define( 'NV_COMM_ID', $id ); //ID bài viết
+	define( 'NV_COMM_AREA', $module_info['funcs'][$op]['func_id'] ); //để đáp ứng comment ở bất cứ đâu không cứ là bài viết
+	$allowed = $module_config[$module_name]['allowed_comm']; //check allow comemnt
+	//tuy vào module để lấy cấu hình. Nếu là module news thì có cấu hình theo bài viết
+	if( $allowed == '-1' )
+	{
+		$allowed = 6;
+	}
+	define( 'NV_PER_PAGE_COMMENT', 5 );
+
+	//Số bản ghi hiển thị bình luận
+	require_once NV_ROOTDIR . '/modules/comment/comment.php';
+	$area = ( defined( 'NV_COMM_AREA' )) ? NV_COMM_AREA : 0;
+	$checkss = md5( $module_name . '-' . $area . '-' . NV_COMM_ID . '-' . $allowed . '-' . NV_CACHE_PREFIX );
+
+	//get url comment
+	$url_info = parse_url( $client_info['selfurl'] );
+	$content_comment = nv_comment_module( $module_name, $checkss, $area, NV_COMM_ID, $allowed, 1 );
+}
+else
+{
+	$content_comment = '';
+}
+
+$contents = nv_music_listenlist( $g_array, $album_array, $song_array, $array_album, $array_video, $array_singer, $content_comment );
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
