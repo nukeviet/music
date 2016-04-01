@@ -21,7 +21,6 @@ if( $id > 0 )
 		// Cap nhat lai so album cua ca si
 		updatesinger( $album['casi'], 'numalbum', '-1' );
 		// Xoa cac bao loi, binh luan
-		delcomment( 'album', $album['id'] );
 		delerror( 'album', $album['id'] );
 		// Cap nhat lai album thanh chua biet cho cac bai hat
 		updateSwhendelA( $id, 0 );
@@ -31,7 +30,6 @@ if( $id > 0 )
 		$video = getvideobyID( $id );
 		updatesinger( $video['casi'], 'numvideo', '-1' );
 		updateauthor( $video['nhacsi'], 'numvideo', '-1' );
-		delcomment( 'video', $video['id'] );
 		unlinkSV( $video['server'], $video['duongdan'] );
 
 		// Cap nhat lai chu de
@@ -69,7 +67,6 @@ if( $id > 0 )
 		updatesinger( $song['casi'], 'numsong', '-1' );
 		updateauthor( $song['nhacsi'], 'numsong', '-1' );
 		// Xoa binh luan, loi bai hat, qua tang am nhac, bao loi
-		delcomment( 'song', $song['id'] );
 		dellyric( $song['id'] );
 		delerror( 'song', $song['id'] );
 		delgift( $song['id'] );

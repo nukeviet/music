@@ -42,14 +42,14 @@ if( $nv_Request->isset_request( 'send_gift', 'post' ) )
 
 		$nv_Request->set_Cookie( $module_name . '_gift', NV_CURRENTTIME );
 
-		$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_gift VALUES ( 
-			NULL, 
-			" . $db->quote( $who_send ) . ", 
-			" . $db->quote( $who_receive ) . ", 
-			" . $db->quote( $id ) . ", 
-			UNIX_TIMESTAMP(), 
-			" . $db->quote( $body ) . ", 
-			" . $setting['auto_gift'] . " 
+		$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_gift VALUES (
+			NULL,
+			" . $db->quote( $who_send ) . ",
+			" . $db->quote( $who_receive ) . ",
+			" . $db->quote( $id ) . ",
+			UNIX_TIMESTAMP(),
+			" . $db->quote( $body ) . ",
+			" . $setting['auto_gift'] . "
 		)";
 
 		if( $db->insert_id( $sql ) )
@@ -138,12 +138,12 @@ if( $nv_Request->isset_request( 'sendlyric', 'post' ) )
 	if( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
 	{
 		$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_lyric VALUES (
-			NULL, 
-			" . $db->quote( $id ) . ", 
-			" . $db->quote( $user_lyric ) . ", 
-			" . $db->quote( $body_lyric ) . ", 
-			" . $setting['auto_lyric'] . ", 
-			" . NV_CURRENTTIME . " 
+			NULL,
+			" . $db->quote( $id ) . ",
+			" . $db->quote( $user_lyric ) . ",
+			" . $db->quote( $body_lyric ) . ",
+			" . $setting['auto_lyric'] . ",
+			" . NV_CURRENTTIME . "
 		)";
 
 		if( $db->insert_id( $sql ) )
@@ -216,13 +216,13 @@ if( $nv_Request->isset_request( 'senderror', 'post' ) )
 		if( ( $check == 0 ) or ( ( $check == 1 ) and ( $ok == 0 ) ) )
 		{
 			$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_error VALUES (
-				NULL, 
-				" . $key . ", 
-				" . $userid . ", 
-				" . $db->quote( $username ) . ", 
-				" . $db->quote( $root_error . " | " . $body ) . ", 
-				" . $db->quote( $where ) . ", 
-				" . NV_CURRENTTIME . ", 
+				NULL,
+				" . $key . ",
+				" . $userid . ",
+				" . $db->quote( $username ) . ",
+				" . $db->quote( $root_error . " | " . $body ) . ",
+				" . $db->quote( $where ) . ",
+				" . NV_CURRENTTIME . ",
 				" . $db->quote( $client_info['ip'] ) . ", 1
 			)";
 
@@ -398,7 +398,6 @@ if( $nv_Request->isset_request( 'delsong', 'post' ) )
 	updatesinger( $song['casi'], 'numsong', '-1' );
 	updateauthor( $song['nhacsi'], 'numsong', '-1' );
 	updatealbum( $song['album'], '-1' );
-	delcomment( 'song', $song['id'] );
 	dellyric( $song['id'] );
 	delerror( 'song', $song['id'] );
 	delgift( $song['id'] );
@@ -407,12 +406,12 @@ if( $nv_Request->isset_request( 'delsong', 'post' ) )
 	$list_cat = $song['listcat'] ? explode( ',', $song['listcat'] ) : array();
 	$list_cat[] = $song['theloai'];
 	$list_cat = array_filter( array_unique( $list_cat ) );
-	
+
 	foreach( $list_cat as $_cid )
 	{
 		UpdateSongCat( $_cid, '-1' );
 	}
-	
+
 	$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id=" . $id;
 	$db->query( $sql );
 	$nv_Cache->delMod( $module_name );
@@ -457,20 +456,20 @@ if( $nv_Request->isset_request( 'quicksearch', 'get' ) )
 {
 	$q = nv_substr( $nv_Request->get_title( 'q', 'get', '', 0 ), 0, NV_MAX_SEARCH_LENGTH);
 	$checksess = nv_substr( $nv_Request->get_title( 'checksess', 'get', '', 1 ), 0, 255);
-	
+
 	if( $checksess != md5( $global_config['sitekey'] . session_id() ) ) die('Error Access!!!');
-	
+
 	if( empty( $q ) ) die('Not thing to search!!!');
-	
+
 	$DB_LikeKey = $db->dblikeescape( $q );
-	
+
 	$array_singer = $array_song = $array_album = $array_video = $array_playlist = array();
-	
+
 	// Ket qua ca si
 	$sql = "SELECT id, tenthat, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE (tenthat LIKE '%" . $DB_LikeKey . "%' AND tenthat NOT LIKE '% ft. %') ORDER BY tenthat ASC LIMIT 0,2";
 	$result = $db->query( $sql );
 	$num_singer = $result->rowCount();
-	
+
 	while( $row = $result->fetch() )
 	{
 		$array_singer[] = array(
@@ -479,12 +478,12 @@ if( $nv_Request->isset_request( 'quicksearch', 'get' ) )
 			'link' => nv_url_rewrite( $main_header_URL . "=search&where=song&q=" . urlencode( $row['tenthat'] ) . "&id=" . $row['id'] . "&type=singer", true )
 		);
 	}
-	
+
 	// Ket qua album
 	$sql = "SELECT a.id, a.name, a.tname, a.thumb, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1 AND a.tname LIKE '%" . $DB_LikeKey . "%' ORDER BY a.tname ASC LIMIT 0,2";
 	$result = $db->query( $sql );
 	$num_album = $result->rowCount();
-	
+
 	while( $row = $result->fetch() )
 	{
 		$array_album[] = array(
@@ -494,12 +493,12 @@ if( $nv_Request->isset_request( 'quicksearch', 'get' ) )
 			'link' => nv_url_rewrite( $main_header_URL . "=listenlist/" . $row['id'] . "/" . $row['name'], true )
 		);
 	}
-	
+
 	// Ket qua playlist
 	$sql = "SELECT id, name, keyname, singer FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE active=1 AND name LIKE '%" . $DB_LikeKey . "%' ORDER BY name ASC LIMIT 0,2";
 	$result = $db->query( $sql );
 	$num_playlist = $result->rowCount();
-	
+
 	while( $row = $result->fetch() )
 	{
 		$array_playlist[] = array(
@@ -508,12 +507,12 @@ if( $nv_Request->isset_request( 'quicksearch', 'get' ) )
 			'link' => nv_url_rewrite( $main_header_URL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'], true )
 		);
 	}
-	
+
 	// Ket qua video
 	$sql = "SELECT a.id, a.name, a.tname, a.thumb, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1 AND a.tname LIKE '%" . $DB_LikeKey . "%' ORDER BY a.tname ASC LIMIT 0,2";
 	$result = $db->query( $sql );
 	$num_video = $result->rowCount();
-	
+
 	while( $row = $result->fetch() )
 	{
 		$array_video[] = array(
@@ -537,7 +536,7 @@ if( $nv_Request->isset_request( 'quicksearch', 'get' ) )
 			'link' => nv_url_rewrite( $main_header_URL . "=listenone/" . $row['id'] . "/" . $row['ten'], true )
 		);
 	}
-	
+
 	$contents = nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $array_video, $array_playlist );
 
 	include NV_ROOTDIR . '/includes/header.php';

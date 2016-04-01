@@ -341,7 +341,6 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 
 		$classMusic->fix_singer( $classMusic->string2array( $video['casi'] ) );
 		$classMusic->fix_author( $classMusic->string2array( $video['nhacsi'] ) );
-		$classMusic->delcomment( 'video', $video['id'] );
 		$classMusic->fix_cat_video( array_unique( array_filter( array_merge_recursive( explode(',', $video['listcat']), array( $video['theloai'] ) ) ) ) );
 		$classMusic->unlinkSV( $video['server'], $video['duongdan'] );
 	}

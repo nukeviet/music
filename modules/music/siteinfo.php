@@ -32,20 +32,6 @@ if( $number > 0 )
 	$siteinfo[] = array( 'key' => $lang_siteinfo['siteinfo_numalbum'], 'value' => $number );
 }
 
-// So binh luan cho bai hat
-$number = $db->query( "SELECT COUNT(*) as number FROM " . NV_PREFIXLANG . "_" . $mod_data . "_comment_song" )->fetchColumn();
-if( $number > 0 )
-{
-	$siteinfo[] = array( 'key' => $lang_siteinfo['siteinfo_commentsong'], 'value' => $number );
-}
-
-// So binh luan cho album
-$number = $db->query( "SELECT COUNT(*) as number FROM " . NV_PREFIXLANG . "_" . $mod_data . "_comment_album" )->fetchColumn();
-if( $number > 0 )
-{
-	$siteinfo[] = array( 'key' => $lang_siteinfo['siteinfo_commentalbum'], 'value' => $number );
-}
-
 // So bao loi chua doc
 $number = $db->query( "SELECT COUNT(*) as number FROM " . NV_PREFIXLANG . "_" . $mod_data . "_error" )->fetchColumn();
 if( $number > 0 )

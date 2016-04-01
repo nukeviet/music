@@ -14,20 +14,20 @@ $module_version = array(
 	"modfuncs" => "main, listenone, listenlist, search, playlist, album, song, creatalbum, listenuserlist, allplaylist, viewvideo, video, upload, searchvideo, editplaylist, managersong, gift, down",
 	"is_sysmod" => 0,
 	"virtual" => 1,
-	"version" => "3.5.01",
+	"version" => "4.0.27",
 	"date" => "Sun, 08 Apr 2012 00:00:00 GMT",
 	"author" => "PHAN TAN DUNG (phantandung92@gmail.com)",
 	"note" => "",
 	"uploads_dir" => array(
-		$module_name,
-		$module_name . "/data",
-		$module_name . "/clipthumb",
-		$module_name . "/thumb",
-		$module_name . "/data/video",
-		$module_name . "/data/upload",
-		$module_name . "/ads",
-		$module_name . "/tmp",
-		$module_name . "/singerthumb",
-		$module_name . "/authorthumb"
+		$module_upload,
+		$module_upload . "/data",
+		$module_upload . "/clipthumb",
+		$module_upload . "/thumb",
+		$module_upload . "/data/video",
+		$module_upload . "/data/upload",
+		$module_upload . "/ads",
+		$module_upload . "/tmp",
+		$module_upload . "/singerthumb",
+		$module_upload . "/authorthumb"
 	)
 );

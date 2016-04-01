@@ -323,7 +323,6 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$db->query( $sql );
 
 		$classMusic->fix_singer( $classMusic->string2array( $album['casi'] ) );
-		$classMusic->delcomment( 'album', $album['id'] );
 		$classMusic->delerror( 'album', $album['id'] );
 
 		$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET album=0 WHERE album=" . $id );

@@ -202,58 +202,8 @@ $(document).ready(function() {
 	<div class="alright"><a href="{SEARCH_ALL_VIDEO}" title="{LANG.view_all}" class="musicicon mforward">{LANG.view_all}</a></div>
 </div>
 <!-- END: other_video -->
-<!-- COMMENT -->
-<div class="alboxw mg10">
-	<div class="alwrap">
-		<div class="alheader">
-			<span>{LANG.comment}</span>
-		</div>
-		<div class="alcontent">
-			<div id="comment-content"></div>
-			<!-- BEGIN: nocomment -->
-			<div class="alboxw">
-				<div class="alwrap alcontent infoerror">
-					<div>
-						{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}
-					</div>
-				</div>
-			</div>
-			<!-- END: nocomment -->
-			<!-- BEGIN: stopcomment -->
-			<div class="alboxw">
-				<div class="alwrap alcontent infoerror">
-					<div>
-						{LANG.setting_stop}
-					</div>
-				</div>
-			</div>
-			<!-- END: stopcomment -->
-			<!-- BEGIN: comment -->
-			<table cellpadding="0" cellspacing="0" class="musictable">
-				<tr>
-					<td class="left">{LANG.your_name}:</td>
-					<td><input class="form-control" type="text" name="name" id="name" value="{GDATA.username}" {CDATA.no_change}/></td>
-				</tr>
-				<tr>
-					<td class="left">{LANG.content}:</td>
-					<td><textarea class="txt-full" name="body" id="commentbody" style="height:50px"></textarea></td>
-				</tr>
-				<tr>
-					<td class="mcenter" colspan="2">
-						<input class="mbutton" id="button-comment" type="button" value="{LANG.send}" onclick="sendcommment('{ID}' , 'album');"/>
-						<input class="mbutton" type="button" onclick="nv_show_emotions('emotion-content');" value="{LANG.emotion}"/>
-						<script type="text/javascript" src="{base_url}showemotion.js"></script>
-						<div class="wrap-emotion"><div class="emotion-content" id="emotion-content"></div></div>
-					</td>
-				</tr>
-			</table>
-			<div class="clear"></div>
-			<script type="text/javascript">
-			$(document).ready(function(){show_comment('{ID}','album',0);});
-			</script>
-			<!-- END: comment -->
-		</div>
-	</div>
-</div>
+<!-- BEGIN: comment -->
+{COMMENT}
+<!-- END: comment -->
 <script type="text/javascript" src="https://apis.google.com/js/plusone.js">{lang: '{NV_LANG_INTERFACE}'}</script>
 <!-- END: main -->
